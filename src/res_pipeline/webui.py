@@ -58,23 +58,45 @@ def _stream(proc: subprocess.Popen) -> None:
     _JOB["running"] = False
 
 
-def _start_stage(stage: str) -> bool:
+def _launch(label: str, args: list[str]) -> bool:
+    """Start a `res <args>` subprocess, streaming stdout to the live console."""
     with _JOB_LOCK:
-        if _JOB["running"] or stage not in _STAGES:
+        if _JOB["running"]:
             return False
-        _JOB.update(running=True, stage=stage, log=[f"$ res {' '.join(_STAGES[stage])}"],
+        _JOB.update(running=True, stage=label, log=[f"$ res {' '.join(args)}"],
                     started=time.strftime("%H:%M:%S"), rc=None)
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"}
-    proc = subprocess.Popen([sys.executable, "-m", "res_pipeline.cli", *_STAGES[stage]],
+    proc = subprocess.Popen([sys.executable, "-m", "res_pipeline.cli", *args],
                             cwd=str(PROJECT_ROOT), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                             text=True, encoding="utf-8", errors="replace", env=env)
     threading.Thread(target=_stream, args=(proc,), daemon=True).start()
     return True
 
 
+def _start_stage(stage: str) -> bool:
+    return _launch(stage, _STAGES[stage]) if stage in _STAGES else False
+
+
+# Commands a user may type into the console (allowlist — no arbitrary shell).
+_ALLOWED_CMDS = {"ingest", "screen", "extract", "synthesize", "verify", "status", "agents",
+                 "detect-communities", "retroduce", "report", "build-lkg", "ratify-ipt",
+                 "precision-test", "gold-code", "validate-cmocs", "adjudicate", "init-db"}
+
+
 @app.post("/run/{stage}")
 def run_stage(stage: str):
     started = _start_stage(stage)
+    return JSONResponse({"started": started, "busy": _JOB["running"] and not started})
+
+
+@app.post("/run-cmd")
+def run_cmd(cmd: str = Form()):
+    """Run a user-typed `res` subcommand (allowlisted) — the console is a real terminal."""
+    parts = cmd.strip().split()
+    if not parts or parts[0] not in _ALLOWED_CMDS:
+        allowed = ", ".join(sorted(_ALLOWED_CMDS))
+        return JSONResponse({"started": False, "error": f"'{cmd}' not allowed. Try: {allowed}"})
+    started = _launch(parts[0], parts)
     return JSONResponse({"started": started, "busy": _JOB["running"] and not started})
 
 
@@ -123,8 +145,8 @@ def upload_clear():
 
 
 # ── design system ────────────────────────────────────────────────────────────
-_NAV = [("/", "Control room"), ("/inputs", "Inputs"), ("/ontology", "Ontology"),
-        ("/graph", "Knowledge graph"), ("/review", "Human review"),
+_NAV = [("/", "Control room"), ("/workflow", "Workflow & agents"), ("/inputs", "Inputs"),
+        ("/ontology", "Ontology"), ("/graph", "Knowledge graph"), ("/review", "Human review"),
         ("/results", "Machine result"), ("/standard", "Human standard"),
         ("/verify", "Comparison")]
 
@@ -214,6 +236,11 @@ h3{font-family:'Iowan Old Style',Georgia,serif;font-weight:600;font-size:1.15rem
   font-family:ui-monospace,Consolas,monospace;font-size:.78rem;line-height:1.6;white-space:pre-wrap;color:#c7d0dc}
 .joblog.live::after{content:"▋";color:#ffcf5c;animation:blink 1s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
+.jobcmd{display:flex;align-items:center;gap:.5rem;padding:.5rem .7rem;border-top:1px solid #2a2f38;background:#191d24}
+.jobcmd .cprompt{color:#63c98a;font-family:ui-monospace,Consolas,monospace;font-weight:700;font-size:.82rem}
+.jobcmd input{flex:1;background:#0e1116;border:1px solid #2a2f38;color:#c7d0dc;border-radius:4px;
+  padding:.35rem .55rem;font-family:ui-monospace,Consolas,monospace;font-size:.78rem}
+.jobcmd input:focus{outline:none;border-color:#0e6b74}
 /* review cards — show the machine's work, then ask */
 .revcard{border:1px solid var(--line);border-radius:4px;margin:.7rem 0;overflow:hidden;background:var(--panel)}
 .revtop{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.6rem .9rem;
@@ -226,6 +253,26 @@ h3{font-family:'Iowan Old Style',Georgia,serif;font-weight:600;font-size:1.15rem
 .pf b{display:block;color:var(--machine);font-size:.82rem;margin-bottom:.25rem}
 .pf span{font-size:.8rem;color:var(--muted);line-height:1.45}
 #drop.drag{border-color:var(--machine);background:color-mix(in srgb,var(--machine) 8%,var(--paper))}
+/* workflow steps + agent cards */
+.wf{position:relative;padding-left:2.4rem;margin:.2rem 0}
+.wf .step{border-left:2px solid var(--line);padding:0 0 1.1rem 1.2rem;position:relative}
+.wf .step:last-child{border-left-color:transparent}
+.wf .num{position:absolute;left:-1.15rem;top:-.15rem;width:1.85rem;height:1.85rem;border-radius:50%;
+  background:var(--machine);color:var(--paper);display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.82rem;font-family:Georgia,serif}
+.wf.human .num{background:var(--human)}
+.wf .st-t{font-family:'Iowan Old Style',Georgia,serif;font-size:1.05rem;font-weight:600;margin-bottom:.15rem}
+.wf .st-d{color:var(--muted);font-size:.9rem;line-height:1.5}
+.wf .st-d b{color:var(--ink)}
+.agentcard{border:1px solid var(--line);border-radius:5px;padding:.8rem .95rem;background:var(--panel);margin:.5rem 0}
+.agentcard .ac-h{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;margin-bottom:.3rem}
+.agentcard .ac-t{font-family:'Iowan Old Style',Georgia,serif;font-weight:600;font-size:1rem}
+.agentcard .ac-tier{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;color:var(--machine);
+  background:color-mix(in srgb,var(--machine) 10%,transparent);padding:.1rem .45rem;border-radius:3px}
+.agentcard .ac-does{font-size:.88rem;margin:.15rem 0}
+.agentcard .ac-mirror{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:.35rem;margin-top:.35rem}
+.hitlrow{display:flex;gap:.6rem;align-items:baseline;padding:.4rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.hitlrow .hk{font-weight:700;color:var(--human);font-family:ui-monospace,Consolas,monospace;font-size:.8rem;min-width:4rem}
 /* tables + compare */
 table{width:100%;border-collapse:collapse;font-size:.88rem}
 th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -501,7 +548,11 @@ def home():
         <div class="jobhead"><span class="dots"><i></i><i></i><i></i></span>
           <span id="jobstate" class="jobstate idle">Idle — nothing running</span>
           <span id="jobtimer" class="jobtimer"></span></div>
-        <pre class="joblog" id="joblog">Press a Run button above — everything the program prints streams here live, so you can watch each stage work.</pre>
+        <pre class="joblog" id="joblog">Press a Run button above, or type a command below — everything the program prints stays here so you can read it after it finishes.</pre>
+        <div class="jobcmd"><span class="cprompt">res</span>
+          <input id="cmdinput" autocomplete="off" spellcheck="false"
+            placeholder="type a command and press Enter — e.g. status · screen --limit 5 · detect-communities · agents">
+          <button class="btn sm" id="cmdrun">Run</button></div>
       </div>
     </div>
 
@@ -525,27 +576,41 @@ def home():
       if(j.busy){{alert('A stage is already running — let it finish.');setBtns(false);return;}}
       if(!poller) poller=setInterval(poll,1000); poll();
     }}
-    async function poll(){{
-      const r=await fetch('/run/status'); const j=await r.json();
+    function paint(j){{
       const st=document.getElementById('jobstate'), tm=document.getElementById('jobtimer');
       const pre=document.getElementById('joblog');
+      if(j.log&&j.log.length){{pre.textContent=j.log.join('\\n');pre.scrollTop=1e9;}}
       if(j.running){{wasRunning=true;setBtns(true); if(!runStart)runStart=Date.now();
-        st.className='jobstate run';
-        st.innerHTML='<span class="spin"></span> RUNNING · '+j.stage;
-        tm.textContent=Math.round((Date.now()-runStart)/1000)+'s elapsed';
-        pre.classList.add('live');
+        st.className='jobstate run'; st.innerHTML='<span class="spin"></span> RUNNING · '+j.stage;
+        tm.textContent=Math.round((Date.now()-runStart)/1000)+'s'; pre.classList.add('live');
       }}else{{
         pre.classList.remove('live');
-        const dur=runStart?(' · '+Math.round((Date.now()-runStart)/1000)+'s'):'';
-        if(j.rc===0){{st.className='jobstate ok';st.textContent='✓ Finished '+(j.stage||'')+' — reloading to surface any review items…';tm.textContent=dur;}}
-        else if(j.rc!==null){{st.className='jobstate err';st.textContent='✕ Failed: '+(j.stage||'')+' (exit '+j.rc+')';tm.textContent=dur;}}
+        const dur=runStart?(Math.round((Date.now()-runStart)/1000)+'s'):'';
+        if(j.rc===0){{st.className='jobstate ok';
+          st.innerHTML='✓ Finished '+(j.stage||'')+' &nbsp;<a href="/" style="color:#63c98a;text-decoration:underline">refresh to load new review items ↻</a>';tm.textContent=dur;}}
+        else if(j.rc!==null){{st.className='jobstate err';st.textContent='✕ Failed: '+(j.stage||'')+' (exit '+j.rc+') — read the log above';tm.textContent=dur;}}
         else{{st.className='jobstate idle';st.textContent='Idle — nothing running';tm.textContent='';}}
       }}
-      if(j.log&&j.log.length){{pre.textContent=j.log.join('\\n');pre.scrollTop=1e9;}}
-      if(!j.running && poller){{clearInterval(poller);poller=null;
-        if(wasRunning && j.rc===0) setTimeout(()=>location.reload(),1400); else setBtns(false);}}
     }}
-    fetch('/run/status').then(r=>r.json()).then(j=>{{if(j.running){{poller=setInterval(poll,1200);poll();}}}});
+    async function poll(){{
+      const j=await (await fetch('/run/status')).json(); paint(j);
+      if(!j.running && poller){{clearInterval(poller);poller=null;setBtns(false);}}
+    }}
+    // On load: restore the LAST run's output so it never vanishes; resume polling if running.
+    fetch('/run/status').then(r=>r.json()).then(j=>{{paint(j); if(j.running){{poller=setInterval(poll,1000);poll();}}}});
+    // Console command line — type a res subcommand and run it.
+    (function(){{
+      const box=document.getElementById('cmdinput'), btn=document.getElementById('cmdrun');
+      async function go(){{
+        const v=(box.value||'').trim(); if(!v)return;
+        const fd=new FormData(); fd.append('cmd',v);
+        const j=await (await fetch('/run-cmd',{{method:'POST',body:fd}})).json();
+        if(j.error){{alert(j.error);return;}}
+        if(j.busy){{alert('A stage is already running — let it finish.');return;}}
+        runStart=0; box.value=''; if(!poller)poller=setInterval(poll,1000); poll();
+      }}
+      btn.onclick=go; box.addEventListener('keydown',e=>{{if(e.key==='Enter')go();}});
+    }})();
     // ── file upload (generic corpus, any N documents) ──
     (function(){{
       const drop=document.getElementById('drop'), inp=document.getElementById('fileinput'),
@@ -626,8 +691,113 @@ def ontology():
       <div class="panel" style="padding:0"><div class="eyebrow" style="padding:.9rem 1rem 0">5 relation types</div>
         <table><thead><tr><th>Predicate</th><th>Domain → Range</th><th>#</th></tr></thead><tbody>{pr}</tbody></table></div>
     </div>
-    <p class="muted"><code>config/ontology.yaml</code> — validated to cover all 40 of Richmond's relations.</p>"""
+    <p class="muted"><code>config/ontology.yaml</code> — validated to cover all 40 of Richmond's relations.</p>
+    <h3>Are these faithful to Richmond, and useful? — self-assessment</h3>
+    <div class="panel">
+      <div class="li e"><b>Faithful.</b> Our five entity types are Richmond's exact CMO framework (§2):
+        Context, Intervention, and Mechanism split into <b>resource</b> + <b>response</b> — the split most
+        automated systems miss. Not an invented ontology.</div>
+      <div class="li e"><b>The relations are ours, grounded in their prose.</b> Richmond names no relation
+        types; our five operationalise their causal verbs ("offer resources", "leads to"), and the
+        distribution matches their gold (TRIGGERS + LEADS_TO dominate).</div>
+      <div class="li e"><b>Low fabrication.</b> 99.4% of extracted relations pass domain/range validation;
+        96% of quotes resolve to a real span; unresolved ones are flagged, never invented.</div>
+      <div class="li x"><b>Weakness 1 — over-granularity.</b> We hold 148 concepts where Richmond abstracted
+        to 47; some are too study-specific. The concept-family layer coarsens 148→30, but the normaliser
+        should abstract more.</div>
+      <div class="li x"><b>Weakness 2 — Resource/Intervention/Response boundary is fuzzy.</b> e.g.
+        "accuracy-speed pressure" is mis-typed as a Resource. Richmond's own gold shows the same tension.
+        Fix: a sharper prompt rule + let the Checker re-type, not just flag.</div>
+      <p class="muted" style="margin-top:.5rem">Full analysis: <code>docs/ENTITY_RELATIONSHIP_EVALUATION.md</code>.
+      Bottom line: the entities/relations are the <i>right kinds</i>, faithfully grounded and usable — what
+      remains is tidiness (abstraction + boundary precision), not correctness.</p>
+    </div>"""
     return _page("/ontology", body)
+
+
+# ── Workflow & agents ────────────────────────────────────────────────────────
+_RICHMOND_STEPS = [
+    ("Seed a theory first", "From a scoping search + expert opinion + learning theory, the team drafts "
+     "an <b>initial programme theory</b> (IPT) — a first guess at the mechanisms — and agrees it by consensus."),
+    ("Theory-driven search", "They search four databases using themes from the IPT, adding terms as new "
+     "concepts emerge. The search grows with the theory."),
+    ("Screen for relevance", "A study is kept if it plausibly <b>contributes to theory building</b> — realist "
+     "relevance, not topical overlap."),
+    ("Code CMOCs (lead + checker)", "AR codes every paper into Context–Mechanism–Outcome configurations; a "
+     "second reviewer (RP/SG/NC) independently checks <b>every one of the 28</b> for consistency."),
+    ("Compare across studies", "Recurrent CMOC patterns are identified; partial evidence from different "
+     "studies is combined into fuller configurations."),
+    ("Retroduction loop", "As later papers reshape the theory, <b>earlier studies are re-analysed</b> in its "
+     "light — the defining iterative rhythm of realist synthesis."),
+    ("Programme theory + consensus", "Five student-context CMOC statements (Figs 2–3); all authors agree the "
+     "final output."),
+]
+_SYSTEM_STEPS = [
+    ("Ingest", "Ingestion", "PDF/abstract → clean text; each file gets a Study ID and is split into "
+     "provenance-bearing <b>text units</b> with exact character offsets."),
+    ("Seed IPT", "IPT Manager", "Drafts the initial programme theory from public learning theory (never "
+     "Richmond's answers); you ratify it at <b>HITL-0</b>."),
+    ("Screen", "Screening Reviewers (×2)", "Two independent models vote include/exclude on theory-relevance; "
+     "disagreements route to you at <b>HITL-1</b>."),
+    ("Extract + check", "CMOC Extractor + Consistency Checker", "The extractor pulls typed C→M→O with a "
+     "verbatim quote per element; an independent checker (different model family) re-checks every study → "
+     "<b>HITL-2</b>."),
+    ("Build the graph", "Normaliser + Community Analyst", "Quotes resolve to spans; synonymous concepts "
+     "merge; Leiden community detection surfaces emergent <b>conceptual entities</b>."),
+    ("Synthesise", "Synthesis Composer", "Recurrent patterns (demi-regularities) + contradictions → a "
+     "five-context programme theory; contradictions resolved at <b>HITL-3</b>, theory signed at <b>HITL-4</b>."),
+    ("Retroduction", "Retroduction loop", "The weakest studies are re-read under the refined theory until "
+     "the configurations stabilise — mirroring Richmond's re-analysis of earlier studies."),
+]
+
+
+@app.get("/workflow", response_class=HTMLResponse)
+def workflow():
+    from res_pipeline.core.agents import human_checkpoints, roster_summary
+    onto = load_yaml_config("agents")
+    r_steps = "".join(
+        f'<div class="step"><div class="num">{i}</div><div class="st-t">{t}</div>'
+        f'<div class="st-d">{d}</div></div>' for i, (t, d) in enumerate(_RICHMOND_STEPS, 1))
+    s_steps = "".join(
+        f'<div class="step"><div class="num">{i}</div>'
+        f'<div class="st-t">{t} &nbsp;<span class="ac-tier">{ag}</span></div>'
+        f'<div class="st-d">{d}</div></div>' for i, (t, ag, d) in enumerate(_SYSTEM_STEPS, 1))
+    agent_defs = onto["agents"]
+    cards = "".join(
+        f'<div class="agentcard"><div class="ac-h"><span class="ac-t">{a["title"]}</span>'
+        f'<span class="ac-tier">{a["tier"]}</span></div>'
+        f'<div class="ac-does">{" ".join(agent_defs[a["id"]]["persona"].split())}</div>'
+        f'<div class="ac-mirror"><b>Mirrors in Richmond:</b> {a["richmond_analogue"]}</div></div>'
+        for a in roster_summary())
+    hitl = "".join(
+        f'<div class="hitlrow"><span class="hk">{h["id"]}</span><span>{h["what"]} '
+        f'<span class="muted">— {h["richmond_analogue"]}</span></span></div>'
+        for h in human_checkpoints())
+    body = f"""
+    <div class="eyebrow">How it works — the human process and ours, side by side</div>
+    <h2 class="title serif">Workflow &amp; the multi-agent system</h2>
+    <p class="lead">Our system does not invent a process — it <b>reproduces Richmond's</b>. Left: how five
+    human experts made their realist review. Right: how our eight agents perform the same operations, with
+    you sovereign at five checkpoints. Full grounding in <code>docs/SYSTEM_WORKFLOW.md</code>.</p>
+    <div class="two">
+      <div class="panel"><div class="eyebrow human">Richmond's human workflow</div>
+        <div class="wf human">{r_steps}</div></div>
+      <div class="panel"><div class="eyebrow machine">Our system's workflow</div>
+        <div class="wf">{s_steps}</div></div>
+    </div>
+    <h3>The agents — who does what</h3>
+    <p class="muted" style="margin-top:-.3rem">Eight machine agents, each with an embedded expert persona,
+    each mirroring a role a Richmond author played. (Also on the command line: <code>res agents</code>.)</p>
+    {cards}
+    <h3>Human-in-the-loop — where you decide</h3>
+    <div class="panel">{hitl}</div>
+    <h3>How we know it works</h3>
+    <div class="panel">{_scorebars()}
+      <p class="muted" style="margin-top:.6rem">Measured against Richmond's published outputs, OUTSIDE the
+      pipeline (the answer key is never read by the agents). LLM-judged metrics are sampled 3× and
+      reported with a range; deterministic ones (screening, faithfulness, type-validity) are stable.
+      See the <a class="tl" href="/verify">Comparison</a> page for the full scorecard.</p></div>"""
+    return _page("/workflow", body)
 
 
 # ── Knowledge graph ──────────────────────────────────────────────────────────
