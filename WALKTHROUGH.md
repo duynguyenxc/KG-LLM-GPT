@@ -727,3 +727,28 @@ copyrighted file was staged before pushing.
 can understand what to review (RA's long-standing pain point); manuscript Findings/Evaluation draft
 (item 2); human κ on gold + HITL ratification + figures (item 4); optionally borrow UI/agent patterns
 from external human-workflow multi-agent repos.
+
+---
+
+## M29 — Entity/relationship evaluation, workflow docs, generic ingest, control-room data (2026-07-22)
+
+**Deliverable 1 — entity/relationship evaluation** (`docs/ENTITY_RELATIONSHIP_EVALUATION.md`): close
+re-reading of Richmond §2/§3.2 + gold + our extracted graph. Verdict: schema FAITHFUL (our 5 entity
+types = Richmond's exact CMO framework with Mechanism split into resource/response; 5 relations
+operationalise Richmond's causal prose, distribution matches gold). Extracted graph SOUND
+(148 concepts, 99.4% type-valid, 96% grounded). Real weaknesses: over-granularity (148 vs Richmond's
+47) and a fuzzy Resource/Intervention/Response boundary (e.g. "accuracy-speed pressure" mis-typed).
+
+**Deliverable 2 — workflow documentation** (`docs/SYSTEM_WORKFLOW.md`): Richmond's human workflow and
+our system's workflow side by side with Mermaid diagrams, the 8-agent roster (who does what, which
+human role each mirrors), and the effectiveness evidence.
+
+**Deliverable 3 — generic ingest + control room**: `build_registry_from_dir()` +
+`res ingest --source <folder>` now scale the whole pipeline to ANY N documents (100+ PDFs), not just
+the 28-study benchmark (.txt sidecar = abstract-only; .jsonl = metadata). New Control-Room "Data —
+what is loaded" panel shows counts, accepted formats, and how to scale.
+
+**GitHub:** all pushed to duynguyenxc/Realist-Evidence-Synthesis-V2 (3 commits this session).
+**Still open:** HITL clarity redesign (so a non-author reviewer understands what to review), manuscript
+Findings/Evaluation draft, human κ + figures; and the KG fixes from Deliverable 1 (tighter
+boundary prompt, abstraction pass, Checker re-typing).
