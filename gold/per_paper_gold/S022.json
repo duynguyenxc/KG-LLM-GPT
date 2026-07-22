@@ -1,0 +1,86 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28",
+        "E46"
+      ],
+      "statement": "In postgraduate/medical learners, a serious game using simulated clinical biliary cases with immediate feedback supported learning, evidenced by improved performance over repeated sessions.",
+      "supporting_quote": "Cases consisted of an image, information describing a clinical problem, and possible solutions... After each attempt, players received feedback focused on their solution... Figure 4 shows that participants improved their performance during their second gaming session (median proportion of 0.72 (IQR 0.23) compared to 0.48 (IQR 0.22) during the first (Wilcoxon signed rank, p = 0.000))."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E23"
+      ],
+      "outcome_ecodes": [
+        "E22"
+      ],
+      "statement": "Among less knowledgeable learners, simulated clinical cases in the serious game could provoke frustration, although the overall experience was still generally positive.",
+      "supporting_quote": "Of the students, 8 of 17 found the game frustrating (compared to 1 of 11 trainees and 1 of 6 experts). According to the 'flow theory,' the level of difficulty is too high for some students... The majority of gamers had enjoyed the game, considering it fun (91.2 %) and challenging (85.3 %)."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For lower-knowledge learners, performance on the simulated cases was poorer than for more experienced groups.",
+      "supporting_quote": "Surgeons (mean 0.77, SD 0.09) solved more cases than residents (mean 0.67, SD 0.05), interns (mean 0.60, SD 0.09), master-degree students (mean 0.50, SD 0.10), and bachelor-degree students (mean 0.39, SD 0.03)."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E03"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For higher-knowledge learners, the simulated cases enabled stronger performance, consistent with building on prior clinical knowledge.",
+      "supporting_quote": "Surgeons solved more cases correctly (mean 77 %) than surgical residents (67 %), interns (60 %), master-degree students (50 %), and bachelor-degree students (39 % (p < 0.01)... 'My experience helps me to solve cases' [experts median 5.0; trainees 4.0; students 3.0]."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E03",
+    "E10",
+    "E13",
+    "E20",
+    "E22",
+    "E23",
+    "E28",
+    "E39",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper is about a serious game for surgical clinical decision-making using simulated cases and immediate feedback. Strongest evidence supports simulation (E10), feedback (E13), positive learning/performance gains (E28/E46), and poorer outcomes/frustration among less knowledgeable students (E23/E47). I did not code mechanisms such as fear, stress, pressure, pattern recognition, explicit expert reasoning, or illness scripts because the paper does not directly evidence them. Although the game is described as fun/challenging and realistic, Richmond vocabulary has limited direct matches; E22 was used cautiously for positive learning experience. No CMOC was forced where a mechanism was not adequately evidenced."
+}

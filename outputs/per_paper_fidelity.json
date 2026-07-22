@@ -1,0 +1,160 @@
+{
+  "n_studies": 25,
+  "mean_per_paper_recall": 0.626041621776916,
+  "mean_recall_fulltext": 0.6433853605544783,
+  "mean_recall_abstract_only": 0.5566666666666668,
+  "n_fulltext": 20,
+  "n_abstract_only": 5,
+  "per_study": {
+    "S003": {
+      "gold": 4,
+      "matched": 3,
+      "recall": 0.75,
+      "source_kind": "abstract_only"
+    },
+    "S004": {
+      "gold": 6,
+      "matched": 5,
+      "recall": 0.8333333333333334,
+      "source_kind": "fulltext_pdf"
+    },
+    "S005": {
+      "gold": 6,
+      "matched": 4,
+      "recall": 0.6666666666666666,
+      "source_kind": "fulltext_pdf"
+    },
+    "S006": {
+      "gold": 16,
+      "matched": 7,
+      "recall": 0.4375,
+      "source_kind": "fulltext_pdf"
+    },
+    "S007": {
+      "gold": 2,
+      "matched": 2,
+      "recall": 1.0,
+      "source_kind": "abstract_only"
+    },
+    "S008": {
+      "gold": 3,
+      "matched": 1,
+      "recall": 0.3333333333333333,
+      "source_kind": "abstract_only"
+    },
+    "S009": {
+      "gold": 5,
+      "matched": 1,
+      "recall": 0.2,
+      "source_kind": "fulltext_pdf"
+    },
+    "S010": {
+      "gold": 5,
+      "matched": 1,
+      "recall": 0.2,
+      "source_kind": "abstract_only"
+    },
+    "S011": {
+      "gold": 6,
+      "matched": 4,
+      "recall": 0.6666666666666666,
+      "source_kind": "fulltext_pdf"
+    },
+    "S013": {
+      "gold": 10,
+      "matched": 5,
+      "recall": 0.5,
+      "source_kind": "fulltext_pdf"
+    },
+    "S014": {
+      "gold": 2,
+      "matched": 1,
+      "recall": 0.5,
+      "source_kind": "abstract_only"
+    },
+    "S015": {
+      "gold": 17,
+      "matched": 10,
+      "recall": 0.5882352941176471,
+      "source_kind": "fulltext_pdf"
+    },
+    "S016": {
+      "gold": 12,
+      "matched": 6,
+      "recall": 0.5,
+      "source_kind": "fulltext_pdf"
+    },
+    "S017": {
+      "gold": 9,
+      "matched": 7,
+      "recall": 0.7777777777777778,
+      "source_kind": "fulltext_pdf"
+    },
+    "S018": {
+      "gold": 12,
+      "matched": 8,
+      "recall": 0.6666666666666666,
+      "source_kind": "fulltext_pdf"
+    },
+    "S019": {
+      "gold": 8,
+      "matched": 6,
+      "recall": 0.75,
+      "source_kind": "fulltext_pdf"
+    },
+    "S020": {
+      "gold": 12,
+      "matched": 4,
+      "recall": 0.3333333333333333,
+      "source_kind": "fulltext_pdf"
+    },
+    "S021": {
+      "gold": 10,
+      "matched": 8,
+      "recall": 0.8,
+      "source_kind": "fulltext_pdf"
+    },
+    "S022": {
+      "gold": 12,
+      "matched": 10,
+      "recall": 0.8333333333333334,
+      "source_kind": "fulltext_pdf"
+    },
+    "S023": {
+      "gold": 12,
+      "matched": 11,
+      "recall": 0.9166666666666666,
+      "source_kind": "fulltext_pdf"
+    },
+    "S024": {
+      "gold": 5,
+      "matched": 4,
+      "recall": 0.8,
+      "source_kind": "fulltext_pdf"
+    },
+    "S025": {
+      "gold": 8,
+      "matched": 6,
+      "recall": 0.75,
+      "source_kind": "fulltext_pdf"
+    },
+    "S026": {
+      "gold": 13,
+      "matched": 8,
+      "recall": 0.6153846153846154,
+      "source_kind": "fulltext_pdf"
+    },
+    "S027": {
+      "gold": 8,
+      "matched": 7,
+      "recall": 0.875,
+      "source_kind": "fulltext_pdf"
+    },
+    "S028": {
+      "gold": 14,
+      "matched": 5,
+      "recall": 0.35714285714285715,
+      "source_kind": "fulltext_pdf"
+    }
+  }
+}

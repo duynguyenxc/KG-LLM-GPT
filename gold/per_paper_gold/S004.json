@@ -1,0 +1,83 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18",
+        "E13"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E25"
+      ],
+      "statement": "Novice learners with little prior ECG knowledge who were instructed to use both pattern recognition and careful feature consideration, and who received feedback during practice, achieved higher diagnostic accuracy than learners given no reasoning instruction.",
+      "supporting_quote": "\"Overall, the instruction to utilise a combined reasoning approach resulted in greater diagnostic accuracy relative to leaving students to their own intuitions regarding how best to approach new cases.\""
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18",
+        "E13"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For absolute novices, explicit guidance to combine analytic and non-analytic reasoning improved learning/performance overall compared with no explicit reasoning guidance.",
+      "supporting_quote": "\"This pair of studies provides further empirical support for the notion that explicitly telling novice diagnosticians to utilise multiple forms of reasoning... can result in improved diagnostic accuracy.\""
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E25"
+      ],
+      "statement": "When misleading case information biased novices toward an incorrect diagnosis, combined reasoning instructions helped them maintain diagnostic accuracy.",
+      "supporting_quote": "\"The effect was particularly pronounced when cases were made challenging by biasing participants towards an incorrect diagnosis, either through mention of a specific feature or by making an inaccurate diagnostic suggestion.\""
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "In challenging biased cases, explicit instruction to use both analytic and non-analytic reasoning protected novices from the drop in performance seen without such instruction.",
+      "supporting_quote": "\"In both studies, those randomly assigned to receive a combined reasoning instruction showed no decline in performance when they were intentionally misled by the researcher towards an incorrect response, by contrast with those who were not given any instruction about how to reason through these stimuli.\""
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Novices left to use their own natural strategy were more vulnerable to misleading features or incorrect diagnostic suggestions, showing reduced diagnostic accuracy under bias.",
+      "supporting_quote": "\"Biasing participants either towards excessive reliance on feature-level information... or towards excessive reliance on diagnosis-level information... had the impact of reducing diagnostic accuracy differentially across groups of participants.\""
+    }
+  ],
+  "ecodes_present": [
+    "E02",
+    "E13",
+    "E18",
+    "E25",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper studies absolute novices ('undergraduate psychology students') learning ECG diagnosis, so E02 is supported as low/no domain-specific knowledge; E01 was not used because participants were not medical/health professions students. Strongest intervention evidence is E18 (explicit instruction to use both non-analytical/pattern recognition and analytical/feature-based reasoning). Practice-phase feedback supports E13, but the main reported effects are tied to reasoning instruction rather than feedback alone. Outcomes are diagnostic accuracy/performance changes (E25, E46, E47). Mechanism responses such as understanding, confusion, cognitive load, or building on prior knowledge were not directly measured/reported and were therefore omitted."
+}

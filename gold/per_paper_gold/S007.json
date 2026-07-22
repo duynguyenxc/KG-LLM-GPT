@@ -1,0 +1,21 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "In undergraduate medical students, participation in the Integrated Cases Section was associated with improved clinical reasoning performance.",
+      "supporting_quote": "Students' clinical reasoning showed a significant gain after the Integrated Cases Section on a script concordance test."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E46"
+  ],
+  "coder_notes": "Very limited evidence is available because only the title and abstract excerpt were provided. The excerpt supports an undergraduate medical education context (E01) and an improvement in learning/clinical reasoning performance (E46). Although the abstract mentions increased confidence, there is no matching outcome code for confidence and E04 is a context code rather than an evidenced pre-existing context here, so it was not coded. The intervention details are insufficiently specified to defensibly assign Richmond intervention codes such as real-life scenarios, expert reasoning explanation, or feedback."
+}

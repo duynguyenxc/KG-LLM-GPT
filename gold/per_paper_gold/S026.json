@@ -1,0 +1,111 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E17"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students working on relatively unfamiliar clinical cases, combining their own self-explanation with listening to residents' self-explanations improved later diagnostic performance, especially on transfer cases.",
+      "supporting_quote": "All cases were related to jaundice because this clinical topic was rather unfamiliar to the Year 3 medical students involved... Group 1 listened to examples of residents’ SEs with prompts; Group 2 listened to examples of residents’ SEs without prompts... On different cases, Group 1 obtained significantly higher diagnostic accuracy (p = 0.011) and diagnostic performance (p < 0.001) scores than the control group"
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E17"
+      ],
+      "response_ecodes": [
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E21",
+        "E28"
+      ],
+      "statement": "For clerks facing unfamiliar cases, hearing residents' self-explanations helped students elaborate and extend their own reasoning, giving them more insight into diagnostic reasoning and supporting learning.",
+      "supporting_quote": "Students reported that listening to residents’ examples helped them to elaborate further on their own ideas. They also reported that it helped them to confirm their reasoning and to complete their final diagnostic opinion and argument with some ideas they had not raised by themselves."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E17"
+      ],
+      "response_ecodes": [
+        "E26"
+      ],
+      "outcome_ecodes": [
+        "E22"
+      ],
+      "statement": "Students experienced the resident-example approach positively.",
+      "supporting_quote": "The role of these techniques in their learning was highly appreciated by students in this study."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E17"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "When students actively processed residents' examples with prompts, this enhanced learning beyond exposure to examples alone.",
+      "supporting_quote": "Its impact is increased significantly by combining it with examples of residents’ SEs and prompts. Although students’ exposure to examples of clinical reasoning is important, their ‘active processing’ of these examples appears to be critical to their learning from them."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E28",
+        "E46"
+      ],
+      "statement": "Self-explanation alone on unfamiliar paper cases supported learning of clinical reasoning, with improved performance after one week even without external feedback.",
+      "supporting_quote": "This supports the growing evidence that this technique, even without external feedback, is effective for learning clinical reasoning at clerkship level... For students in the control group, no improvement was noted immediately, but a significant increase in scores occurred 1 week later."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E17",
+    "E20",
+    "E21",
+    "E22",
+    "E26",
+    "E27",
+    "E28",
+    "E39",
+    "E40",
+    "E46"
+  ],
+  "coder_notes": "Coding is restricted by the Richmond vocabulary. The paper clearly studies undergraduate medical students (Year 3 clerks) and unfamiliar cases, so E01 and E02 are well supported. The intervention most closely matching the resident self-explanation examples is E17 (near-peer think-aloud reasoning with prompts and examples), although the models were residents rather than peers and prompts were absent in one arm; no separate code exists for resident examples without prompts, so E17 was used only where the resident-example intervention is central. Cases were paper clinical scenarios rather than real patients/simulation, but E10 is the closest available case-based intervention code. Mechanisms such as active processing, elaboration, confirming/completing reasoning, and building on prior knowledge are only partially represented in the vocabulary; E39, E27, and E20 were used conservatively where directly supported. The paper discusses illness scripts theoretically, but does not measure them, so E29/E43 were not coded. No feedback code was applied because the study did not provide feedback in the Richmond sense. Precision was prioritized over recall."
+}

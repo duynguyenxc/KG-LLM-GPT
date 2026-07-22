@@ -1,0 +1,125 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Year 4 medical students with limited prior patient experience practised diagnosing written clinical cases; repeated case practice appears to let them build on existing disease knowledge and improve later diagnostic performance on new exemplars.",
+      "supporting_quote": "We recruited Year 4 students because students at this point in their training have been exposed to theoretical knowledge about diseases but not yet to many patients. Therefore, they are not yet likely to have well-developed illness scripts."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E29"
+      ],
+      "statement": "For relatively novice medical students, practising with clinical cases can support enrichment of disease representations/illness scripts by building on what they already know.",
+      "supporting_quote": "Thus, even if no new information was provided to the students in this study and no new knowledge could be acquired, reflection enriched the illness scripts they had already stored, which, in turn, facilitated the diagnostic process when they encountered different exemplars of the same diseases at a later stage in the study."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "Students can learn from practising with well-selected clinical cases because case work helps them build on prior theoretical knowledge.",
+      "supporting_quote": "To foster the acquisition of such knowledge, which is prerequisite for clinical diagnosis, students need to repeatedly encounter well-selected clinical cases in order to gain experience with many diseases and their different clinical presentations."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E29",
+        "E46"
+      ],
+      "statement": "When novice medical students use structured reflection while diagnosing simulated clinical cases, the stepwise comparison of findings for and against diagnoses helps them understand and build richer disease representations, leading to better delayed diagnostic performance on new cases.",
+      "supporting_quote": "This positive effect of reflection would occur because it explicitly focuses students’ attention on the findings in the case that speak for or against each of the alternative diagnoses, which may lead to the formation of deeper and richer mental representations of diseases, consequently enhancing students’ competence in diagnosing other cases of the same disease."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E29"
+      ],
+      "statement": "Structured reflection appears to enrich students' illness scripts by requiring them to match case findings against multiple diagnostic hypotheses, including contradictory and absent findings.",
+      "supporting_quote": "In this study, when students engaged in reflection while diagnosing a clinical case, they were required to think about how each finding in the case related to a diagnostic hypothesis, and to proceed with this process of matching findings and scripts for all alternative diagnoses... reflection enriched the illness scripts they had already stored."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E35",
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For novice medical students, structured reflection during case diagnosis may initially increase cognitive load or confusion, which may contribute to poorer immediate test performance.",
+      "supporting_quote": "A potential reason why the beneficial effects of reflection show only after some delay may be that reflection imposes a high cognitive load during the learning phase and leads to exhaustion, or that reflection leads to initial confusion given that many different features and diagnoses have been considered in detail."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E20",
+    "E27",
+    "E29",
+    "E35",
+    "E39",
+    "E40",
+    "E45",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper is an experimental study of Year 4 medical students diagnosing written clinical cases under immediate diagnosis, differential diagnosis, or structured reflection instructions. Richmond vocabulary does not contain a specific intervention code for structured reflection, differential diagnosis, or explicit reflection prompts, so these were not forced into intervention codes; only the case-based/simulated scenario element (E10) was coded where defensible. No feedback was provided, but absence of feedback (E14) was not used in CMOCs because the paper does not test or clearly attribute outcomes to feedback absence. Mechanisms of cognitive load/confusion are explicitly presented by authors as speculative, so included cautiously only in one under-claiming CMOC tied to immediate poorer performance. Outcomes were coded mainly as delayed improvement in diagnostic accuracy/learning gain (E46/E40) and richer illness scripts (E29)."
+}

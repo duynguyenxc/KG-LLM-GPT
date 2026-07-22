@@ -1,0 +1,66 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Among novices with no prior cytopathology knowledge, brief exposure to paired cervical cell images labeled normal/abnormal enabled use of non-analytical pattern recognition and improved diagnostic performance.",
+      "supporting_quote": "By recruiting participants with no previous experience in cytopathology and examining their diagnostic performance under controlled laboratory conditions, we were able to demonstrate a significant element of nonanalytic reasoning from the earliest learning stages. After only brief exposure to paired images of normal and abnormal cells in the style of alternative forced choice training, the diagnostic performance of participants improved significantly in subsequent tests."
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For novices, explicit feature-based teaching with clarification and correct-answer feedback supported understanding and improved diagnostic performance.",
+      "supporting_quote": "Following the baseline test, 24 participants were randomly allocated to receive 'analytic training,' in which they were taught the morphological features of normal and abnormal cells by an experienced cytology trainer... Participants in this group were also given a typed list of features for future reference, and a full explanation of the relevant cytological terminology was provided... The trainer answered all queries and clarified any points of uncertainty... participants were instructed to use the feature list to make their diagnosis and then press a computer key to see the correct answer... Diagnostic accuracy in both groups improved significantly between tests 1 and 2 (P<.001)."
+    },
+    {
+      "context_ecodes": [
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "When novices were instructed to combine analytical and non-analytical reasoning, the instruction appeared to create confusion and diagnostic performance worsened.",
+      "supporting_quote": "Diagnostic accuracy in both groups improved significantly between tests 1 and 2 (P<.001) but decreased between tests 2 and 3 (P<.05)... An alternative explanation for the relatively poor performance in the final test, which occurred in both groups of participants, is the possibility that participants were confused by the instructions given just prior to the test. We readily acknowledge that the meaning and validity of an instruction to 'combine' analytic and nonanalytic reasoning is not entirely clear."
+    }
+  ],
+  "ecodes_present": [
+    "E02",
+    "E10",
+    "E13",
+    "E15",
+    "E18",
+    "E20",
+    "E24",
+    "E45",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper concerns undergraduate psychology students, not medical/health professions students, so E01 does not apply. The study clearly includes novices/low prior domain knowledge (E02). Nonanalytic training used paired cytology images rather than real-life scenarios/simulation; E10 is the closest available intervention code but is imperfect. Analytic training included explicit explanation of features/terminology and correct-answer feedback during practice, supporting E15 and E13. The final combined strategy produced worse performance; authors speculate confusion, so E45 is used cautiously because it is explicitly discussed as a possible explanation. No strong evidence for expert reasoning being revealed (E07) beyond feature explanation, nor for illness scripts outcomes, affective responses like frustration/stress, or knowledge-retention strategies."
+}

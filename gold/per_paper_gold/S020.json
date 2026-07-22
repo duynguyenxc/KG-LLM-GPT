@@ -1,0 +1,90 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E29",
+        "E28"
+      ],
+      "statement": "For undergraduate medical students working on less familiar clinical cases, self-explanation appears to prompt use of prior biomedical knowledge and linking it to clinical knowledge, helping them build a more coherent disease representation and supporting learning.",
+      "supporting_quote": "\"Less familiar cases seem to activate students’ biomedical knowledge, which in turn helps them to create new links between biomedical and clinical knowledge, and eventually construct a more coherent mental representation of diseases. This may clarify the previously found positive effect that self-explanation has on the diagnosis of unfamiliar cases.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21",
+        "E28"
+      ],
+      "statement": "Among medical students, solving unfamiliar simulated clinical cases with self-explanation supports deeper understanding of the material, which provides insight into reasoning and contributes positively to learning.",
+      "supporting_quote": "\"Consequently, learners deepen their understanding of the material and make their knowledge more meaningful, while monitoring their evolving understanding.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For clerks diagnosing less familiar cases, self-explanation works by making them work with and reorganise their own prior knowledge, which is associated with improved later diagnostic performance.",
+      "supporting_quote": "\"It is important to note here that in the learning phase of our first study, students who engaged in self-explanation had received no content-type feedback and, thus, without any new external information, they must have somehow worked with, and reorganised, their own prior knowledge.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "When medical students self-explain less familiar cases, unfamiliarity is associated with more errors during reasoning, indicating reduced immediate performance while knowledge is still being constructed.",
+      "supporting_quote": "\"When self-explaining on less familiar cases, students produced significantly more paraphrases (t[6] = 5.65, p = 0.001, d = 2.14) and made more errors (t[6] = 3.87, p = 0.008, d = 2.45).\""
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E20",
+    "E21",
+    "E27",
+    "E28",
+    "E29",
+    "E39",
+    "E45",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper is about third-year medical students (E01) and contrasts familiar versus less familiar cases; the closest context code for less familiar/unfamiliar cases is low domain-specific knowledge (E02). The study centers on self-explanation, but there is no Richmond intervention code specifically for self-explanation, so I did not force-code it; I only used E10 because the intervention material was clinical cases, which are closest to real-life scenarios. Prior positive diagnostic effect comes from a previous study by the same group and is discussed here; I coded only where this paper explicitly uses that prior finding to explain mechanism/outcome. I avoided coding feedback absence because the no-feedback condition is mentioned, but the paper does not directly evidence a Richmond-style CMOC around absent feedback causing outcomes in this dataset. I also avoided E36/E37/E38 because the paper does not clearly show poor illness scripts or faulty future non-analytical reasoning."
+}

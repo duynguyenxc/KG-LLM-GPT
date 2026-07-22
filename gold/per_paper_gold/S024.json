@@ -1,0 +1,42 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Among senior medical students, cognitive forcing strategy training did not improve diagnostic performance; the paper suggests novices may rely on analytic rather than non-analytic reasoning, so the intervention offered no benefit and diagnostic accuracy did not increase.",
+      "supporting_quote": "The educational interventions suggested by experts in clinical reasoning and employed in our study to teach cognitive forcing strategies failed to show any reduction in diagnostic error by novices... One possible explanation for the failure of CFS in this study is that it purports to target biases arising from nonanalytic reasoning. If novices are not using nonanalytic reasoning, CFS may be of little benefit."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E08"
+      ],
+      "response_ecodes": [
+        "E35"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For undergraduate medical students, encouraging additional analytic processing/circumspection may increase cognitive load, which may contribute to no improvement in diagnostic outcomes.",
+      "supporting_quote": "A second explanation is that a 'ceiling' on analytic processing was achieved, and the benefits of CFS could not be accessed... Further encouragement to engage in additional circumspection (particularly in a novice, where, by definition, more analytic than nonanalytic reasoning is carried out) may simply overwhelm an individual's cognitive load without any effect on outcomes."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E08",
+    "E24",
+    "E35",
+    "E47"
+  ],
+  "coder_notes": "Very limited fit to the Richmond vocabulary because this paper evaluates cognitive forcing strategies, which are not directly represented by a specific intervention code. I therefore coded only defensible CMOCs supported by explicit discussion and results. The main empirical finding is null effect on diagnostic accuracy among medical students. I did not force codes for feedback, expert reasoning explanation, simulation/real cases, or knowledge level because the paper does not clearly evidence those Richmond entities as causal elements in the reported outcomes."
+}

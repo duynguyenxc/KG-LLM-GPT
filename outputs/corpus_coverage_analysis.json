@@ -1,0 +1,16 @@
+{
+  "corpus_term_frequency": {
+    "fear": 2,
+    "anxiety": 1,
+    "stress": 14,
+    "panic": 2,
+    "pressure to perform": 0,
+    "coping": 2,
+    "self-efficacy": 0,
+    "self-confidence": 0,
+    "frustrat": 4,
+    "gratef": 2,
+    "simulat": 83
+  },
+  "finding": "Richmond E-codes E04/E05 (coping/self-efficacy), E31/E34 (pressure), E32 (fear), E26 (gratitude) are absent or minimal in the 28-paper corpus text (self-efficacy/self-confidence/pressure-to-perform = 0 occurrences). Richmond built these from simulation/emotion studies not represented in the available corpus and partly theorised them. The entity-coverage ceiling (~72-79%) is therefore a corpus limitation, not an extraction failure; forcing these codes would hallucinate and break the 98.3% citation faithfulness."
+}

@@ -1,0 +1,37 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.key
+
+# Third-party COPYRIGHTED source PDFs & PRIVATE materials — must never be published
+data/
+documents/
+transcript-meetings/
+
+# Per-run regenerable artifacts (curated top-level reports in outputs/ are kept)
+outputs/runs/
+outputs/lkg/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Project outputs (regenerable) — keep source, ignore heavy generated artifacts
+outputs/**/graphrag_data/
+*.parquet
+*.log

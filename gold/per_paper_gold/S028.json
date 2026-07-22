@@ -1,0 +1,109 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E16",
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21"
+      ],
+      "statement": "For undergraduate medical students with limited clinical experience/knowledge, initial observation of a clinician's consultation followed by explicit deconstruction and explanation of the clinician's reasoning helps students understand the reasoning process.",
+      "supporting_quote": "\"The learner initially observes a consultation by the teaching clinician, followed by the teacher explaining the reasoning processes used including hypothesising, hypothesis testing, re-analysis and differential diagnosis.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E20",
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "When medical students/junior doctors are taught clinical reasoning as a skill with clear explanation of reasoning and teacher feedback on their own reasoning, they develop understanding of their successes and failures and this has a positive impact on learning.",
+      "supporting_quote": "\"The student then comments on the reasoning of the teacher in a subsequent consultation, followed by feedback from the teacher on the student’s reasoning in a third consultation.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "In the consulting room, instant feedback from a coaching clinician on the relevance and accuracy of students' questions and responses helps learners identify successes and failures and improve learning.",
+      "supporting_quote": "\"the idea of a ‘coach’ to assist the student during an evolving consultation is highlighted as essential to monitor the student’s questions and responses and commenting on their relevance and accuracy with instant feedback during the consultation.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "Providing students with clear guidance on the reasoning process supports their understanding of how to navigate clinical information during patient interactions, with positive effects on learning.",
+      "supporting_quote": "\"medical students are armed with knowledge helpful to patient diagnosis. but they can find it challenging to know how to navigate the information during a patient interaction. junior doctors similarly are developing these skills and would benefit from clear guidance on the reasoning process.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E18"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Teaching clinical reasoning in clinical consultations using both analytical and intuitive approaches enables learners to build on what they already know and improve learning or diagnostic performance.",
+      "supporting_quote": "\"the most recent being a unified ‘dual theory’ of clinical reasoning,4 which suggests that clinicians use a combination of intuition and analysis in their consultations.\""
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E13",
+    "E15",
+    "E16",
+    "E18",
+    "E20",
+    "E21",
+    "E28",
+    "E39",
+    "E40",
+    "E42",
+    "E46"
+  ],
+  "coder_notes": "This is a narrative teaching guide rather than an empirical study, so CMOCs are inferred only where the text explicitly describes a teaching sequence and claimed benefit. I coded undergraduate medical students and junior doctors conservatively as E01 only where clearly medical learners were referenced; junior doctors do not map perfectly to the vocabulary. I used E02 where the paper explicitly describes novice learners/medical students as having limited clinical experience and needing analytical approaches. I did not code outcomes such as diagnostic accuracy unless the paper linked them directly enough to the teaching approach. I omitted unsupported affective mechanisms and any elements without a close Richmond match."
+}

@@ -1,0 +1,61 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E21"
+      ],
+      "statement": "For undergraduate medical students, video-enriched virtual patient cases that simulate real-life primary care consultations are intended to provide virtual prior experience that supports pattern-recognition style reasoning and gives insight into GP diagnostic reasoning processes.",
+      "supporting_quote": "The aim of our video enriched VP cases is to simulate GP consultations revolving around these core presentations, giving students the opportunity to be active participants in the consultations in a virtual way... We chose to use real patient videos as the basis of our VP cases to provide a virtual ‘prior experience’ to enable these strategies. Genuine patient videos also offer experience in the interpretation of patient narrative... Fast hypothesis generation often depends on prior experience allowing ‘spot diagnosis’ or ‘pattern recognition’."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E22"
+      ],
+      "statement": "Among undergraduate students, real-patient video within virtual patient cases was experienced positively by learners.",
+      "supporting_quote": "We received positive responses with comments, such as ‘I liked the real patients!’, ‘interactive with patient videos’."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21"
+      ],
+      "statement": "For undergraduate students, video-enriched virtual patient cases helped learners understand aspects of consultation and questioning in primary care.",
+      "supporting_quote": "Some commented that they found the scenarios useful for developing consulting skills e.g. ‘Good tips e.g. asking if could be pregnant before prescribing’, ‘Videos were useful to pick-up how to phrase questions.’"
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E10",
+    "E20",
+    "E21",
+    "E22",
+    "E24"
+  ],
+  "coder_notes": "This paper is primarily a descriptive design/report of video-enriched virtual patients for undergraduate primary care education, with limited evaluation data. Strongest evidence is for context E01 and intervention E10. The paper theorises that videos may enable pattern recognition and clinical reasoning, but does not measure diagnostic accuracy or learning gains; therefore outcomes such as E25, E28, E40, E46 were not coded. No clear evidence for explicit expert reasoning explanation (E07/E15), feedback effects (E13/E14), or dual-process instruction (E18). Mechanism coding is conservative: E24 is used only where the text explicitly links prior experience/video to spot diagnosis/pattern recognition; E20 is used where student comments indicate perceived understanding/usefulness."
+}

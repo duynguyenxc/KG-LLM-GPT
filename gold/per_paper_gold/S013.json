@@ -1,0 +1,93 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E39",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students working on less familiar clinical topics, generating self-explanations appears to help them build on prior knowledge and develop understanding, leading to improved later diagnostic performance.",
+      "supporting_quote": "Students in the self-explanation condition, compared with those in the control condition, demonstrated better diagnostic performance on subsequent clinical cases, but this effect emerged only for cases concerning the less familiar topic."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E39",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "In less familiar clinical contexts, self-explanation supports learning by prompting students to elaborate and integrate new information with existing knowledge, producing increased learning after a delay.",
+      "supporting_quote": "By contrast, with less familiar problems, self-explanation may have a greater effect on learning as students will generate more inferences and new links, with greater integration of new information into their prior knowledge, and enhanced enrichment of their mental representations."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E12"
+      ],
+      "response_ecodes": [
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students with limited familiarity/knowledge, self-explanation functions as a knowledge-retention-promoting strategy, resulting in better diagnostic performance one week later.",
+      "supporting_quote": "These processes probably favoured the retention of knowledge acquired during the problem-solving phase and facilitated its retrieval when students were asked to solve problems on a similar topic 1 week later."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E03"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "When students are already familiar with a clinical topic, prior self-explanation does not improve subsequent diagnostic performance.",
+      "supporting_quote": "When clinical problems referred to the topic with which they were already familiar, having previously engaged in self-explanation in the course of solving problems did not make any difference."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02",
+        "E05"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Students were less confident on the less familiar topic, and in that lower-confidence/less familiar context self-explanation was associated with better subsequent diagnostic performance.",
+      "supporting_quote": "A Student’s t-test comparing students’ levels of confidence in their diagnoses revealed a significant difference between student confidence in an unfamiliar clinical topic (jaundice) and that in a familiar clinical topic (heart failure)... providing an additional check for our handling of topic familiarity."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E03",
+    "E05",
+    "E12",
+    "E27",
+    "E39",
+    "E40",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "The paper studies undergraduate medical students (E01) and explicitly contrasts less familiar versus more familiar topics; less familiar was coded as low domain-specific knowledge (E02) and more familiar as higher domain-specific knowledge (E03). The intervention is self-explanation, which has no direct Richmond intervention code, so intervention fields are left empty unless the text explicitly supports the broader idea of promoting knowledge retention (E12). No feedback was provided, but E14 was not used because the paper does not test or theorise absence of feedback as the operative intervention in a CMOC; it is simply a study condition detail. Mechanisms were coded conservatively from authors' discussion only where closely aligned: building on prior knowledge (E39) and building understanding (E27). Outcomes were coded mainly as improved/decreased diagnostic performance (E46/E47) because illness scripts, non-analytical reasoning, or insight into reasoning were discussed speculatively rather than directly measured."
+}

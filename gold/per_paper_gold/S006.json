@@ -1,0 +1,126 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E13",
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20",
+        "E27"
+      ],
+      "outcome_ecodes": [
+        "E40",
+        "E46"
+      ],
+      "statement": "For undergraduate medical students with deficient diagnostic knowledge, case-based worked examples using clinical scenarios plus elaborated feedback that clearly explains why steps are right or wrong and the underlying rationale support acquisition of diagnostic knowledge.",
+      "supporting_quote": "The results show that the acquisition of diagnostic knowledge is mainly fostered by providing erroneous examples in combination with elaborated feedback... the feedback given must inform students why the respective step in the diagnostic process is wrong and which specific conclusion or procedure is adequate."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "When students are shown erroneous case-based worked examples and each error is corrected with elaborated feedback, they can learn from their successes and failures and improve diagnostic knowledge.",
+      "supporting_quote": "In the condition with errors, the student makes several severe errors... After each erroneous decision, the error is corrected in the GP's feedback... Results show that the acquisition of diagnostic knowledge is mainly supported by providing erroneous examples in combination with elaborated feedback."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For undergraduate medical students with limited diagnostic knowledge, erroneous worked examples paired only with minimal knowledge-of-correct-result feedback are detrimental to learning outcomes.",
+      "supporting_quote": "Students working with erroneous examples and receiving only KCR feedback did rather poorly... When only KCR feedback is given, erroneous examples are detrimental."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E38",
+        "E47"
+      ],
+      "statement": "When feedback is limited to indicating right or wrong without explanation, especially alongside erroneous examples, students lack sufficient information to understand the diagnostic process, contributing to poorer learning outcomes.",
+      "supporting_quote": "Considerations, conclusions and further procedures are evaluated only as right or wrong; no further explanation is forthcoming... For most students, the information that a specific diagnostic conclusion or procedure is not adequate seems not to be sufficient to induce deep conceptual understanding. The information deficit in the conditions with KCR feedback, especially when learners are confronted with erroneous examples, must be compensated for by effective self-explanation."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "The computer-supported case-based worked example approach itself was effective and efficient for medical students.",
+      "supporting_quote": "Our results demonstrate that the case-based, worked example approach is effective and efficient."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E12"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "The learning environment produced sustained gains in relevant conceptual knowledge six weeks later.",
+      "supporting_quote": "Furthermore, the effects of the learning environment proved sustainable... Six weeks after the experiment had concluded, medium effects of the learning environment on conceptual knowledge were still significant."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E12",
+    "E13",
+    "E14",
+    "E15",
+    "E20",
+    "E27",
+    "E28",
+    "E38",
+    "E40",
+    "E42",
+    "E45",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Paper clearly concerns undergraduate medical students. Authors explicitly describe students' diagnostic knowledge as deficient, supporting E02. Strongest supported CMOC is erroneous examples plus elaborated feedback improving diagnostic knowledge. The paper discusses understanding, deep conceptual understanding, and learning from errors/plans for improvement, but does not directly measure emotions such as frustration or cognitive load in this experiment, so those were omitted. Although worked examples and expert/GP explanations are central, the Richmond vocabulary has no exact code for generic worked examples; E15 was used only where the paper explicitly states feedback explains why steps are right/wrong and underlying rationale. Sustainability is evidenced for conceptual knowledge, but mechanism is not directly observed. No code was assigned for real cases versus simulation beyond E10 as these were clinical case scenarios in a computer-based environment rather than actual patients."
+}

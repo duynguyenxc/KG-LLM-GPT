@@ -1,0 +1,29 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E07",
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21"
+      ],
+      "statement": "For veterinary/medical students, the tool supports learning by explicitly revealing and explaining expert diagnostic reasoning, which helps students understand the reasoning process used to interpret laboratory data and diagnose disease.",
+      "supporting_quote": "Experienced diagnosticians, veterinarians, and physicians... become increasingly adept at learning to trace back through a cascade of data abnormalities, using logic to connect them to underlying mechanisms of disease and ultimately identifying failing organ systems."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E07",
+    "E15",
+    "E20",
+    "E21"
+  ],
+  "coder_notes": "The provided text is only the opening/background portion of the paper and does not include methods, evaluation results, learner responses, or comparative findings. Therefore coding is necessarily sparse and limited to what is directly evidenced: the paper concerns veterinary (and medical) students and foregrounds explicit expert reasoning as the educational focus. No defensible evidence is present in the excerpt for feedback, simulation/real cases, knowledge-level subgroups, emotional responses, or measured learning/diagnostic accuracy outcomes."
+}

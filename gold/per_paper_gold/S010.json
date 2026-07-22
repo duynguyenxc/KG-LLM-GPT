@@ -1,0 +1,29 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21",
+        "E46"
+      ],
+      "statement": "For undergraduate health professions students, a case-based clinical reasoning seminar that explicitly explained cognitive features of reasoning gave students understanding/insight into the reasoning process and improved aspects of diagnostic competence.",
+      "supporting_quote": "This case-based clinical reasoning seminar intervention, designed to bring students insight into cognitive features of their reasoning, improved aspects of diagnostic competence."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E15",
+    "E20",
+    "E21",
+    "E46"
+  ],
+  "coder_notes": "Coding is based only on the title and abstract text provided. The evidence clearly supports undergraduate/health professions learners in a seminar intervention aimed at explicitly providing insight into reasoning processes, with outcomes of insight into reasoning and improved diagnostic competence. No stronger claim can be made about specific mechanisms, feedback, simulation, knowledge level, or dual-process instruction from the provided text alone."
+}

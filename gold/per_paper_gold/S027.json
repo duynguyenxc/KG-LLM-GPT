@@ -1,0 +1,65 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E12",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E40",
+        "E46"
+      ],
+      "statement": "In undergraduate medical students, repeated computer-based patient cases augmented with formative key feature questions and detailed feedback supported learning from errors/successes and improved later performance compared with repeated case-based study alone.",
+      "supporting_quote": "Detailed feedback was created for each item; students were able to access this feedback by clicking on a specific button... 33.3% of students who failed to provide a correct answer in one test went on to submit a correct answer in a subsequent test of the same item, thus suggesting a learning effect elicited by the feedback provided."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E12"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Among undergraduate medical students, repeated testing embedded in case-based e-seminars produced higher long-term retention test scores than repeated study of the same cases without questions.",
+      "supporting_quote": "In the retention test, mean student scores on intervention items were significantly higher than those on control items (56.0 ± 25.8% versus 48.8 ± 24.7%; p < 0.001)... repeated testing was more effective than repeated case-based learning alone."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E12"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E28",
+        "E46"
+      ],
+      "statement": "Using longitudinal key feature testing with authentic patient cases had a positive impact on learning outcomes in relevant aspects of clinical medicine for undergraduate students.",
+      "supporting_quote": "This is the first study to demonstrate an effect of test-enhanced learning on clinical reasoning as assessed with key feature questions... Curricular implementation of longitudinal key feature testing may considerably enhance student learning outcomes in relevant aspects of clinical medicine."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E10",
+    "E12",
+    "E13",
+    "E28",
+    "E40",
+    "E42",
+    "E46"
+  ],
+  "coder_notes": "Paper clearly concerns undergraduate medical students (E01). The intervention is repeated testing within computer-based patient cases; the closest available intervention code is strategies that promote knowledge retention (E12), with real-life/patient case scenarios (E10). Detailed feedback is explicitly described and linked to improvement (E13 -> E42). Outcomes are improved learning/performance/retention, best captured by E46, with broader positive learning impact (E28/E40) where stated. The paper discusses intuitive and analytic reasoning in the introduction, but the intervention did not explicitly instruct students to use analytical reasoning alone or dual-process reasoning, so E08/E18 were not coded. No defensible evidence for mechanisms such as understanding (E20), cognitive load, frustration, fear, or illness scripts."
+}

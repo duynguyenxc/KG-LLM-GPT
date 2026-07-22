@@ -1,0 +1,27 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "In undergraduate health professions education, a targeted remediation process that provides feedback can help failing students understand their deficiencies and plan improvement, leading to improved subsequent examination performance.",
+      "supporting_quote": "This study provides insight into the reasons that students fail clinical performance examinations and elucidates one method by which such students may be successfully remediated."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E13",
+    "E42",
+    "E46"
+  ],
+  "coder_notes": "Only the title and abstract sentence were provided, so coding is necessarily very conservative. The text supports undergraduate/health professions education broadly (E01) and successful remediation/improved performance (E46). Because remediation typically entails feedback and the abstract refers to insight into reasons for failure and successful remediation, E13 and E42 are the closest defensible codes, but this remains tentative without fuller paper text. No stronger claims about mechanisms, specific learner knowledge level, simulation/standardized patients, or diagnostic reasoning outcomes should be made from the provided text alone."
+}

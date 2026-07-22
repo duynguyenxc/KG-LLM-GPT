@@ -1,0 +1,71 @@
+# =============================================================================
+# Review protocol — operationalized from Richmond et al. (2020), Methods §2.1-2.2
+# (PROSPERO CRD42017072029; RAMESES realist synthesis standards).
+# This file is the researcher-editable encoding of scope + eligibility criteria
+# that governs the Screening Agent. Version it; never edit prompts to change
+# scope — change THIS file.
+# =============================================================================
+
+version: "1.0"
+
+review_question: >
+  What educational interventions are effective for developing analytical and
+  non-analytical clinical reasoning ability amongst undergraduate medical and
+  healthcare students — and when, why, for whom, and in what circumstances are
+  they effective?
+
+initial_programme_theory_summary: >
+  Grounded in dual-process theory: clinical reasoning develops through both
+  non-analytical (pattern-recognition, familiarity-driven) and analytical
+  (effortful, deliberative) cognitive processing. Educational interventions offer
+  resources into a learner context; the learner's cognitive/emotional response to
+  those resources — conditioned by pre-existing knowledge, self-confidence and
+  coping — produces positive or negative reasoning outcomes.
+
+eligibility:
+  population:
+    include: >
+      Undergraduate students in medical or healthcare professions education
+      (medicine, nursing, allied health, veterinary; psychology students used as
+      novice-diagnostician proxies are acceptable per the benchmark review).
+    exclude: >
+      Exclusively postgraduate/resident/practising-clinician populations with no
+      undergraduate component.
+  intervention:
+    include: >
+      An educational intervention — a teaching process, method, or resource for
+      developing knowledge and skills or delivering information to an individual
+      or group — including experimental instruction techniques applied at test
+      time (e.g., reasoning-strategy instructions).
+    exclude: >
+      No educational intervention or technique (e.g., purely observational
+      studies of reasoning without any instructional component).
+  focus:
+    include: >
+      Development of clinical reasoning ability: analytical and/or non-analytical
+      reasoning, diagnostic reasoning/accuracy, illness-script formation,
+      knowledge acquisition and recall relevant to reasoning.
+  outcomes:
+    include: >
+      Diagnostic accuracy or error; effective learning about clinical reasoning
+      as a process (e.g., knowledge of case exemplars, illness-script formation);
+      short-term and longer-term measures of reasoning ability; student
+      satisfaction and knowledge change are acceptable secondary outcomes.
+  timeframe:
+    published_from: 2000
+    rationale: "Post-'To Err is Human' (1999) per the benchmark review."
+  relevance_test: >
+    Title/abstract stage: does the study plausibly CONTRIBUTE TO THEORY BUILDING
+    about how educational interventions develop clinical reasoning (realist
+    relevance), not merely topical overlap? Full-text stage additionally assesses
+    methodological rigour (credible and trustworthy methods).
+
+screening_policy:
+  posture: recall_first          # never lose a potentially relevant study
+  labels: [include, exclude, uncertain]
+  uncertain_goes_to: HITL-1
+  dual_model_vote: true          # union of includes across two model families
+  benchmark_mode_note: >
+    For verification runs against the Richmond benchmark the pipeline may operate
+    on the known 28-study corpus; screening still runs and its decisions are
+    compared against the benchmark inclusion list (all 28 = include).

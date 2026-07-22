@@ -1,0 +1,96 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [
+        "E39",
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E29",
+        "E28"
+      ],
+      "statement": "Advanced undergraduate medical students with incomplete or low domain knowledge learned from reasoning through multiple similar clinical cases, even when feedback was restricted to the diagnosis, by building on what they already knew and developing understanding of variations across cases.",
+      "supporting_quote": "\"Students did learn from processing multiple cases even when the feedback is restricted to the diagnosis. They built up representations faster, became more secure, used more specific language, and tested their knowledge against case information.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E29",
+        "E28"
+      ],
+      "statement": "When undergraduate medical students with incomplete knowledge worked through multiple similar cases, they learned patterns and variations in enabling conditions and consequences by comparing cases and prior knowledge, contributing to more developed illness scripts.",
+      "supporting_quote": "\"Most students learned from the variations in enabling conditions and consequences components of the cases. Some students compared prior knowledge with case findings, some actively compared cases, drawing conclusions about enabling conditions and consequences, whilst others seemed to learn implicitly.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E36",
+        "E47"
+      ],
+      "statement": "For undergraduate medical students who lacked sufficient biomedical knowledge, reasoning through multiple similar cases with only minimal feedback hampered integration of fault knowledge, leading to poor illness script development and reduced learning outcomes.",
+      "supporting_quote": "\"Integration of biomedical knowledge into the fault component was, however, hampered by lack of knowledge and by misconceptions that students were unable to debug in the absence of learning resources or detailed feedback.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E14"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E38",
+        "E36"
+      ],
+      "statement": "Unsupported case analyses were insufficient for students with poor or error-prone knowledge to integrate biomedical knowledge into illness scripts; misconceptions persisted and fault knowledge did not really improve.",
+      "supporting_quote": "\"Many students had poor knowledge, including misconceptions... students were unable to complete these processes unsupported.\" \"We may conclude from these analyses that students may learn patterns of and variations in enabling conditions and consequences from this kind of learning situation but that unsupported case analyses are in no way sufficient for integrating biomedical knowledge in illness scripts.\""
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E14",
+    "E20",
+    "E28",
+    "E29",
+    "E36",
+    "E38",
+    "E39",
+    "E45",
+    "E47"
+  ],
+  "coder_notes": "Paper concerns 4th-year undergraduate medical students reasoning through multiple written cases based on real patients; closest context is E01. Many students had incomplete, poor, or error-prone knowledge, supporting E02. The intervention is best captured as real-life scenarios including cases/simulation (E10), though these were written cases based on real patients; E11 was not used because students did not encounter actual patients in this study. Feedback consisted only of the official diagnosis after each case, and the paper repeatedly characterises feedback as restricted/minimal and absence of detailed feedback, supporting E14 rather than E13. Strongest outcomes concern learning/illness script development rather than diagnostic accuracy. Mechanisms were coded conservatively: explicit evidence for building on prior knowledge (E39), understanding (E20), and confusion from misconceptions/lack of knowledge (E45). No expert reasoning modelling, think-aloud instruction by near-peer, or dual-process instruction was part of the intervention, so those codes were omitted."
+}

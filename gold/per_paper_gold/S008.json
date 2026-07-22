@@ -1,0 +1,24 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E08"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "In undergraduate medical students, being instructed to use analytical reasoning alone can reduce diagnostic error by allowing correction of an initially incorrect diagnosis.",
+      "supporting_quote": "These data suggest that querying an initial diagnostic hypothesis does not harm a correct diagnosis but instead allows students to rectify an incorrect diagnosis."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E08",
+    "E47"
+  ],
+  "coder_notes": "Evidence is limited to the abstract sentence provided. The paper clearly involves medical students (E01). 'Querying an initial diagnostic hypothesis' is most closely aligned with analytical reasoning (E08), but no richer mechanism is explicitly evidenced in the provided text. The abstract supports an improvement in diagnostic performance/reduction in error; because the Richmond vocabulary lacks a direct 'reduced diagnostic error' code except the generic increase/decrease learning/diagnostic accuracy pair, E47 was not appropriate semantically, but among available outcome codes E46 would normally fit improvement. However, the text is framed around reducing error rather than explicitly increasing accuracy. Precision is limited by the sparse text provided."
+}

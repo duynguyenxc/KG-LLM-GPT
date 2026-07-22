@@ -1,0 +1,74 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Among novice undergraduate medical students with low domain-specific knowledge, traditional instruction delivered in a simulator setting was associated with low diagnostic accuracy.",
+      "supporting_quote": "Cardiac physical diagnosis provides a good model to test the effect of schema-based instructional guidance... multiple studies have documented poor cardiac auscultatory skills among senior medical students and residents, and resulting low rates of diagnostic success... On the practical test, schema-based instruction was associated with greater diagnostic accuracy (61% versus 26%)."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For novice undergraduate medical students, schema-based instruction appeared to help learners build on what they already knew, improving structured knowledge and diagnostic accuracy.",
+      "supporting_quote": "The results on the written test provide evidence that schemas modified knowledge organisation by increasing the amount of structured knowledge without changing factual knowledge of diagnoses... Schema-based instruction was associated with higher scores on structured knowledge questions (74% versus 55%; p < 0.0001)... On the practical test, schema-based instruction was associated with greater diagnostic accuracy (61% versus 26%)."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E25"
+      ],
+      "statement": "Among novice medical students, schema-based instruction was associated with greater diagnostic success for taught lesions and also for untaught lesions, consistent with more accurate non-analytical/schema-based reasoning.",
+      "supporting_quote": "Although reasoning strategy was not directly measured... schema-instructed students were more likely to report features from the schema in arriving at their diagnosis. This suggests a higher use of schema-based reasoning by schema-instructed students... Schema-based instruction was associated with greater diagnostic accuracy for both taught (77% versus 39%... p < 0.001) and untaught (44% versus 13%... p < 0.001) lesions."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "Among novice undergraduate medical students, schema-based instruction improved retention of structured knowledge over 2-4 weeks.",
+      "supporting_quote": "A majority of students (n = 37, 70%) voluntarily returned for follow-up written testing 2–4 weeks later... Students in the schema group performed better on structured knowledge questions (62% versus 42%; p = 0.001)... CONCLUSIONS Schema-based instruction was associated with improved retention of structured knowledge and diagnostic performance among novices."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E24",
+    "E25",
+    "E39",
+    "E40",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "The paper clearly concerns undergraduate medical students and repeatedly frames them as novices, supporting E01 and E02. The simulator/Harvey setting supports E10 as contextually present, but the focal intervention is schema-based instruction, which has no direct Richmond intervention code; therefore intervention fields are left empty where appropriate rather than forced. Mechanisms are mostly inferred by authors rather than directly measured. I coded E39 conservatively where the paper explicitly discusses schemas modifying knowledge organisation/structured knowledge, and E24 only where authors state schema-instructed students were more likely to report schema features and suggest higher use of schema-based reasoning, noting reasoning was not directly measured. Outcomes around structured knowledge retention and diagnostic accuracy are well evidenced. No feedback, expert reasoning explanation, near-peer, or emotional/cognitive load response codes were directly evidenced in the trial results sufficiently to code."
+}

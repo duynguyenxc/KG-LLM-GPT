@@ -1,0 +1,207 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E33",
+        "E35",
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Final-year medical students who felt unprepared and lacked effective decision-making strategies experienced individually oriented simulated ward scenarios as stressful and cognitively demanding, contributing to poorer decision making/performance during complex tasks such as prioritisation and multitasking.",
+      "supporting_quote": "\"During their simulation session, the students were faced with multiple tasks and acutely unwell patients, and therefore had to prioritise. Students found this stressful.\" ... \"There were a number of areas where students found difficulty with decision making, especially in making decisions alone regarding diagnosis, prioritisation and asking for help, and in making simultaneous decisions.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E40"
+      ],
+      "statement": "When final-year medical students engaged in simulated ward scenarios, they reflected on their mistakes and generated improved plans for future action, leading to increased learning about diagnosis, prioritisation, and asking for help.",
+      "supporting_quote": "\"It was evident from the interviews that the students had learned from the mistakes they had made during the simulator session across the domains of diagnosis, prioritisation and when to ask for help.\""
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "Individually oriented simulation helped students understand their responsibility for decision making and when to ask for help, producing a positive impact on learning and making them feel more prepared for FY1 work.",
+      "supporting_quote": "\"The students felt more prepared for work after the simulator session.\" ... \"The students gained confidence from the simulation and felt that they were more prepared for working as FY1s afterwards. Specifically, they acknowledged an improved understanding, as compared with any learning to date, of their personal responsibility for decision making.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E22",
+        "E40"
+      ],
+      "statement": "Simulation in a safe environment where students could make mistakes and then discuss/reflect on them was experienced positively and supported learning.",
+      "supporting_quote": "\"A recent paper by Eva (2009) has suggested that in the domain of clinical decision making, mistakes are necessary evils when trying to induce learning. In our study, it was evident from the interviews that students were making such mistakes in a safe, simulated environment. Individual simulation exercises such as the one in this study may enable medical students to improve their decision making without jeopardising the care of real patients.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E13"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "After the simulation experience, students were able to identify weaknesses in their own prioritisation and help-seeking decisions and formulate improvements, indicating positive impact on learning.",
+      "supporting_quote": "\"During the interviews students were able to identify weaknesses in the prioritisation strategies they used in the simulator session.\" ... \"After the simulator session, the students had a better understanding of when to ask for help.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "A tutorial introducing clinical decision-making theory, including analytical and non-analytical concepts, helped some students recognise influences on decisions, suggesting a positive impact on learning, though effects on behaviour were unclear.",
+      "supporting_quote": "\"The interviews revealed that the tutorial group were able to identify some of the concepts from the tutorial within the simulator session\" ... \"The tutorial was useful. It was stuff I'd never heard of, and the ways you are influenced into decisions with stuff I had never heard of, but having it pointed out to you is probably a good thing\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For some students, teaching clinical decision-making theory did not feel relevant, limiting its educational benefit.",
+      "supporting_quote": "\"Some students did not see the relevance of being taught clinical decision making theory such as dual process theory and cognitive dispositions to respond.\" ... \"I got it, I understood it but I don't think I found it relevant to me.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E13"
+      ],
+      "response_ecodes": [
+        "E32"
+      ],
+      "outcome_ecodes": [
+        "E22"
+      ],
+      "statement": "Having the structured SBAR aid readily available when calling seniors reduced fear and made students feel more comfortable, contributing to a positive learning experience.",
+      "supporting_quote": "\"Making it readily available increased the use of SBAR. The students felt more comfortable using the structured, SBAR approach when it came to actually speaking to their senior on the phone.\" ... \"The SBAR structure was really useful. It took a bit of the fear away definitely\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E14"
+      ],
+      "response_ecodes": [
+        "E33"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "When students did not use the available structured support for referral, they became flustered and stressed, which was associated with poorer performance/learning in the task.",
+      "supporting_quote": "\"When students did not use the SBAR tool, some ran into problems and started feeling stressed. 'I wish I had used SBAR. I felt a bit flustered without it. I sort of forgot.'\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "Students valued clear, structured approaches for clinical tasks and perceived that a decision-making tool offering such structure could be useful for learning decision making.",
+      "supporting_quote": "\"They liked the idea of having a structure to use when faced with a difficult decision, in the same way that they used ABCDE for assessment and SBAR for referrals to their seniors.\""
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15"
+      ],
+      "response_ecodes": [
+        "E45"
+      ],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "The AM I HERO NOW tool was not used in practice because students found it too complex, too time-consuming, and unfamiliar, limiting its effectiveness.",
+      "supporting_quote": "\"There were three main reasons why the students did not use it; they felt it would take too long to use, it was too complex and they were unfamiliar with it.\""
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E10",
+    "E13",
+    "E14",
+    "E15",
+    "E18",
+    "E20",
+    "E22",
+    "E28",
+    "E32",
+    "E33",
+    "E35",
+    "E40",
+    "E42",
+    "E45",
+    "E47"
+  ],
+  "coder_notes": "Coding is restricted by the Richmond vocabulary. The paper is about final-year medical students (E01) and repeatedly describes them as unprepared/lacking strategies, which was mapped cautiously to low knowledge/inability to use knowledge in reasoning situations (E02) only where clearly evidenced. Strongest evidence concerns simulation (E10), structured support/feedback availability (E13/E14), and students' responses of stress, fear, confusion, and reflective learning (E32/E33/E35/E42). I did not code ABCDE/SBAR or the AM I HERO NOW mnemonic as specific intervention E-codes unless they clearly aligned with broader structured explanation/support categories, because the vocabulary lacks direct codes for generic structured tools. I also avoided coding diagnostic accuracy or illness scripts because the paper mainly reports perceived preparedness and qualitative learning rather than robust accuracy outcomes."
+}

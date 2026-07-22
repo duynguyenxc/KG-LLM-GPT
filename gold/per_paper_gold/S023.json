@@ -1,0 +1,87 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E11",
+        "E10",
+        "E07"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E21"
+      ],
+      "statement": "For undergraduate medical students, interacting with virtual patient cases built from real patient records and annotated with physicians' decision-making rationale can help them understand clinical reasoning and decision-making processes.",
+      "supporting_quote": "Casebook is a tablet-based, interactive Virtual Patient teaching application for undergraduate students of medicine... Annotations can be defined as physician notes that have been added to electronic health records for the purpose of providing some insight for the student into the physician’s decision-making rationale... By making is possible to create cases using electronic health records, and allowing for these patient records to be annotated with physician’s notes and insights, we hope that students can gain an understanding into the thought processes and clinical reasoning of the physician who worked on the patient."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E11"
+      ],
+      "response_ecodes": [
+        "E39"
+      ],
+      "outcome_ecodes": [
+        "E29"
+      ],
+      "statement": "For undergraduate medical students, access to multiple real patient cases supports building on prior knowledge and developing richer illness scripts.",
+      "supporting_quote": "Research into how clinical reasoning and decision making is learnt suggests that access to multitudes of patient examples is key to learning decision-making skills... The student must have experience with similar patients or scenarios in order to build illness scripts... Therefore, there is much literature that suggests the availability of multiple cases, either real patients or simulations, is advantageous for learning decision-making."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E09",
+        "E11",
+        "E07"
+      ],
+      "response_ecodes": [
+        "E42"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "For undergraduate medical students, examining real patient cases and others' mistakes with relevant annotations can help them understand successes and failures and improve learning.",
+      "supporting_quote": "Students can reduce diagnostic error when they have been provided the opportunity to learn from their mistakes... Crucially, however, they reported that students also reduce error when learning from others’ mistakes. Electronic health records provide an ideal resource for learning from error: health records, properly organised into patient cases, with the relevant annotations and discussions, provide for a unique opportunity to examine mistakes and their consequences. This would allow students to examine the cause of an error, or perhaps more importantly, the course of events that occurred which eventually led to an error."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E13"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "For undergraduate medical students, immediate feedback after answering case questions supports understanding and has a positive impact on learning.",
+      "supporting_quote": "As the user navigates through a patient case, they will occasionally encounter multiple-choice questions which they must answer before continuing... Once the user has submitted their answer, they are provided with immediate feedback and are allowed to continue to the next patient record along the timeline."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E07",
+    "E09",
+    "E10",
+    "E11",
+    "E13",
+    "E20",
+    "E21",
+    "E28",
+    "E29",
+    "E39",
+    "E42"
+  ],
+  "coder_notes": "This is primarily a design/development paper and contains little empirical evaluation of learner outcomes. Coding is therefore limited to explicit claims about intended educational functioning that are directly stated in the paper. I avoided coding stronger outcomes such as diagnostic accuracy, increased learning gain, complete illness scripts, or future non-analytical reasoning because these were not empirically demonstrated here. I also did not code small-group format, preparedness, prototypical/common cases, or abundance of EHRs because the Richmond vocabulary does not provide close context/intervention matches for those concepts."
+}

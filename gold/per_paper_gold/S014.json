@@ -1,0 +1,21 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E28"
+      ],
+      "statement": "For undergraduate health professions students, evPaeds was popular for practising and developing clinical reasoning.",
+      "supporting_quote": "evPaeds has proven popular with students to practise and develop clinical reasoning, individually or in small group sessions."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E28"
+  ],
+  "coder_notes": "Evidence is extremely limited to a single abstract sentence. The text supports only that undergraduate students used evPaeds and that it was popular/used to practise and develop clinical reasoning. No specific Richmond intervention code is clearly evidenced (e.g., simulation, feedback, explicit reasoning explanation), and no mechanism is stated. Outcome coding is conservative: 'popular' and 'practise and develop clinical reasoning' most closely align with E28 (positive impact on learning), but this is weakly evidenced. No stronger claims should be made."
+}

@@ -1,0 +1,61 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E25",
+        "E46"
+      ],
+      "statement": "For novice undergraduate learners with no prior ECG experience, explicit instruction to use both analytical feature checking and non-analytical familiarity-based reasoning improved diagnostic accuracy compared with spontaneous reasoning.",
+      "supporting_quote": "Those in the combined reasoning condition significantly outperformed those in the spontaneous reasoning condition... In conclusion, it appears that instructions to use... combined reasoning lead to significantly higher diagnostic accuracy than... student-derived reasoning strategies, respectively."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E25"
+      ],
+      "statement": "Combined reasoning instruction explicitly encouraged learners to trust familiarity as part of diagnosis, and this was associated with higher diagnostic accuracy.",
+      "supporting_quote": "For each ECG, assign a diagnosis using similarity as a guide. New ECGs often look like ECGs that have been seen before (i.e. during training). Trust this sense of familiarity... Those in the combined reasoning condition significantly outperformed those in the spontaneous reasoning condition."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Even without explicit reasoning instruction, novices appeared to use similarity-based non-analytical reasoning to some extent, as shown by better performance on previously seen than novel ECGs.",
+      "supporting_quote": "The consistency with which old (i.e. previously seen) ECGs were diagnosed more accurately than new ECGs suggests that similarity-based processes were operational in all conditions."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E18",
+    "E24",
+    "E25",
+    "E46"
+  ],
+  "coder_notes": "This paper strongly supports the benefit of E18 (instruction to use both non-analytical and analytical reasoning) for novice undergraduate learners, with outcomes in diagnostic accuracy. The contrastive learning intervention is central to the paper but has no close Richmond intervention code, so it is omitted rather than forced. Mechanisms around improved understanding of diagnosticity, premature closure avoidance, or balanced strategy use are discussed as speculative and therefore not coded. No defensible evidence for feedback effects was coded because feedback was provided to all groups during the immediate test and was not analysed as the active ingredient."
+}

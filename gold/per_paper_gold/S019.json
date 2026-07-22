@@ -1,0 +1,76 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E08"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "Among fourth-year medical students, being instructed to use an analytic reasoning process during OSCE cases with standardized patients improved diagnostic accuracy compared with usual diagnosis reporting.",
+      "supporting_quote": "All fourth-year medical students... undertook the OSCE with four cases using standardized patients. The analytic reasoning group was requested to list differential diagnoses and findings compatible or not compatible with each diagnosis prior to providing a diagnosis... Mean diagnostic accuracy scores were significantly higher in the analytic reasoning group than in the control group (3.40 ± 0.66 versus 3.05 ± 0.98; p = 0.011)."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E08"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E25"
+      ],
+      "statement": "In medical students diagnosing standardized patients, enhanced analytic reasoning produced higher diagnostic accuracy.",
+      "supporting_quote": "In conclusion, this randomized controlled study demonstrated that, among fourth-year medical students diagnosing standardized patients, the enhancement of analytic reasoning increased diagnostic accuracy on the OSCE."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E08"
+      ],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [],
+      "statement": "For a typical case, students may use pattern recognition rather than analytic reasoning.",
+      "supporting_quote": "Because the clinical presentation of this case was typical, students who took a heuristic (pattern recognition) approach may not have made diagnostic errors."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E10",
+        "E08"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Analytic reasoning may be less helpful when case complexity exceeds students' level of medical knowledge, leading to reduced learning or diagnostic outcomes.",
+      "supporting_quote": "That study’s findings suggest that analytic reasoning may not be helpful if a case is too complex with respect to the level of students’ medical knowledge."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E08",
+    "E10",
+    "E24",
+    "E25",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Strongest evidence is a randomized comparison showing improved diagnostic accuracy from an analytic reasoning instruction in fourth-year medical students during OSCEs with standardized patients. The paper does not directly measure most mechanisms; authors speculate about reducing cognitive bias, but this does not map cleanly to Richmond mechanism codes and should not be over-coded. One candidate statement about heuristic/pattern recognition lacks an outcome and therefore is not retained as a full CMOC under the rule that each CMOC needs at least one context and one outcome. The final limitation about complex cases and knowledge level is explicitly attributed to another study rather than this trial, so it is weakly supported and should be treated cautiously."
+}

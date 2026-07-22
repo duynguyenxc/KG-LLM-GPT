@@ -1,0 +1,27 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E18"
+      ],
+      "response_ecodes": [
+        "E24"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate health professions learners, instruction to use both feature-oriented analytical reasoning and trust similarity supports use of non-analytical reasoning and improves diagnostic performance.",
+      "supporting_quote": "The results support an additive model of clinical reasoning in which instructions to be feature oriented and to trust similarity improve performance in novice diagnosticians."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E18",
+    "E24",
+    "E46"
+  ],
+  "coder_notes": "Very limited evidence is available because only the title and abstract sentence were provided. 'Novice diagnosticians' supports a learner context in health professions education (E01), but does not clearly justify E02 beyond general novice status, so it was omitted for precision. The abstract explicitly supports combined analytical plus non-analytical instruction (E18) and improved performance (best coded conservatively as E46 rather than E25). The phrase 'trust similarity' suggests reliance on non-analytical reasoning (E24), but no stronger mechanism or additional outcomes are directly evidenced."
+}

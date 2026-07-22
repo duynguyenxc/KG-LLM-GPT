@@ -1,0 +1,112 @@
+# =============================================================================
+# INITIAL PROGRAMME THEORY (IPT) — the theory-first "seed" (Gap 1)
+# -----------------------------------------------------------------------------
+# In a realist review the IPT is authored BEFORE the main analysis, from scoping +
+# expert opinion + established theory, and it STEERS extraction and synthesis; the
+# corpus then confirms, refines, or rejects it (retroduction). This mirrors
+# Richmond et al. (2020) §2 (L171-203) and the professor's 28-May instruction
+# ("we need some seed, then an iterative modifier, then the human exam").
+#
+# CONTAMINATION BOUNDARY (critical): everything below is drawn ONLY from PUBLIC
+# pre-existing learning-science theory that predates and is independent of Richmond's
+# findings. It contains NO Richmond-specific results — not their five contexts, not
+# their verdicts, not their CMOC statements. These are HYPOTHESES to be tested against
+# the 28 papers, exactly as Richmond's own team started. The seed must never encode
+# the answer key (gold/richmond_gold.json is read only by verification, never here).
+#
+# STATUS: draft seed — requires human ratification at HITL checkpoint 0 before it
+# drives a production run. Version it; log changes in docs/DECISION_LOG.md.
+# =============================================================================
+
+version: "0.1-seed"
+derived_from:
+  - "config/protocol.yaml (review_question + initial_programme_theory_summary)"
+  - "public learning-science theory (see seed_theories) — NOT Richmond's results"
+ratified_by: null            # set to human name at checkpoint 0
+ratified_at: null
+
+# --- The public theories the seed is built on (Richmond used these same public
+#     theories to build their own IPT; citing them here is not contamination) ---
+seed_theories:
+  dual_process_theory:
+    claim: >
+      Clinical reasoning proceeds through two complementary modes: non-analytical
+      (fast, pattern/familiarity-driven, low working-memory load) and analytical
+      (slow, effortful, deliberative). Expertise shifts the balance toward
+      non-analytical processing with a capacity to switch back when cases do not fit.
+    ref: "Evans & Stanovich 2013; Norman et al. 1994"
+  cognitive_flexibility_theory:
+    claim: >
+      Learning is context-dependent; transfer to future encounters improves when
+      learning occurs across multiple scenarios and contexts.
+    ref: "Spiro et al. 1988"
+  situativity_theory:
+    claim: >
+      Learning is situated in experience; context operates at distinct levels
+      (learner, teacher, and the learning encounter/organisation). → directs the
+      search for contexts at MULTIPLE levels.
+    ref: "Durning & Artino 2011"
+  expertise_and_load_literature:
+    claim: >
+      Prior knowledge, self-efficacy/self-confidence, cognitive load, and the
+      learner's coping with task demands are established moderators of instructional
+      effect in the wider learning-science literature (expertise-reversal, cognitive
+      load, self-regulated learning). These are candidate CONTEXT DIMENSIONS — to be
+      confirmed or rejected by the corpus, not assumed true.
+    ref: "Kalyuga et al. 2003; Young et al. 2014; Bandura (self-efficacy)"
+
+# --- The realist analytic template the extractor must instantiate per study ---
+# (This is the METHOD skeleton, from RAMESES, not a Richmond finding.)
+cmo_skeleton: >
+  In a learner CONTEXT (C), an educational intervention offers a
+  MECHANISM-RESOURCE (M_resource); the learner's cognitive/emotional
+  MECHANISM-RESPONSE (M_response) to that resource — conditioned by C —
+  produces a positive or negative reasoning OUTCOME (O).
+
+# --- Where to look for contexts (from Situativity — a search directive, not a finding) ---
+context_levels_to_investigate:
+  - level: individual_student
+    hypothesis: "Learner-side conditions most strongly moderate intervention effect."
+  - level: teacher_or_instructional_design
+    hypothesis: "Teaching/instructional-design conditions may moderate effect."
+  - level: organisation_or_wider_system
+    hypothesis: "Programme/organisational conditions may moderate effect."
+
+# --- Candidate context DIMENSIONS to test (public-literature hypotheses only) ---
+hypothesised_context_dimensions:
+  - id: prior_knowledge_level
+    from_theory: "expertise/expertise-reversal literature"
+    to_test: "Does pre-existing knowledge level change which interventions work?"
+  - id: self_confidence_self_efficacy
+    from_theory: "self-efficacy / self-regulated-learning literature"
+    to_test: "Does calibrated self-confidence/self-efficacy moderate outcomes?"
+  - id: coping_with_task_demand
+    from_theory: "cognitive-load / stress-and-performance literature"
+    to_test: "Does the learner's coping with task stress moderate outcomes?"
+
+# --- Generic mechanism families hypothesised as resources (to be refined) ---
+hypothesised_mechanism_resources:
+  - "explicit modelling/explanation of expert reasoning"
+  - "practice with real or simulated cases"
+  - "instructed reasoning strategy (analytical and/or non-analytical)"
+  - "feedback on reasoning performance"
+  - "knowledge-retention strategies (e.g., retrieval/spacing)"
+
+# --- Outcome measures the synthesis should recognise (from protocol, method-level) ---
+outcome_measures:
+  - diagnostic_accuracy_or_error
+  - illness_script_or_exemplar_formation
+  - knowledge_acquisition_and_recall
+  - reasoning_process_development_over_time
+
+# --- How the seed is used and revised (retroduction contract — Gap 2) ---
+usage:
+  injected_into: ["cmoc_extraction prompt (as the theory being tested)",
+                  "synthesis (as the frame to confirm/refine/reject)"]
+  revision_rule: >
+    After each synthesis pass, record which hypotheses were CONFIRMED, REFINED, or
+    REJECTED by the corpus, bump the IPT version, and (Gap 2) re-analyse earlier
+    studies under the revised theory until CMOCs stabilise. The human ratifies each
+    revision. The final refined programme theory is the pipeline's answer — compared
+    to Richmond only afterwards, by the verification harness.
+refinement_log: []          # appended each retroduction iteration

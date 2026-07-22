@@ -1,0 +1,93 @@
+{
+  "cmocs": [
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15",
+        "E17"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students working on a relatively unfamiliar clinical topic, listening to a peer's explicit self-explanation after generating their own self-explanation was associated with improved diagnostic performance on the training cases.",
+      "supporting_quote": "Jaundice was a rather unfamiliar topic to the 3rd-year medical students involved... In both the peer- and the expert-SE groups, students’ diagnostic accuracy scores improved significantly immediately after listening to the SE example... For the diagnostic performance scores... The diagnostic performance scores in the peer and the expert-SE groups improved significantly immediately."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15"
+      ],
+      "response_ecodes": [
+        "E20"
+      ],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students with low familiarity in the domain, listening to an expert's explicit self-explanation after their own self-explanation was associated with improved diagnostic accuracy and diagnostic performance on the training cases.",
+      "supporting_quote": "Jaundice was a rather unfamiliar topic to the 3rd-year medical students involved... In both the peer- and the expert-SE groups, students’ diagnostic accuracy scores improved significantly immediately after listening to the SE example... For the diagnostic performance scores... The diagnostic performance scores in the peer and the expert-SE groups improved significantly immediately."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E46"
+      ],
+      "statement": "For undergraduate medical students on an unfamiliar topic, students' own self-explanation without any example was also associated with later improvement on the training cases.",
+      "supporting_quote": "The control group showed a borderline but delayed improvement, i.e., 1 week later... the delayed positive effect of students’ own SE noticed in the control group suggests that SE alone is useful for learning."
+    },
+    {
+      "context_ecodes": [
+        "E01",
+        "E02"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E15",
+        "E17"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "For undergraduate medical students on unfamiliar transfer cases, adding peer or expert self-explanation examples to students' own self-explanation did not improve outcomes over self-explanation alone.",
+      "supporting_quote": "On transfer cases, there was no difference between the three groups (p > .05)... For transfer cases 1 week later, no added value of SE models was noted. For this task... students’ SE alone was as effective as the combination with SE examples."
+    },
+    {
+      "context_ecodes": [
+        "E01"
+      ],
+      "intervention_or_resource_ecodes": [
+        "E16"
+      ],
+      "response_ecodes": [],
+      "outcome_ecodes": [
+        "E47"
+      ],
+      "statement": "Passive listening to natural peer or expert self-explanation examples, without additional prompts to actively process them, appeared to have limited value for learning clinical reasoning.",
+      "supporting_quote": "They were not given prompts or other specific tasks to ensure that they listened actively to the examples. They may have been passive... However, there seems to be limited value of adding SE examples, at least examples from peers or experts that are natural, without further instructions to students to actively process these examples."
+    }
+  ],
+  "ecodes_present": [
+    "E01",
+    "E02",
+    "E15",
+    "E16",
+    "E17",
+    "E20",
+    "E46",
+    "E47"
+  ],
+  "coder_notes": "Coding is restricted by the Richmond vocabulary, which does not include a code for students generating their own self-explanations, so those intervention elements were omitted rather than forced. The paper clearly concerns undergraduate medical students (E01) and an unfamiliar/low-knowledge topic (E02). Peer examples fit E17; expert examples were coded with E15 because the reasoning was made explicit, though not necessarily didactically explained. The paper discusses possible mechanisms such as immediate feedback and passive processing, but these are speculative rather than directly evidenced, so mechanism coding was kept minimal. Outcomes on training cases support improvement (E46); lack of added value on transfer cases and limited value of passive observation support E47."
+}
