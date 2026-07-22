@@ -84,3 +84,58 @@ def build_registry(metadata_file: Path = METADATA_FILE) -> list[StudyRecord]:
             )
         )
     return studies
+
+
+def _pdf_title(pdf_path: Path) -> str:
+    """Best-effort title: PDF metadata title, else first non-trivial line, else filename."""
+    try:
+        reader = PdfReader(str(pdf_path))
+        meta_title = (reader.metadata.title or "").strip() if reader.metadata else ""
+        if meta_title and len(meta_title) > 8:
+            return meta_title
+        first = (reader.pages[0].extract_text() or "").strip().splitlines() if reader.pages else []
+        for line in first:
+            s = line.strip()
+            if 12 <= len(s) <= 200 and not s.isupper():
+                return s
+    except Exception:  # noqa: BLE001 — never let one bad PDF break registry building
+        pass
+    return pdf_path.stem.replace("_", " ").replace("-", " ").strip()
+
+
+def build_registry_from_dir(
+    directory: Path, *, pattern: str = "*.pdf", start_index: int = 1
+) -> list[StudyRecord]:
+    """GENERIC ingest — build a registry from ANY folder of documents (not just the 28).
+
+    Scans ``directory`` for files matching ``pattern`` (PDFs by default), assigns stable
+    StudyIDs by sorted filename, and extracts a best-effort title from each PDF. Optional
+    per-file abstract-only records can be added by dropping a ``*.txt`` sidecar next to a
+    PDF (used when only an abstract is available). This is what lets the pipeline scale
+    from 28 to 100+ papers with no code change: point ``res ingest --source <dir>`` at it.
+    """
+    from pypdf import PdfReader  # noqa: F401 — used via _pdf_title
+
+    directory = Path(directory)
+    files = sorted(directory.glob(pattern), key=lambda p: p.name.lower())
+    studies: list[StudyRecord] = []
+    for index, path in enumerate(files, start=start_index):
+        is_pdf = path.suffix.lower() == ".pdf"
+        sidecar = path.with_suffix(".txt")
+        abstract = sidecar.read_text(encoding="utf-8", errors="replace") if sidecar.exists() else None
+        studies.append(
+            StudyRecord(
+                study_id=f"S{index:03d}",
+                record_id=path.stem,
+                doi=None,
+                title=_pdf_title(path) if is_pdf else path.stem,
+                authors=[],
+                year=None,
+                journal=None,
+                abstract=abstract,
+                source_kind="fulltext_pdf" if is_pdf else "abstract_only",
+                pdf_path=str(path) if is_pdf else None,
+                metadata_confidence=0.5,
+            )
+        )
+    return studies

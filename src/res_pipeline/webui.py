@@ -345,6 +345,36 @@ def _review_block(pend: dict, *, compact: bool = False) -> str:
     return head + "".join(out)
 
 
+def _corpus_panel() -> str:
+    """What data is loaded, in what formats, and how to scale to any N documents."""
+    with get_connection() as c:
+        rows = c.execute(
+            "SELECT source_kind, count(*) n, sum(length(ct.canonical_text)) chars "
+            "FROM studies s JOIN canonical_texts ct USING (study_id) GROUP BY source_kind"
+        ).fetchall()
+        total = c.execute("SELECT count(*) n FROM studies").fetchone()["n"]
+        units = c.execute("SELECT count(*) n FROM text_units").fetchone()["n"]
+    by = {r["source_kind"]: r for r in rows}
+    ft = by.get("fulltext_pdf", {"n": 0, "chars": 0})
+    ab = by.get("abstract_only", {"n": 0, "chars": 0})
+    return (
+        '<div class="panel"><div class="eyebrow">0 · Data — what is loaded</div>'
+        f'<div class="metrics" style="margin:.3rem 0 .6rem"><div class="metric">'
+        f'<div class="n machine">{total}</div><div class="l">documents ingested</div></div>'
+        f'<div class="metric"><div class="n">{ft["n"]}</div><div class="l">full-text PDF</div></div>'
+        f'<div class="metric"><div class="n">{ab["n"]}</div><div class="l">abstract-only</div></div>'
+        f'<div class="metric"><div class="n">{units}</div><div class="l">text units (provenance)</div></div></div>'
+        '<p class="muted" style="margin:.2rem 0"><b>Accepted inputs:</b> full-text <b>PDF</b> · a '
+        '<code>.txt</code> sidecar next to a PDF (abstract-only) · a <code>.jsonl</code> metadata file. '
+        'Every document is chunked into provenance-bearing text units so every claim traces to a span.</p>'
+        '<p class="muted" style="margin:.2rem 0"><b>To review a different / larger corpus (any N, e.g. 100 PDFs):</b> '
+        'drop the PDFs in a folder and run '
+        '<code>res ingest --source &lt;folder&gt;</code> — the whole pipeline (screen → extract → '
+        'synthesise) scales with no code change. The default corpus is the 28-study Richmond benchmark.</p>'
+        '<a class="tl" href="/inputs">See the full document list →</a></div>'
+    )
+
+
 # ── Control room (home) ──────────────────────────────────────────────────────
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -377,6 +407,8 @@ def home():
     <p class="lead">The pipeline runs one stage at a time. You press <i>next up</i>, the live console
     below shows it working, and the moment it needs a human it surfaces the item right here — no tab-hunting.</p>
     <div class="stepper">{stp}</div>
+
+    {_corpus_panel()}
 
     <div class="panel">
       <div class="eyebrow">1 · Operate</div>{ctrl}

@@ -29,8 +29,19 @@ def init_db() -> None:
 
 
 @app.command()
-def ingest() -> None:
-    """Phase 1: build the study registry and ingest all sources into Postgres."""
+def ingest(
+    source: str = typer.Option(
+        None, help="A folder of PDFs (generic, any N) OR a metadata .jsonl. "
+        "Default: the Richmond benchmark corpus."),
+) -> None:
+    """Phase 1: build the study registry and ingest all sources into Postgres.
+
+    GENERIC ingest — point --source at a folder of PDFs to review ANY corpus (100+ papers),
+    not just the 28-study benchmark. Supported inputs: PDF (full text), a .txt sidecar next
+    to a PDF (abstract-only), or a .jsonl metadata file (structured records).
+    """
+    from pathlib import Path
+
     from res_pipeline.core.db import (
         init_schema,
         log_audit_event,
@@ -38,11 +49,22 @@ def ingest() -> None:
         upsert_registry,
     )
     from res_pipeline.core.ingestion import ingest_study
-    from res_pipeline.core.registry import build_registry
+    from res_pipeline.core.registry import build_registry, build_registry_from_dir
 
     run_id = f"ingest-{uuid.uuid4().hex[:8]}"
     init_schema()
-    studies = build_registry()
+    if source:
+        p = Path(source)
+        if p.is_dir():
+            studies = build_registry_from_dir(p)
+            console.print(f"Generic ingest: {len(studies)} documents from {p}", markup=False)
+        elif p.suffix == ".jsonl":
+            studies = build_registry(p)
+        else:
+            console.print(f"[red]--source must be a folder or a .jsonl file[/red] (got {source})")
+            raise typer.Exit(1)
+    else:
+        studies = build_registry()
     upsert_registry(studies)
     log_audit_event(run_id, "ingestion", "registry_built", detail={"n_studies": len(studies)})
 
