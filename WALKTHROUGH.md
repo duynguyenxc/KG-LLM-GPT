@@ -698,3 +698,32 @@ harder), already fixed by span-repair.
 80.9%; relation pattern 97.5%; relation strict 10%; faithfulness 96.3%; theory correspondence ~0.51;
 community↔mechanism alignment 42.9% (6/14). REMAINING: item 2 (manuscript Findings/Evaluation draft),
 item 4 (human κ on gold + HITL ratification + figures).
+
+---
+
+## M28 — Real interactive Knowledge Graph + GitHub repo (2026-07-22)
+
+**What:** Rebuilt the webui `/graph` page from the ground up per RA feedback ("not a sample — make it
+real, like the old Knowledge_Dashboard.html"). It now renders the ENTIRE extracted graph (not a
+LIMIT-60 sample): **148 canonical concept nodes / 316 typed relations** at canonical granularity (with
+a toggle to the 30-node Richmond-family overview), using vis-network (same library the reference
+dashboard used) with a **Node Inspector** side-panel — click any node to see its entity type, the
+verbatim evidence quote behind it, study support, and every relationship it participates in — plus a
+concept search box. Colour = the five realist entity types; arrows = the five directed relations.
+Restarted the server; `/graph` returns 200.
+
+**Corpus integrity (answered the RA's worry that full-text isn't read):** confirmed full-text PDFs
+ARE fully ingested — median 32,068 chars (12k–44k), 3–5 CMOCs each; the 8 short "abstract_only"
+records (~300 chars) are short only because we lack their PDFs. No truncation bug (except S009, a
+known first-page-only PDF). Ontology definitions verified grounded in Richmond §2 / RAMESES.
+
+**GitHub:** initialised the repo and pushed to https://github.com/duynguyenxc/Realist-Evidence-
+Synthesis-V2 (main, 88 files). SECURITY/COPYRIGHT: extended `.gitignore` to exclude `data/` (20
+copyrighted study PDFs + Richmond original), `documents/` + `transcript-meetings/` (private professor
+materials), `.env` (all API keys/passwords), and per-run/parquet artifacts. Verified no secret or
+copyrighted file was staged before pushing.
+
+**Still open (staged next):** HITL pages need a clarity redesign so a non-author reviewer/professor
+can understand what to review (RA's long-standing pain point); manuscript Findings/Evaluation draft
+(item 2); human κ on gold + HITL ratification + figures (item 4); optionally borrow UI/agent patterns
+from external human-workflow multi-agent repos.
