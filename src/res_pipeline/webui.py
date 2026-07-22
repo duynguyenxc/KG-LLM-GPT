@@ -24,18 +24,26 @@ import time
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
-from res_pipeline.core.config import GOLD_DIR, OUTPUTS_DIR, PROJECT_ROOT, load_yaml_config
+from res_pipeline.core.config import (
+    DATA_DIR,
+    GOLD_DIR,
+    OUTPUTS_DIR,
+    PROJECT_ROOT,
+    load_yaml_config,
+)
 from res_pipeline.core.db import get_connection, log_audit_event
 
 app = FastAPI(title="Realist Synthesis")
+INBOX = DATA_DIR / "inbox"
 
 # ── pipeline runner ──────────────────────────────────────────────────────────
 _JOB: dict = {"running": False, "stage": None, "log": [], "started": None, "rc": None}
 _JOB_LOCK = threading.Lock()
-_STAGES = {"ingest": ["ingest"], "screen": ["screen"], "extract-pilot": ["extract", "--limit", "3"],
+_STAGES = {"ingest": ["ingest"], "ingest-uploaded": ["ingest", "--source", str(INBOX)],
+           "screen": ["screen"], "extract-pilot": ["extract", "--limit", "3"],
            "extract": ["extract"], "synthesize": ["synthesize"], "verify": ["verify"],
            "build-lkg": ["build-lkg"], "report": ["report"]}
 
@@ -74,6 +82,44 @@ def run_stage(stage: str):
 def run_status():
     return JSONResponse({"running": _JOB["running"], "stage": _JOB["stage"], "rc": _JOB["rc"],
                          "started": _JOB["started"], "log": _JOB["log"][-80:]})
+
+
+_ALLOWED_UPLOAD = {".pdf", ".txt", ".json", ".jsonl", ".csv"}
+
+
+@app.post("/upload")
+async def upload(files: list[UploadFile] = File(...)):
+    """Save uploaded documents to data/inbox/ so they can be ingested generically.
+
+    Accepts any number of PDFs (full text), .txt (abstract sidecars), or .jsonl/.json/.csv
+    metadata. The files land in a folder the pipeline can ingest with one click — this is
+    what makes the system a general review tool, not a 28-paper fixture.
+    """
+    from pathlib import Path as _P
+
+    INBOX.mkdir(parents=True, exist_ok=True)
+    saved, skipped = [], []
+    for f in files:
+        name = _P(f.filename or "").name
+        if not name or _P(name).suffix.lower() not in _ALLOWED_UPLOAD:
+            skipped.append(name or "(unnamed)")
+            continue
+        (INBOX / name).write_bytes(await f.read())
+        saved.append(name)
+    return JSONResponse({"saved": saved, "skipped": skipped, "count": len(saved),
+                         "folder": str(INBOX)})
+
+
+@app.post("/upload/clear")
+def upload_clear():
+    """Empty the inbox (before uploading a fresh corpus)."""
+    n = 0
+    if INBOX.exists():
+        for p in INBOX.iterdir():
+            if p.is_file():
+                p.unlink()
+                n += 1
+    return JSONResponse({"removed": n})
 
 
 # ── design system ────────────────────────────────────────────────────────────
@@ -152,23 +198,34 @@ h3{font-family:'Iowan Old Style',Georgia,serif;font-weight:600;font-size:1.15rem
 .sbbar{height:7px;background:var(--line);border-radius:4px;overflow:hidden}
 .sbfill{display:block;height:100%}.sbfill.good{background:var(--good)}.sbfill.warn{background:var(--warn)}
 .sbn{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
-/* job log — a live console, always visible */
-.jobbox{margin-top:.9rem;border:1px solid var(--line);border-radius:4px;background:#12151a;display:none}
+/* job log — a live terminal console, always visible */
+.jobbox{margin-top:.9rem;border:1px solid #2a2f38;border-radius:6px;background:#12151a;display:none;overflow:hidden}
 .jobbox.show{display:block}
-.jobhead{padding:.5rem .8rem;border-bottom:1px solid #2a2f38}
+.jobhead{padding:.5rem .8rem;border-bottom:1px solid #2a2f38;display:flex;align-items:center;gap:.6rem;background:#191d24}
+.dots{display:inline-flex;gap:.28rem}.dots i{width:.6rem;height:.6rem;border-radius:50%;background:#3a4048;display:block}
+.dots i:nth-child(1){background:#e06c5f}.dots i:nth-child(2){background:#e0b34e}.dots i:nth-child(3){background:#63c98a}
 .jobstate{font-size:.82rem;font-weight:700;letter-spacing:.02em;display:inline-flex;align-items:center;gap:.5rem}
 .jobstate.idle{color:#8b95a3}.jobstate.run{color:#ffcf5c}.jobstate.ok{color:#63c98a}.jobstate.err{color:#ef8c7f}
+.jobtimer{margin-left:auto;color:#6b7480;font-size:.76rem;font-variant-numeric:tabular-nums;font-family:ui-monospace,Consolas,monospace}
 .spin{width:.72rem;height:.72rem;border:2px solid #ffcf5c;border-top-color:transparent;border-radius:50%;
   display:inline-block;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.joblog{margin:0;padding:.7rem .9rem;min-height:120px;max-height:320px;overflow:auto;
-  font-family:ui-monospace,Consolas,monospace;font-size:.78rem;line-height:1.5;white-space:pre-wrap;color:#c7d0dc}
+.joblog{margin:0;padding:.8rem 1rem;min-height:220px;max-height:440px;overflow:auto;
+  font-family:ui-monospace,Consolas,monospace;font-size:.78rem;line-height:1.6;white-space:pre-wrap;color:#c7d0dc}
+.joblog.live::after{content:"▋";color:#ffcf5c;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
 /* review cards — show the machine's work, then ask */
 .revcard{border:1px solid var(--line);border-radius:4px;margin:.7rem 0;overflow:hidden;background:var(--panel)}
 .revtop{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.6rem .9rem;
   border-bottom:1px solid var(--line);font-family:'Iowan Old Style',Georgia,serif}
 .revwhat{padding:.7rem .9rem;background:color-mix(in srgb,var(--machine) 5%,var(--panel))}
 .revask{padding:.7rem .9rem;border-top:1px solid var(--line);background:color-mix(in srgb,var(--human) 6%,var(--panel))}
+/* data-processing flow */
+.pipeflow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:.5rem}
+.pf{border:1px solid var(--line);border-radius:4px;padding:.6rem .7rem;background:var(--paper)}
+.pf b{display:block;color:var(--machine);font-size:.82rem;margin-bottom:.25rem}
+.pf span{font-size:.8rem;color:var(--muted);line-height:1.45}
+#drop.drag{border-color:var(--machine);background:color-mix(in srgb,var(--machine) 8%,var(--paper))}
 /* tables + compare */
 table{width:100%;border-collapse:collapse;font-size:.88rem}
 th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -346,33 +403,61 @@ def _review_block(pend: dict, *, compact: bool = False) -> str:
 
 
 def _corpus_panel() -> str:
-    """What data is loaded, in what formats, and how to scale to any N documents."""
+    """Interactive DATA section: upload any N documents, see what's loaded, and read how
+    the pipeline turns raw files into a provenance-bearing knowledge graph."""
     with get_connection() as c:
         rows = c.execute(
-            "SELECT source_kind, count(*) n, sum(length(ct.canonical_text)) chars "
-            "FROM studies s JOIN canonical_texts ct USING (study_id) GROUP BY source_kind"
+            "SELECT source_kind, count(*) n FROM studies GROUP BY source_kind"
         ).fetchall()
         total = c.execute("SELECT count(*) n FROM studies").fetchone()["n"]
         units = c.execute("SELECT count(*) n FROM text_units").fetchone()["n"]
-    by = {r["source_kind"]: r for r in rows}
-    ft = by.get("fulltext_pdf", {"n": 0, "chars": 0})
-    ab = by.get("abstract_only", {"n": 0, "chars": 0})
-    return (
-        '<div class="panel"><div class="eyebrow">0 · Data — what is loaded</div>'
-        f'<div class="metrics" style="margin:.3rem 0 .6rem"><div class="metric">'
-        f'<div class="n machine">{total}</div><div class="l">documents ingested</div></div>'
-        f'<div class="metric"><div class="n">{ft["n"]}</div><div class="l">full-text PDF</div></div>'
-        f'<div class="metric"><div class="n">{ab["n"]}</div><div class="l">abstract-only</div></div>'
-        f'<div class="metric"><div class="n">{units}</div><div class="l">text units (provenance)</div></div></div>'
-        '<p class="muted" style="margin:.2rem 0"><b>Accepted inputs:</b> full-text <b>PDF</b> · a '
-        '<code>.txt</code> sidecar next to a PDF (abstract-only) · a <code>.jsonl</code> metadata file. '
-        'Every document is chunked into provenance-bearing text units so every claim traces to a span.</p>'
-        '<p class="muted" style="margin:.2rem 0"><b>To review a different / larger corpus (any N, e.g. 100 PDFs):</b> '
-        'drop the PDFs in a folder and run '
-        '<code>res ingest --source &lt;folder&gt;</code> — the whole pipeline (screen → extract → '
-        'synthesise) scales with no code change. The default corpus is the 28-study Richmond benchmark.</p>'
-        '<a class="tl" href="/inputs">See the full document list →</a></div>'
-    )
+    by = {r["source_kind"]: r["n"] for r in rows}
+    ft, ab = by.get("fulltext_pdf", 0), by.get("abstract_only", 0)
+    inbox_n = len([p for p in INBOX.iterdir() if p.is_file()]) if INBOX.exists() else 0
+    inbox_note = (f'<span class="pill pos">{inbox_n} file(s) uploaded, ready to ingest</span>'
+                  if inbox_n else '<span class="muted">no uploaded files waiting</span>')
+    return f"""
+    <div class="panel"><div class="eyebrow">0 · Data — upload your corpus &amp; see how it is processed</div>
+      <div class="two" style="gap:1.2rem">
+        <div>
+          <div id="drop" style="border:2px dashed var(--rule);border-radius:6px;padding:1.2rem;
+            text-align:center;cursor:pointer;background:var(--paper)">
+            <div style="font-size:1.5rem">⤓</div>
+            <div><b>Drop PDFs / JSON here</b> or click to choose</div>
+            <div class="muted" style="font-size:.8rem">PDF · .txt (abstract) · .jsonl/.csv (metadata) · any number of files</div>
+          </div>
+          <input id="fileinput" type="file" multiple accept=".pdf,.txt,.json,.jsonl,.csv" style="display:none">
+          <div id="uploadmsg" class="muted" style="margin:.5rem 0;font-size:.85rem">{inbox_note}</div>
+          <button class="btn" id="uploadbtn" disabled>Upload selected</button>
+          <button class="btn ghost sm" onclick="run('ingest-uploaded')" {'' if inbox_n else 'disabled'}
+            id="ingestup">Ingest uploaded files →</button>
+          <button class="btn ghost sm" onclick="clearInbox()">Clear</button>
+        </div>
+        <div>
+          <div class="metrics"><div class="metric"><div class="n machine">{total}</div>
+            <div class="l">documents in corpus</div></div>
+            <div class="metric"><div class="n">{ft}</div><div class="l">full-text PDF</div></div>
+            <div class="metric"><div class="n">{ab}</div><div class="l">abstract-only</div></div>
+            <div class="metric"><div class="n">{units}</div><div class="l">text units</div></div></div>
+          <a class="tl" href="/inputs">See the full document list →</a>
+        </div>
+      </div>
+      <hr class="rule" style="margin:1rem 0">
+      <div class="eyebrow">How your data is processed (the same for 28 or 1000 papers)</div>
+      <div class="pipeflow">
+        <div class="pf"><b>1 Ingest</b><span>PDF/abstract → clean text; each file gets a stable
+          Study ID; text split into overlapping <b>units</b> with exact character offsets so every
+          later claim can point back to a span.</span></div>
+        <div class="pf"><b>2 Screen</b><span>two models vote include/exclude on theory-relevance;
+          disagreements go to you (HITL-1).</span></div>
+        <div class="pf"><b>3 Extract</b><span>per paper, an agent pulls C→M→O configurations, each
+          element carrying a <b>verbatim quote</b>; a second agent checks every one.</span></div>
+        <div class="pf"><b>4 Graph</b><span>quotes resolve to spans; synonymous concepts merge;
+          Leiden finds emergent conceptual entities → the knowledge graph.</span></div>
+        <div class="pf"><b>5 Synthesise</b><span>recurring patterns + contradictions → a programme
+          theory you sign off (HITL-4).</span></div>
+      </div>
+    </div>"""
 
 
 # ── Control room (home) ──────────────────────────────────────────────────────
@@ -413,8 +498,10 @@ def home():
     <div class="panel">
       <div class="eyebrow">1 · Operate</div>{ctrl}
       <div id="jobbox" class="jobbox show">
-        <div class="jobhead"><span id="jobstate" class="jobstate idle">Idle — nothing running</span></div>
-        <pre class="joblog" id="joblog">Press a Run button above. Everything the program prints in the console will stream here, live.</pre>
+        <div class="jobhead"><span class="dots"><i></i><i></i><i></i></span>
+          <span id="jobstate" class="jobstate idle">Idle — nothing running</span>
+          <span id="jobtimer" class="jobtimer"></span></div>
+        <pre class="joblog" id="joblog">Press a Run button above — everything the program prints streams here live, so you can watch each stage work.</pre>
       </div>
     </div>
 
@@ -430,31 +517,54 @@ def home():
     </div>
 
     <script>
-    let poller=null, wasRunning=false;
+    let poller=null, wasRunning=false, runStart=0;
     function setBtns(dis){{document.querySelectorAll('.btn[data-run]').forEach(b=>{{b.disabled=dis;}});}}
     async function run(s){{
-      setBtns(true);
+      setBtns(true); runStart=0;
       const r=await fetch('/run/'+s,{{method:'POST'}}); const j=await r.json();
       if(j.busy){{alert('A stage is already running — let it finish.');setBtns(false);return;}}
-      if(!poller) poller=setInterval(poll,1200); poll();
+      if(!poller) poller=setInterval(poll,1000); poll();
     }}
     async function poll(){{
       const r=await fetch('/run/status'); const j=await r.json();
-      const st=document.getElementById('jobstate');
-      if(j.running){{wasRunning=true;setBtns(true);
-        st.className='jobstate run';
-        st.innerHTML='<span class="spin"></span> RUNNING · '+j.stage+' · started '+j.started;
-      }}else{{
-        if(j.rc===0){{st.className='jobstate ok';st.textContent='✓ Finished '+(j.stage||'')+' — reloading to surface any review items…';}}
-        else if(j.rc!==null){{st.className='jobstate err';st.textContent='✕ Failed: '+(j.stage||'')+' (exit code '+j.rc+') — see log below';}}
-        else{{st.className='jobstate idle';st.textContent='Idle — nothing running';}}
-      }}
+      const st=document.getElementById('jobstate'), tm=document.getElementById('jobtimer');
       const pre=document.getElementById('joblog');
+      if(j.running){{wasRunning=true;setBtns(true); if(!runStart)runStart=Date.now();
+        st.className='jobstate run';
+        st.innerHTML='<span class="spin"></span> RUNNING · '+j.stage;
+        tm.textContent=Math.round((Date.now()-runStart)/1000)+'s elapsed';
+        pre.classList.add('live');
+      }}else{{
+        pre.classList.remove('live');
+        const dur=runStart?(' · '+Math.round((Date.now()-runStart)/1000)+'s'):'';
+        if(j.rc===0){{st.className='jobstate ok';st.textContent='✓ Finished '+(j.stage||'')+' — reloading to surface any review items…';tm.textContent=dur;}}
+        else if(j.rc!==null){{st.className='jobstate err';st.textContent='✕ Failed: '+(j.stage||'')+' (exit '+j.rc+')';tm.textContent=dur;}}
+        else{{st.className='jobstate idle';st.textContent='Idle — nothing running';tm.textContent='';}}
+      }}
       if(j.log&&j.log.length){{pre.textContent=j.log.join('\\n');pre.scrollTop=1e9;}}
       if(!j.running && poller){{clearInterval(poller);poller=null;
         if(wasRunning && j.rc===0) setTimeout(()=>location.reload(),1400); else setBtns(false);}}
     }}
     fetch('/run/status').then(r=>r.json()).then(j=>{{if(j.running){{poller=setInterval(poll,1200);poll();}}}});
+    // ── file upload (generic corpus, any N documents) ──
+    (function(){{
+      const drop=document.getElementById('drop'), inp=document.getElementById('fileinput'),
+            msg=document.getElementById('uploadmsg'), ub=document.getElementById('uploadbtn');
+      if(!drop) return; let chosen=[];
+      drop.onclick=()=>inp.click();
+      ['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{{ev.preventDefault();drop.classList.add('drag');}}));
+      ['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{{ev.preventDefault();drop.classList.remove('drag');}}));
+      drop.addEventListener('drop',ev=>{{chosen=[...ev.dataTransfer.files];show();}});
+      inp.addEventListener('change',()=>{{chosen=[...inp.files];show();}});
+      function show(){{if(chosen.length){{msg.textContent=chosen.length+' file(s) selected — press Upload';ub.disabled=false;}}}}
+      ub.onclick=async()=>{{ if(!chosen.length)return; ub.disabled=true;
+        msg.textContent='Uploading '+chosen.length+' file(s)…';
+        const fd=new FormData(); chosen.forEach(f=>fd.append('files',f));
+        const r=await fetch('/upload',{{method:'POST',body:fd}}); const j=await r.json();
+        msg.textContent='Uploaded '+j.count+(j.skipped.length?(' ('+j.skipped.length+' skipped)'):'')+'. Reloading…';
+        setTimeout(()=>location.reload(),900); }};
+    }})();
+    window.clearInbox=async()=>{{await fetch('/upload/clear',{{method:'POST'}});location.reload();}};
     </script>"""
     return _page("/", body)
 
