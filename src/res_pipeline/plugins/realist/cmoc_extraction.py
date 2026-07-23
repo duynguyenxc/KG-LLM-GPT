@@ -92,6 +92,13 @@ class CMOCCheck(BaseModel):
         description="If not agreed: the specific defect — mislabelled C/M/O, unsupported causal "
         "reading, resource/response conflated, over-claim, or a missed pathway. Empty if agreed.",
     )
+    retype: list[str] = Field(
+        default_factory=list,
+        description="Explicit type corrections for mis-typed elements, one per fix, in the form "
+        "\"'<label>' should be <Context|Intervention|Mechanism_Resource|Mechanism_Response|Outcome>, "
+        "not <current type>\". A supplied THING is a Resource; an internal reaction is a Response; a "
+        "pre-existing condition is a Context. Empty if the typing is already correct.",
+    )
 
 
 class ConsistencyReview(BaseModel):
@@ -198,7 +205,15 @@ def _critique_draft(study_id: str, cmocs: list[ExtractedCMOC], run_id: str) -> s
             f"response vs context typing, over-claims, and paraphrased quotes).\n\n"
             + _cmoc_listing(cmocs)),
         schema=ConsistencyReview, run_id=run_id)
-    issues = [f"CMOC #{c.cmoc_index}: {c.issue}" for c in review.checks if not c.agrees and c.issue]
+    issues: list[str] = []
+    for c in review.checks:
+        parts = []
+        if not c.agrees and c.issue:
+            parts.append(c.issue)
+        if c.retype:
+            parts.append("RE-TYPE these elements exactly: " + "; ".join(c.retype))
+        if parts:
+            issues.append(f"CMOC #{c.cmoc_index}: " + " | ".join(parts))
     return "\n".join(issues)
 
 
