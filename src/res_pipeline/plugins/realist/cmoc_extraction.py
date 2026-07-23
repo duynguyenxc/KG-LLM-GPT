@@ -25,7 +25,7 @@ from res_pipeline.core.db import get_connection, log_audit_event
 from res_pipeline.core.llm import call_structured
 from res_pipeline.plugins.realist.ontology import EntityType, Predicate, domain_range_map
 
-PROMPT_VERSION = "cmoc-extraction-v3.0-ipt+checker"
+PROMPT_VERSION = "cmoc-extraction-v4.0-selfrefine+boundary"
 
 _ENTITY_FIELD_TO_TYPE: dict[str, EntityType] = {
     "contexts": EntityType.CONTEXT,
@@ -164,6 +164,44 @@ def _resolve_span(quote: str, canonical_text: str) -> tuple[int | None, int | No
     return None, None, False
 
 
+_CATS = ("contexts", "mechanism_resources", "mechanism_responses", "outcomes")
+
+
+def _cmoc_listing(cmocs: list[ExtractedCMOC]) -> str:
+    """A compact, checkable rendering of a study's CMOCs (labels + quotes) for review."""
+    def _one(i: int, cmoc: ExtractedCMOC) -> str:
+        quotes = [e.verbatim_quote[:120] for cat in _CATS for e in getattr(cmoc, cat)]
+        return (
+            f"CMOC #{i} (polarity={cmoc.polarity}):\n"
+            f"  statement: {cmoc.narrative_statement}\n"
+            f"  contexts: {[e.label for e in cmoc.contexts]}\n"
+            f"  resources: {[e.label for e in cmoc.mechanism_resources]}\n"
+            f"  responses: {[e.label for e in cmoc.mechanism_responses]}\n"
+            f"  outcomes: {[e.label for e in cmoc.outcomes]}\n"
+            f"  quotes: {quotes}"
+        )
+    return "\n\n".join(_one(i, c) for i, c in enumerate(cmocs))
+
+
+def _critique_draft(study_id: str, cmocs: list[ExtractedCMOC], run_id: str) -> str:
+    """Reflection step: an independent reviewer (different model family) critiques the DRAFT
+    CMOCs in-memory and returns the specific defects, so the extractor can self-correct
+    before anything is persisted (Self-Refine / Reflexion, grounded in the SOTA on
+    multi-agent self-correction). Returns '' when the draft is accepted as-is."""
+    if not cmocs:
+        return ""
+    review = call_structured(
+        tier="gold_coder", system_prompt=persona("consistency_checker"),
+        user_prompt=(
+            f"STUDY {study_id}. The lead coder DRAFTED these CMOCs. Independently check each for "
+            f"consistency with its quotes and realist coding conventions (especially resource vs "
+            f"response vs context typing, over-claims, and paraphrased quotes).\n\n"
+            + _cmoc_listing(cmocs)),
+        schema=ConsistencyReview, run_id=run_id)
+    issues = [f"CMOC #{c.cmoc_index}: {c.issue}" for c in review.checks if not c.agrees and c.issue]
+    return "\n".join(issues)
+
+
 def extract_study_cmocs(study_id: str, run_id: str) -> dict:
     """Extract, verify, resolve, validate, and persist CMOCs for one study."""
     with get_connection() as conn:
@@ -188,8 +226,37 @@ def extract_study_cmocs(study_id: str, run_id: str) -> dict:
         schema=ExtractionResult, run_id=run_id,
     )
 
+    # ── Reflection round (Self-Refine / Reflexion) ────────────────────────────────
+    # An independent reviewer critiques the DRAFT; if it finds defects the extractor
+    # REVISES before anything is persisted — the second reviewer's feedback improves the
+    # coding, exactly as Richmond's second reviewer's checks led the lead coder to revise
+    # (L248-250), rather than merely flagging problems for a human to clean up later.
+    refined = 0
+    critique = _critique_draft(study_id, result.cmocs, run_id)
+    if critique:
+        draft_n = len(result.cmocs)
+        revised = call_structured(
+            tier="extraction", system_prompt=_SYSTEM,
+            user_prompt=(
+                user_prompt + "\n\nYOUR DRAFT CMOCs:\n" + result.model_dump_json(indent=1)
+                + "\n\nAN INDEPENDENT SECOND REVIEWER RAISED THESE ISSUES WITH THE DRAFT:\n"
+                + critique
+                + "\n\nRevise now: fix each issue — correct any mis-typed Context / "
+                "Mechanism-resource / Mechanism-response / Outcome, make every verbatim_quote match "
+                "the source exactly, and re-word an over-claim to what the text supports RATHER than "
+                "deleting it. Only drop a configuration if the text genuinely does not support it. "
+                "Keep every sound CMOC and add any well-evidenced pathway you missed. Return the "
+                "full corrected set — do not reduce a well-evidenced paper to nothing."),
+            schema=ExtractionResult, run_id=run_id)
+        # Guard against over-correction: a revision should FIX, not gut the paper. If it
+        # collapses the set (< half the draft, or empty), keep the draft — losing evidence
+        # is worse than a residual typing issue (which HITL-2 still catches).
+        if len(revised.cmocs) >= max(1, draft_n // 2):
+            result = revised
+            refined = 1
+
     stats = {"cmocs": 0, "entities": 0, "relations": 0, "unresolved_quotes": 0,
-             "demoted_relations": 0, "low_support": 0, "checker_flagged": 0}
+             "demoted_relations": 0, "low_support": 0, "checker_flagged": 0, "refined": refined}
     persisted: list[tuple[str, ExtractedCMOC]] = []  # (cmoc_id, cmoc) for the Checker pass
 
     for cmoc in result.cmocs:
@@ -279,21 +346,7 @@ def _run_consistency_checker(
     Disagreements are recorded on the cmocs row and surfaced at HITL-2 for the human
     to adjudicate — the machine never silently overrides one expert with another.
     """
-    _cats = ("contexts", "mechanism_resources", "mechanism_responses", "outcomes")
-
-    def _one(i: int, cmoc: ExtractedCMOC) -> str:
-        quotes = [e.verbatim_quote[:120] for cat in _cats for e in getattr(cmoc, cat)]
-        return (
-            f"CMOC #{i} (polarity={cmoc.polarity}):\n"
-            f"  statement: {cmoc.narrative_statement}\n"
-            f"  contexts: {[e.label for e in cmoc.contexts]}\n"
-            f"  resources: {[e.label for e in cmoc.mechanism_resources]}\n"
-            f"  responses: {[e.label for e in cmoc.mechanism_responses]}\n"
-            f"  outcomes: {[e.label for e in cmoc.outcomes]}\n"
-            f"  quotes: {quotes}"
-        )
-
-    listing = "\n\n".join(_one(i, cmoc) for i, (_, cmoc) in enumerate(persisted))
+    listing = _cmoc_listing([cmoc for _, cmoc in persisted])
     review = call_structured(
         tier="gold_coder",  # deliberately a different model family than the extractor
         system_prompt=persona("consistency_checker"),
