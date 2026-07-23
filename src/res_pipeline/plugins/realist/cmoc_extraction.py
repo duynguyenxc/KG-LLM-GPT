@@ -112,6 +112,18 @@ received (e.g., low prior knowledge, high self-confidence, mixed-knowledge group
 - Outcome: the measured or theorised effect (e.g., diagnostic accuracy, illness-script \
 development, negative learning outcome).
 
+BOUNDARY RULE (the most-mistyped distinction — apply it deliberately):
+- A Mechanism_Resource is a THING the intervention SUPPLIES: a case, a worked example, an \
+expert explanation, feedback, an instruction/prompt, a simulator. Test: can you say "the \
+teaching PROVIDES this"? If yes → Resource.
+- A Mechanism_Response is the learner's INTERNAL reaction: understanding, insight, panic, \
+frustration, felt pressure, stress, confidence, confusion, cognitive load. Test: does the \
+learner FEEL it or do it in their head? If yes → Response, NOT Resource. (e.g. "pressure to \
+perform", "felt stress" are Responses.)
+- A Context is a condition that exists BEFORE and INDEPENDENT of the intervention (prior \
+knowledge level, self-confidence level, group composition). If it describes who the learner \
+ALREADY is → Context, NOT a Response.
+
 RULES:
 1. Extract 2-5 CMOCs per paper — cover BOTH the beneficial pathways AND any harmful/no-effect \
 pathways the study reports (realist reviews care especially about when interventions FAIL or \
