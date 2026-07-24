@@ -30,11 +30,22 @@ from res_pipeline.core.llm import call_structured
 
 RESOLUTION = 1.0
 _SEED = 20260714
+_ETYPES = {"Context", "Intervention", "Mechanism_Resource", "Mechanism_Response", "Outcome"}
 
 
 class ConceptLabel(BaseModel):
-    label: str = Field(description="Concise concept name for this cluster (<=6 words).")
-    definition: str = Field(description="One sentence defining what the members share.")
+    """A big-concept report for one Leiden community (GraphRAG-style community report):
+    the emergent high-level realist entity this cluster represents."""
+    label: str = Field(description="Concise big-concept name for this cluster (<=6 words), e.g. "
+                       "'Low Knowledge Context' or 'Expertise Reversal Effect'.")
+    realist_role: str = Field(
+        pattern=r"^(Context|Intervention|Mechanism_Resource|Mechanism_Response|Outcome)$",
+        description="Which realist role this big concept plays.")
+    definition: str = Field(description="One-sentence definition of what the members share.")
+    description: str = Field(
+        description="A 2-3 sentence report of this big concept: what it is, how it operates in the "
+        "realist logic, and its significance — grounded only in the member concepts.")
+    rationale: str = Field(description="Why these members belong together (one sentence).")
 
 
 def _load_graph() -> tuple[nx.Graph, dict]:
@@ -128,6 +139,9 @@ def detect_communities(run_id: str, min_size: int = 2) -> dict:
             )
             """
         )
+        conn.execute("ALTER TABLE conceptual_entities ADD COLUMN IF NOT EXISTS description TEXT")
+        conn.execute("ALTER TABLE conceptual_entities ADD COLUMN IF NOT EXISTS rationale TEXT")
+        conn.execute("ALTER TABLE conceptual_entities ADD COLUMN IF NOT EXISTS realist_role TEXT")
         conn.execute("DELETE FROM conceptual_entities")
 
         kept = 0
@@ -139,23 +153,31 @@ def detect_communities(run_id: str, min_size: int = 2) -> dict:
             dominant_type = max(set(types), key=types.count)
             studies = sorted({s for n in nodes for s in g.nodes[n]["studies"]})
 
+            # GraphRAG-style community report: turn the cluster into ONE high-level "big
+            # concept" entity (name, realist role, definition, a short report, and rationale).
             named = call_structured(
                 tier="normalization",
                 system_prompt=persona("community_analyst"),
                 user_prompt=(
-                    f"This community clusters {len(nodes)} entities (dominant type "
+                    f"This Leiden community clusters {len(nodes)} entities (dominant realist type "
                     f"{dominant_type}) that recur together across {len(studies)} studies:\n"
                     + ", ".join(labels[:40])
-                    + "\n\nGive the cluster a concept label and one-line definition."
+                    + "\n\nWrite a community report that turns this cluster into ONE emergent "
+                    "high-level big concept: give it a name, its realist role, a one-line "
+                    "definition, a 2-3 sentence description of what it is and how it operates in "
+                    "the C->M->O logic, and the rationale for grouping. Ground everything only in "
+                    "the member concepts above; do not import outside ideas."
                 ),
                 schema=ConceptLabel, run_id=run_id,
             )
+            role = named.realist_role if named.realist_role in _ETYPES else dominant_type
             conn.execute(
                 "INSERT INTO conceptual_entities (community_key, community_label, definition, "
                 "entity_type, member_canonical_ids, member_labels, study_ids, member_count, "
-                "algorithm, run_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                "algorithm, run_id, description, rationale, realist_role) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                 (comm_key, named.label, named.definition, dominant_type, nodes, labels,
-                 studies, len(nodes), algo, run_id),
+                 studies, len(nodes), algo, run_id, named.description, named.rationale, role),
             )
             kept += 1
 
