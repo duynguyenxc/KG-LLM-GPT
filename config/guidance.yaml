@@ -1,0 +1,15 @@
+# =============================================================================
+# EXTRACTION GUIDANCE — the professor's three emphasised mechanisms (toggleable)
+# -----------------------------------------------------------------------------
+# These steer NAMING and cross-study CONSISTENCY during CMOC extraction. They are
+# advisory only and never restrict what a paper may yield. A heavy theory block in
+# extraction was measured to suppress yield, so keep these LIGHT and A/B them on a
+# cheap 2-3 paper pilot (see docs) before committing to a full run.
+# =============================================================================
+
+seed_guided: true          # Gap A — few-shot big-concept seed names from the public IPT
+graphrag_in_loop: true     # Gap B — retrieve existing LKG concepts for label consistency
+hitl_few_shot: true        # Gap C — replay stored human corrections as few-shot examples
+
+max_known_concepts: 24     # cap on retrieved existing concepts (keeps the block short)
+max_feedback_examples: 5   # cap on replayed human corrections

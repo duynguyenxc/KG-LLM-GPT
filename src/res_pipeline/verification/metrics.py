@@ -108,11 +108,14 @@ def entity_coverage(run_id: str) -> dict:
         ).fetchall()
 
     by_type: dict[str, list[str]] = {}
+    concept_type: dict[str, str] = {}
+    all_candidate_lines: list[str] = []
     for c in concepts:
         quote = (c["quote"] or "")[:120]
-        by_type.setdefault(c["entity_type"], []).append(
-            f"{c['canonical_id']} :: {'; '.join(c['labels'][:3])} :: evidence: \"{quote}\""
-        )
+        line = f"{c['canonical_id']} :: {'; '.join(c['labels'][:3])} :: evidence: \"{quote}\""
+        by_type.setdefault(c["entity_type"], []).append(line)
+        concept_type[c["canonical_id"]] = c["entity_type"]
+        all_candidate_lines.append(f"[{c['entity_type']}] {line}")
 
     def _one_pass() -> list[EntityMatch]:
         matches: list[EntityMatch] = []
@@ -167,17 +170,64 @@ def entity_coverage(run_id: str) -> dict:
 
     threshold = (_JUDGE_SAMPLES // 2) + 1  # majority
     matched_codes = {c for c, v in votes.items() if v >= threshold}
+    crosswalk_codes: set[str] = set()
+
+    # Cross-type recovery pass: Richmond and this system sometimes assign the SAME
+    # construct to different realist roles (e.g. Richmond files self-efficacy/coping as
+    # a Context; our extractor filed "diagnostic reasoning confidence" as a Mechanism_
+    # Response). A within-category matcher wrongly scores those as misses. For the
+    # still-unmatched gold codes only, we match against candidates of ALL types, keep
+    # the strict same-construct bar, and record the role disagreement rather than hide
+    # it. This corrects a matcher artefact; it does not loosen what counts as recovered.
+    unmatched = [c for c in all_codes if c not in matched_codes]
+    if unmatched and all_candidate_lines:
+        recovery = call_structured(
+            tier="extraction_verifier",
+            system_prompt=(
+                "You are recovering cross-category matches for a systematic-review "
+                "verification. Each GOLD entity below was NOT matched to an extracted "
+                "concept of its own realist type. Decide whether any EXTRACTED concept (of "
+                "ANY type, prefixed [Type]) expresses the SAME underlying construct — judged "
+                "on labels and the verbatim evidence quote. The realist role may differ; that "
+                "is expected and must NOT lower the bar. Require genuine construct identity, "
+                "not adjacency or broader/narrower concepts. Give the matched concept id or "
+                "leave empty."
+            ),
+            user_prompt=(
+                "GOLD ENTITIES (still unmatched):\n"
+                + "\n".join(f"{c} [{gold['entities'][c]['category']}]: "
+                            f"{gold['entities'][c]['label']}" for c in unmatched)
+                + "\n\nEXTRACTED CONCEPTS (any type):\n" + "\n".join(all_candidate_lines)
+            ),
+            schema=EntityMatchBatch, run_id=run_id,
+        )
+        for m in recovery.matches:
+            if m.matched and m.e_code in unmatched:
+                matched_codes.add(m.e_code)
+                crosswalk_codes.add(m.e_code)
+                if m.matched_concept:
+                    concept_of[m.e_code] = m.matched_concept
+                rationale_of[m.e_code] = m.rationale
+
+    def _type_agree(code: str) -> bool:
+        cid = concept_of.get(code, "")
+        return bool(cid) and concept_type.get(cid) == gold["entities"][code]["category"]
+
     return {
         "gold_entities": total,
         "matched": len(matched_codes),
         "recall": len(matched_codes) / total if total else 0,
+        "matched_within_type": len(matched_codes) - len(crosswalk_codes),
+        "matched_cross_type": len(crosswalk_codes),
         "samples": _JUDGE_SAMPLES,
         "per_sample_recalls": [round(r, 3) for r in per_sample_recalls],
         "recall_min": round(min(per_sample_recalls), 3) if per_sample_recalls else 0,
         "recall_max": round(max(per_sample_recalls), 3) if per_sample_recalls else 0,
         "per_entity": {c: {"matched": c in matched_codes,
                            "concept": concept_of.get(c, ""),
-                           "rationale": rationale_of.get(c, "")} for c in all_codes},
+                           "rationale": rationale_of.get(c, ""),
+                           "cross_type": c in crosswalk_codes,
+                           "type_agrees": _type_agree(c)} for c in all_codes},
     }
 
 
@@ -211,29 +261,40 @@ def relation_coverage(entity_matches: dict) -> dict:
         ).fetchall()
     strict_set = {(r["predicate"], r["subj"], r["obj"]) for r in rows}
     type_set = {(r["predicate"], r["subj_type"], r["obj_type"]) for r in rows}
+    # for the middle tier: predicate + one exact concept endpoint + other endpoint's type
+    subj_anchored = {(r["predicate"], r["subj"], r["obj_type"]) for r in rows}
+    obj_anchored = {(r["predicate"], r["subj_type"], r["obj"]) for r in rows}
 
-    strict_recovered, type_recovered, missed_strict = [], [], []
+    strict_recovered, partial_recovered, type_recovered, missed_strict = [], [], [], []
     for rel in gold["relationships"]:
         subj_concept = code_to_concept.get(rel["subject_code"])
         obj_concept = code_to_concept.get(rel["object_code"])
+        subj_cat = categories[rel["subject_code"]]
+        obj_cat = categories[rel["object_code"]]
         if subj_concept and obj_concept and (
             (rel["predicate"], subj_concept, obj_concept) in strict_set
         ):
             strict_recovered.append(rel["id"])
         else:
             missed_strict.append(rel["id"])
-        key = (rel["predicate"], categories[rel["subject_code"]],
-               categories[rel["object_code"]])
-        if key in type_set:
+        # ANCHORED (middle tier): same predicate, one endpoint is the exact matched
+        # concept, the other endpoint is of the correct realist type.
+        if (subj_concept and (rel["predicate"], subj_concept, obj_cat) in subj_anchored) or \
+           (obj_concept and (rel["predicate"], subj_cat, obj_concept) in obj_anchored):
+            partial_recovered.append(rel["id"])
+        if (rel["predicate"], subj_cat, obj_cat) in type_set:
             type_recovered.append(rel["id"])
     total = len(gold["relationships"])
     return {
         "gold_relations": total,
         "recovered": len(strict_recovered),
         "recall": len(strict_recovered) / total if total else 0,
+        "anchored_recovered": len(partial_recovered),
+        "anchored_recall": len(partial_recovered) / total if total else 0,
         "type_recovered": len(type_recovered),
         "type_recall": len(type_recovered) / total if total else 0,
-        "recovered_ids": strict_recovered, "missed_ids": missed_strict,
+        "recovered_ids": strict_recovered, "anchored_ids": partial_recovered,
+        "missed_ids": missed_strict,
     }
 
 

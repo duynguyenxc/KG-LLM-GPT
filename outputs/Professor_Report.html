@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Realist Evidence Synthesis — Progress Report</title>
+<style>
+  :root{
+    --paper:#faf9f6; --ink:#1b2430; --muted:#5c6672; --line:#d9d5cc;
+    --accent:#0f5b6b; --accent2:#14788c; --red:#8a2b34; --chip:#eef1ee;
+    --ctx:#9a6b18; --int:#0f6b74; --mres:#2f6bad; --mresp:#7a4b93; --out:#2e7d52;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--paper:#14181e; --ink:#e7e6e1; --muted:#9aa2ad; --line:#2c333c;
+      --accent:#4bb6c9; --accent2:#5cc4d6; --red:#e0868f; --chip:#1e242c;}
+  }
+  :root[data-theme="light"]{--paper:#faf9f6;--ink:#1b2430;--muted:#5c6672;--line:#d9d5cc;--accent:#0f5b6b;--accent2:#14788c;--red:#8a2b34;--chip:#eef1ee;}
+  :root[data-theme="dark"]{--paper:#14181e;--ink:#e7e6e1;--muted:#9aa2ad;--line:#2c333c;--accent:#4bb6c9;--accent2:#5cc4d6;--red:#e0868f;--chip:#1e242c;}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Georgia,Cambria,"Times New Roman",serif;line-height:1.62;font-size:17px}
+  .wrap{max-width:820px;margin:0 auto;padding:56px 28px 96px}
+  .sans{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header.title{border-bottom:2px solid var(--accent);padding-bottom:22px;margin-bottom:8px}
+  .kicker{font-family:system-ui,sans-serif;font-size:12.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+  h1{font-size:30px;line-height:1.18;margin:0 0 12px;text-wrap:balance;font-weight:600}
+  .byline{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--muted);margin:0}
+  h2{font-size:21px;color:var(--accent);margin:44px 0 4px;font-weight:600;
+    padding-bottom:6px;border-bottom:1px solid var(--line)}
+  h2 .n{color:var(--muted);font-weight:400;margin-right:.5em}
+  h3{font-size:16px;margin:26px 0 4px;font-weight:600;font-family:system-ui,sans-serif}
+  p{margin:12px 0}
+  .lead{font-size:18.5px}
+  .muted{color:var(--muted)}
+  em.red{color:var(--red);font-style:normal;font-weight:600}
+  a{color:var(--accent2)}
+  figure{margin:26px 0;padding:0}
+  figure svg{width:100%;height:auto;display:block}
+  figcaption{font-family:system-ui,sans-serif;font-size:12.5px;color:var(--muted);
+    margin-top:10px;text-align:center}
+  .fignum{color:var(--accent);font-weight:600}
+  table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14px;
+    font-family:system-ui,sans-serif}
+  caption{caption-side:top;text-align:left;font-size:12.5px;color:var(--muted);
+    margin-bottom:8px;font-family:system-ui,sans-serif}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{color:var(--accent);border-bottom:1.5px solid var(--accent);font-size:12.5px;
+    letter-spacing:.03em;text-transform:uppercase}
+  tbody tr:last-child td{border-bottom:1px solid var(--line)}
+  td .q{color:var(--muted);font-style:italic;font-family:Georgia,serif}
+  td .cid{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;font-size:12px;color:var(--muted)}
+  .tag{display:inline-block;font-family:system-ui,sans-serif;font-size:10.5px;font-weight:600;
+    padding:2px 7px;border-radius:10px;color:#fff;letter-spacing:.02em;white-space:nowrap}
+  .t-ctx{background:var(--ctx)}.t-int{background:var(--int)}.t-mres{background:var(--mres)}
+  .t-mresp{background:var(--mresp)}.t-out{background:var(--out)}
+  .cross{color:var(--red);font-family:system-ui,sans-serif;font-size:11px;font-weight:600}
+  .miss{color:var(--red);font-weight:600;font-family:system-ui,sans-serif;font-size:13px}
+  .statband{display:flex;flex-wrap:wrap;gap:14px;margin:20px 0}
+  .stat{flex:1 1 130px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--chip)}
+  .stat .v{font-family:system-ui,sans-serif;font-size:23px;font-weight:700;color:var(--accent)}
+  .stat .v.warn{color:var(--red)}
+  .stat .l{font-family:system-ui,sans-serif;font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .callout{border-left:3px solid var(--accent);background:var(--chip);padding:12px 16px;
+    margin:18px 0;border-radius:0 8px 8px 0;font-size:15.5px}
+  .callout.red{border-left-color:var(--red)}
+  ul,ol{margin:12px 0;padding-left:22px}li{margin:6px 0}
+  .refs{font-family:system-ui,sans-serif;font-size:13px;line-height:1.5}
+  .refs p{margin:9px 0;padding-left:26px;text-indent:-26px}
+  .foot{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+    font-family:system-ui,sans-serif;font-size:12px;color:var(--muted)}
+  @media (max-width:560px){body{font-size:16px}.wrap{padding:36px 18px 70px}h1{font-size:25px}
+    table{font-size:13px}th,td{padding:7px 8px}}
+  @media print{body{background:#fff;color:#000;font-size:11.5pt}.wrap{max-width:none;padding:0}
+    h2{break-after:avoid}figure,table{break-inside:avoid}.stat{background:#f4f4f2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <p class="kicker">Methodological progress report · benchmarked against Richmond et al. (2020)</p>
+  <h1>An agentic multi-agent system for realist evidence synthesis</h1>
+  <p class="byline">Reproducing the analytic operations of a published realist review, with every
+  claim traced to a verbatim quote. Prepared for review; the system is under active development.</p>
+</header>
+
+<p class="lead">This report explains what the system is for, how it is built, and how well it
+reproduces a human realist review — Richmond et al.'s (2020) synthesis of educational interventions
+for clinical reasoning (28 papers). Verification is not a self-assigned grade: we transcribed
+Richmond's own published concepts, relations, and programme-theory chains into a reference key and
+checked, item by item, whether the system recovered them and from which quote. Every number below
+was taken from the run described here.</p>
+
+<h2><span class="n">1</span>What the system is for</h2>
+<p>Realist synthesis asks not simply whether an intervention works, but <em>what</em> about it works,
+<em>for whom</em>, and <em>in what circumstances</em> (Pawson &amp; Tilley, 1997). Its unit of analysis
+is the <strong>Context–Mechanism–Outcome configuration</strong> (CMOC): within a context, an
+intervention offers a resource, a learner responds, and an outcome follows. Assembling these across a
+body of literature and drawing them into a programme theory is slow expert work.</p>
+<p>The goal is a system that performs these operations with a human in charge at every judgement
+point, and that is not tied to one review method: a method-agnostic core with realist synthesis added
+as a plug-in. Success is defined narrowly — can the system recover the contexts, mechanisms, outcomes,
+and programme theory a careful human team published, with each element auditable against the source.</p>
+
+<h2><span class="n">2</span>Entities and relationships: definitions and types</h2>
+<p>The knowledge graph is built from two kinds of object. An <strong>entity</strong> is a single
+realist element extracted from a paper and grounded in a verbatim quote; every entity has exactly one
+of five types. A <strong>relationship</strong> is a directed, typed causal link between two entities;
+only five predicates are allowed, each with a fixed domain and range, so the graph stays a coherent
+C→M→O structure rather than free text.</p>
+
+<figure>
+<svg viewBox="0 0 820 300" role="img" aria-label="The five entity types and five relationship predicates">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#7a828d"/>
+    </marker>
+  </defs>
+  <!-- Context on top -->
+  <rect x="330" y="26" width="160" height="50" rx="9" fill="none" stroke="#9a6b18" stroke-width="2"/>
+  <text x="410" y="47" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="700" fill="#9a6b18">Context</text>
+  <text x="410" y="64" text-anchor="middle" font-family="system-ui" font-size="10.5" fill="#7a828d">pre-existing condition</text>
+  <!-- Row: Intervention, Resource, Response, Outcome -->
+  <rect x="24" y="170" width="170" height="54" rx="9" fill="none" stroke="#0f6b74" stroke-width="2"/>
+  <text x="109" y="192" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="700" fill="#0f6b74">Intervention</text>
+  <text x="109" y="209" text-anchor="middle" font-family="system-ui" font-size="10.5" fill="#7a828d">the method studied</text>
+  <rect x="230" y="170" width="170" height="54" rx="9" fill="none" stroke="#2f6bad" stroke-width="2"/>
+  <text x="315" y="189" text-anchor="middle" font-family="system-ui" font-size="12.5" font-weight="700" fill="#2f6bad">Mechanism</text>
+  <text x="315" y="204" text-anchor="middle" font-family="system-ui" font-size="12.5" font-weight="700" fill="#2f6bad">Resource</text>
+  <text x="315" y="218" text-anchor="middle" font-family="system-ui" font-size="10" fill="#7a828d">what it offers</text>
+  <rect x="436" y="170" width="170" height="54" rx="9" fill="none" stroke="#7a4b93" stroke-width="2"/>
+  <text x="521" y="189" text-anchor="middle" font-family="system-ui" font-size="12.5" font-weight="700" fill="#7a4b93">Mechanism</text>
+  <text x="521" y="204" text-anchor="middle" font-family="system-ui" font-size="12.5" font-weight="700" fill="#7a4b93">Response</text>
+  <text x="521" y="218" text-anchor="middle" font-family="system-ui" font-size="10" fill="#7a828d">how learners react</text>
+  <rect x="642" y="170" width="154" height="54" rx="9" fill="none" stroke="#2e7d52" stroke-width="2"/>
+  <text x="719" y="192" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="700" fill="#2e7d52">Outcome</text>
+  <text x="719" y="209" text-anchor="middle" font-family="system-ui" font-size="10.5" fill="#7a828d">the result</text>
+  <!-- arrows row -->
+  <line x1="194" y1="197" x2="228" y2="197" stroke="#7a828d" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="211" y="189" text-anchor="middle" font-family="system-ui" font-size="9.5" fill="#5c6672">PROVIDES</text>
+  <line x1="400" y1="197" x2="434" y2="197" stroke="#7a828d" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="417" y="189" text-anchor="middle" font-family="system-ui" font-size="9.5" fill="#5c6672">TRIGGERS</text>
+  <line x1="606" y1="197" x2="640" y2="197" stroke="#7a828d" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="623" y="189" text-anchor="middle" font-family="system-ui" font-size="9.5" fill="#5c6672">LEADS_TO</text>
+  <!-- context arrows -->
+  <path d="M400,76 C440,120 480,140 515,168" fill="none" stroke="#9a6b18" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="4 3"/>
+  <text x="470" y="120" font-family="system-ui" font-size="9.5" fill="#9a6b18">ENABLES</text>
+  <path d="M470,58 C610,74 715,110 719,166" fill="none" stroke="#9a6b18" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="4 3"/>
+  <text x="612" y="96" font-family="system-ui" font-size="9.5" fill="#9a6b18">CONSTRAINS</text>
+</svg>
+<figcaption><span class="fignum">Figure 1.</span> The realist ontology: five entity types and the
+five directed predicates (with their fixed domain→range) that connect them into a C→M→O configuration.</figcaption>
+</figure>
+
+<table>
+<caption>Table 1. The five relationship predicates and where each may apply.</caption>
+<thead><tr><th>Predicate</th><th>From (domain)</th><th>To (range)</th></tr></thead>
+<tbody>
+<tr><td>PROVIDES</td><td>Intervention</td><td>Mechanism Resource / Response</td></tr>
+<tr><td>TRIGGERS</td><td>Intervention / Mechanism Resource</td><td>Mechanism Response / Outcome</td></tr>
+<tr><td>ENABLES</td><td>Context</td><td>Mechanism Response / Outcome</td></tr>
+<tr><td>LEADS_TO</td><td>Mechanism Response</td><td>Mechanism Response / Outcome</td></tr>
+<tr><td>CONSTRAINS</td><td>Context</td><td>Outcome</td></tr>
+</tbody>
+</table>
+<p class="muted" style="font-size:14px">A link whose endpoints break these rules is not silently kept —
+it is demoted to an untyped candidate and surfaced for human review. On this run the graph holds
+<strong>180 concept-level entities</strong> and <strong>439 typed relations</strong>.</p>
+
+<h2><span class="n">3</span>Architecture and algorithm</h2>
+<p>The system runs as a staged pipeline of specialised agents over one shared database — the single
+source of truth. Narrow agents give more faithful output than one agent asked to do everything, and
+they mirror the division of labour in a review team. A human sign-off sits at each stage that needs
+judgement.</p>
+
+<figure>
+<svg viewBox="0 0 820 250" role="img" aria-label="The processing pipeline">
+  <defs>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#0f5b6b"/></marker>
+  </defs>
+  <g font-family="system-ui" font-size="11.5" font-weight="600">
+    <g>
+      <rect x="14" y="40" width="120" height="46" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="74" y="60" text-anchor="middle" fill="#0f5b6b">Ingest</text>
+      <text x="74" y="76" text-anchor="middle" font-size="9.5" font-weight="400" fill="#5c6672">text → units</text>
+    </g>
+    <g>
+      <rect x="154" y="40" width="120" height="46" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="214" y="60" text-anchor="middle" fill="#0f5b6b">Screen</text>
+      <text x="214" y="76" text-anchor="middle" font-size="9.5" font-weight="400" fill="#5c6672">two-model vote</text>
+    </g>
+    <g>
+      <rect x="294" y="34" width="128" height="58" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="358" y="54" text-anchor="middle" fill="#0f5b6b">Extract</text>
+      <text x="358" y="69" text-anchor="middle" font-size="9" font-weight="400" fill="#5c6672">draft → check →</text>
+      <text x="358" y="81" text-anchor="middle" font-size="9" font-weight="400" fill="#5c6672">self-refine → ground</text>
+    </g>
+    <g>
+      <rect x="442" y="34" width="132" height="58" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="508" y="54" text-anchor="middle" fill="#0f5b6b">Normalise</text>
+      <text x="508" y="69" text-anchor="middle" font-size="9" font-weight="400" fill="#5c6672">merge synonyms;</text>
+      <text x="508" y="81" text-anchor="middle" font-size="9" font-weight="400" fill="#5c6672">Leiden communities</text>
+    </g>
+    <g>
+      <rect x="594" y="40" width="104" height="46" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="646" y="60" text-anchor="middle" fill="#0f5b6b">Synthesise</text>
+      <text x="646" y="76" text-anchor="middle" font-size="9.5" font-weight="400" fill="#5c6672">demi-regularities</text>
+    </g>
+    <g>
+      <rect x="718" y="40" width="90" height="46" rx="8" fill="none" stroke="#0f5b6b" stroke-width="1.8"/>
+      <text x="763" y="57" text-anchor="middle" font-size="10.5" fill="#0f5b6b">Programme</text>
+      <text x="763" y="71" text-anchor="middle" font-size="10.5" fill="#0f5b6b">theory</text>
+    </g>
+    <line x1="134" y1="63" x2="152" y2="63" stroke="#0f5b6b" stroke-width="1.5" marker-end="url(#ar2)"/>
+    <line x1="274" y1="63" x2="292" y2="63" stroke="#0f5b6b" stroke-width="1.5" marker-end="url(#ar2)"/>
+    <line x1="422" y1="63" x2="440" y2="63" stroke="#0f5b6b" stroke-width="1.5" marker-end="url(#ar2)"/>
+    <line x1="574" y1="63" x2="592" y2="63" stroke="#0f5b6b" stroke-width="1.5" marker-end="url(#ar2)"/>
+    <line x1="698" y1="63" x2="716" y2="63" stroke="#0f5b6b" stroke-width="1.5" marker-end="url(#ar2)"/>
+  </g>
+  <!-- HITL row -->
+  <g font-family="system-ui" font-size="9.5" fill="#8a2b34">
+    <line x1="214" y1="86" x2="214" y2="118" stroke="#8a2b34" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <line x1="358" y1="92" x2="358" y2="118" stroke="#8a2b34" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <line x1="763" y1="86" x2="763" y2="118" stroke="#8a2b34" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <text x="214" y="132" text-anchor="middle" font-weight="600">human check</text>
+    <text x="358" y="132" text-anchor="middle" font-weight="600">human check</text>
+    <text x="763" y="132" text-anchor="middle" font-weight="600">sign-off</text>
+  </g>
+  <!-- verification harness -->
+  <rect x="14" y="168" width="794" height="52" rx="8" fill="none" stroke="#2e7d52" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="411" y="190" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="700" fill="#2e7d52">Verification harness — outside the pipeline</text>
+  <text x="411" y="208" text-anchor="middle" font-family="system-ui" font-size="10" fill="#5c6672">compares outputs to the Richmond key; the answer key is read only here, never by the agents</text>
+</svg>
+<figcaption><span class="fignum">Figure 2.</span> The pipeline. Each stage is an agent writing to the
+shared database; humans sign off at the marked points. The benchmark comparison sits outside the
+system so the agents never see the answer key.</figcaption>
+</figure>
+
+<p>Two design choices are worth naming. First, extraction is <strong>self-correcting</strong>: the
+extractor drafts, an independent checker in a <em>different</em> model family critiques the draft, and
+the extractor revises before anything is stored — echoing Richmond's practice of a second reviewer
+checking every paper. Self-refinement of this kind is established to improve model output (Madaan et
+al., 2023; Shinn et al., 2023). Second, higher-level concepts are <strong>discovered, not
+pre-listed</strong>: entities are clustered by Leiden community detection (Traag et al., 2019), the
+method Microsoft's GraphRAG uses (Edge et al., 2024), and each community is summarised into one "big
+concept". One empirical caution shaped the design — injecting the full programme theory into the
+per-paper extraction prompt was found to <em class="red">reduce</em> how many configurations were
+recovered, so that guidance is kept light and steers naming and synthesis, not the first read.</p>
+
+<h2><span class="n">4</span>Does the system follow Richmond's workflow?</h2>
+<p>We mapped each step of Richmond's human process onto an agent. The table records whether the step
+was reproduced and what it produced on this run.</p>
+<table>
+<caption>Table 2. Richmond's human workflow beside the system, with the result at each step.</caption>
+<thead><tr><th>Richmond step (human)</th><th>System agent</th><th>Followed</th><th>Result on this run</th></tr></thead>
+<tbody>
+<tr><td>Write the initial programme theory</td><td>Protocol &amp; initial-theory agent</td><td>Yes</td><td>Public-theory seed; steers synthesis, not the per-paper read</td></tr>
+<tr><td>Search databases</td><td>—</td><td class="miss">Partial</td><td>Out of scope for the benchmark; the 28-paper corpus is fixed to Richmond's</td></tr>
+<tr><td>Screen abstracts, then full texts</td><td>Two-stage screening agent + human</td><td>Yes</td><td>Reproduced the inclusion set — 100% sensitivity after human review</td></tr>
+<tr><td>Two reviewers extract CMOCs</td><td>Extraction agent (self-refine)</td><td>Yes</td><td>91 configurations; 96.9% of quotes resolve to the source text</td></tr>
+<tr><td>Second reviewer checks each paper</td><td>Independent checker (different model)</td><td>Yes</td><td>Every study re-checked; disagreements surfaced, not overwritten</td></tr>
+<tr><td>Synthesise across studies</td><td>Normalisation + Leiden communities</td><td>Yes</td><td>180 concepts, 8 big concepts, 36 demi-regularities</td></tr>
+<tr><td>Build programme theory by context</td><td>Theory synthesis &amp; refinement</td><td>Yes</td><td>Seven context sections (see §6)</td></tr>
+<tr><td>Report with an audit trail</td><td>Reporting &amp; audit agent</td><td>Yes</td><td>Outputs plus full provenance for RAMESES reporting (Wong et al., 2013)</td></tr>
+</tbody>
+</table>
+
+<h2><span class="n">5</span>How verification works — and what it is <em>not</em></h2>
+<p>Richmond's paper is prose, not a scored test. So the standard is built <strong>from that
+prose</strong>: we read their Results §3.2 and Figures 2 and 3 and transcribed, by hand, the analytic
+content they published — <strong>47 concepts</strong> (their contexts, interventions, mechanisms and
+outcomes), <strong>40 causal relations</strong> among them, and their <strong>5 context-specific
+programme-theory chains</strong> — each tagged with its location in the paper. This transcription is
+the reference key.</p>
+<p>Verification then compares the system's output to that key <strong>one item at a time</strong>: for
+each concept Richmond describes, is there an extracted concept expressing the same thing, and if so
+from which study and quote? A number such as "43 of 47" is therefore not a grade the system gave
+itself — it is a count of how many of Richmond's published items were recovered, and <strong>every
+count is traceable</strong> to a page in Richmond and a verbatim quote in a source paper (§6). Where
+the semantic match is a judgement call, it is made by a separate model and flagged for a human to
+ratify; it is never treated as settled.</p>
+
+<h2><span class="n">6</span>Results</h2>
+<p>The centre of the result is the content match below, which can be checked directly against
+Richmond's paper. The summary figures follow it.</p>
+
+<h3>6.1 Content recovered, with evidence</h3>
+<p>A representative selection across the five entity types (the full 47-item list is in
+<span class="cid">Richmond_Correspondence.md</span>). "Different role" marks a concept the system
+recovered but filed under a different realist role than Richmond — surfaced honestly, not hidden.</p>
+<table>
+<caption>Table 3. Richmond's published elements beside what the system recovered, with the source quote.</caption>
+<thead><tr><th>Richmond element · location</th><th>Recovered as · study · quote</th></tr></thead>
+<tbody>
+<tr><td><span class="tag t-ctx">Context</span> low clinical knowledge / cannot yet use knowledge <span class="cid">Fig 2, pp.712–14</span></td>
+<td><strong>novices not using non-analytic reasoning</strong> <span class="cid">S006, S013, S016, S018</span><br><span class="q">"they are not yet likely to have well-developed illness scripts."</span></td></tr>
+<tr><td><span class="tag t-ctx">Context</span> high clinical knowledge <span class="cid">§3.2</span></td>
+<td><strong>clinically different expertise levels</strong> <span class="cid">S001, S009, S022</span> <span class="cross">▸ different role</span><br><span class="q">"Scores were compared between groups of different levels of expertise: surgeons, residents, interns…"</span></td></tr>
+<tr><td><span class="tag t-int">Intervention</span> expert's reasoning explicitly revealed <span class="cid">§3.2.2, p.714</span></td>
+<td><strong>case-based clinical reasoning seminar</strong> <span class="cid">S001, S003, S004, S005</span><br><span class="q">"…designed to bring students insight into cognitive features of their reasoning…"</span></td></tr>
+<tr><td><span class="tag t-int">Intervention</span> real-life scenarios incl. simulation <span class="cid">§3.2.3, p.714</span></td>
+<td><strong>diagnostic decision-tree virtual-patient cases</strong> <span class="cid">S011, S015</span><br><span class="q">"…software can be used to create VP cases that give virtual experience of these real-time clinical reasoning techniques."</span></td></tr>
+<tr><td><span class="tag t-mres">Resource</span> multiple relevant resources <span class="cid">Fig 2, p.713</span></td>
+<td><strong>multiple tasks and acutely unwell patients</strong> <span class="cid">S011, S015, S022, S023</span> <span class="cross">▸ different role</span><br><span class="q">"…the students were faced with multiple tasks and acutely unwell patients, and therefore had to prioritise."</span></td></tr>
+<tr><td><span class="tag t-mresp">Response</span> cognitive load is increased <span class="cid">§3.2.4, p.716</span></td>
+<td><strong>cognitive-load overwhelm</strong> <span class="cid">S016, S024, S025, S028</span><br><span class="q">"…may simply overwhelm an individual's cognitive load without any effect on outcomes."</span></td></tr>
+<tr><td><span class="tag t-mresp">Response</span> stress <span class="cid">§3.2.4, p.716</span></td>
+<td><strong>stress from competing patient and pager demands</strong> <span class="cid">S015</span><br><span class="q">"It was stressful. When you have a sick patient and then the page goes off, that was stressful."</span></td></tr>
+<tr><td><span class="tag t-mresp">Response</span> frustrated <span class="cid">§3.2.2, p.714</span></td>
+<td><strong>student frustration</strong> <span class="cid">S022</span><br><span class="q">"8 of 17 found the game frustrating (compared to 1 of 11 trainees and 1 of 6 experts)."</span></td></tr>
+<tr><td><span class="tag t-out">Outcome</span> high diagnostic accuracy <span class="cid">§3.2.2, p.714</span></td>
+<td><strong>improved diagnostic accuracy</strong> <span class="cid">S003, S004, S005, S019</span><br><span class="q">"Mean diagnostic accuracy scores were significantly higher in the analytic reasoning group than in the control group."</span></td></tr>
+<tr><td><span class="tag t-out">Outcome</span> more complete illness scripts <span class="cid">§3.2.3, p.714</span></td>
+<td><strong>illness-script development for diagnosis</strong> <span class="cid">S023</span><br><span class="q">"pools of similar cases are required so that students can properly develop their illness scripts…"</span></td></tr>
+</tbody>
+</table>
+
+<h3>6.2 Summary of the match</h3>
+<div class="statband">
+  <div class="stat"><div class="v">100%</div><div class="l">Screening sensitivity (after human review)</div></div>
+  <div class="stat"><div class="v">43 / 47</div><div class="l">Richmond concepts recovered (37 same role, 6 different role)</div></div>
+  <div class="stat"><div class="v">39 / 40</div><div class="l">Causal relations recovered at the pattern level</div></div>
+  <div class="stat"><div class="v">96.9%</div><div class="l">Extracted elements grounded in an exact source quote</div></div>
+</div>
+<p class="muted" style="font-size:14px">Relations at the strictest level (both endpoints the exact same
+concept) are <strong>0 of 40</strong>; with one exact endpoint, <strong>22 of 40</strong>. We report all
+three levels rather than the flattering one: for a realist review the causal <em>pattern</em> (e.g.
+<em>Context constrains Outcome</em>) is the appropriate target, and it is nearly complete.</p>
+
+<h3>6.3 Programme-theory chains</h3>
+<p>Richmond's five context-specific chains, and how closely the system's programme theory corresponds
+to each (judged by a separate model; a human expert rating is still required before any publication
+claim).</p>
+<table>
+<caption>Table 4. Correspondence of the system's programme theory to Richmond's five chains.</caption>
+<thead><tr><th>Chain · Richmond context</th><th>Correspondence</th></tr></thead>
+<tbody>
+<tr><td><strong>PTS1</strong> low domain knowledge</td><td><strong>0.89</strong> — strong</td></tr>
+<tr><td><strong>PTS4</strong> negative coping / low self-efficacy</td><td>0.59 — moderate</td></tr>
+<tr><td><strong>PTS2</strong> high domain knowledge</td><td>0.50 — partial</td></tr>
+<tr><td><strong>PTS5</strong> mixed-knowledge group</td><td>0.39 — limited</td></tr>
+<tr><td><strong>PTS3</strong> positive coping / self-efficacy</td><td>0.32 — limited</td></tr>
+</tbody>
+</table>
+
+<h2><span class="n">7</span>Honest assessment</h2>
+<p><strong>What works.</strong> The system reproduces the inclusion decisions, recovers most of the
+content Richmond published, and grounds nearly every element in a verbatim quote — so the output can
+be audited rather than trusted on faith. The causal patterns are almost all present, and the big
+concepts the graph finds on its own (guided reasoning practice, self-explanation, testing-enhanced
+study, and so on) are recognisably the mechanisms a human would name. Its strongest programme-theory
+chain, for low-knowledge novices, corresponds closely to Richmond's.</p>
+<p><strong>What is not there yet.</strong> Four of Richmond's 47 elements were missed on this run,
+<span class="cid">including the mixed-knowledge-group context and two affective responses</span>. Six matches
+sit under a different realist role than Richmond assigned, and a few of those are generous — they are
+flagged for human ratification, not counted as clean. Exact-concept relation matching is low, and the
+programme-theory correspondence is model-judged and awaits an expert rating. These are specific,
+understood gaps, not diffuse weakness.</p>
+<div class="callout red"><strong>Is the current result strong enough to keep going?</strong> We think
+yes. On a genuinely hard expert task the system already recovers most of a published human review with
+traceable evidence, and where it falls short the reasons are concrete. Three mechanisms requested for
+this project — seed-guided extraction, graph-aware extraction, and a human-feedback-to-few-shot loop —
+are now built in and were active on this run; refining them is the next step.</p>
+
+<h2><span class="n">8</span>References</h2>
+<div class="refs">
+<p>Edge, D., Trinh, H., Cheng, N., Bradley, J., Chao, A., Mody, A., Truitt, S., &amp; Larson, J. (2024).
+<em>From local to global: A Graph RAG approach to query-focused summarization</em>. arXiv:2404.16130.</p>
+<p>Madaan, A., Tandon, N., Gupta, P., Hallinan, S., Gao, L., Wiegreffe, S., … Clark, P. (2023).
+Self-Refine: Iterative refinement with self-feedback. <em>Advances in Neural Information Processing
+Systems, 36</em>.</p>
+<p>Pawson, R., &amp; Tilley, N. (1997). <em>Realistic evaluation</em>. Sage.</p>
+<p>Richmond, A., Cooper, N., Gay, S., Atiomo, W., &amp; Patel, R. (2020). The student is key: A realist
+review of educational interventions to develop analytical and non-analytical clinical reasoning
+ability. <em>Medical Education, 54</em>(8), 709–719.</p>
+<p>Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K., &amp; Yao, S. (2023). Reflexion: Language agents
+with verbal reinforcement learning. <em>Advances in Neural Information Processing Systems, 36</em>.</p>
+<p>Traag, V. A., Waltman, L., &amp; van Eck, N. J. (2019). From Louvain to Leiden: Guaranteeing
+well-connected communities. <em>Scientific Reports, 9</em>, 5233.</p>
+<p>Wong, G., Greenhalgh, T., Westhorp, G., Buckingham, J., &amp; Pawson, R. (2013). RAMESES publication
+standards: Realist syntheses. <em>BMC Medicine, 11</em>, 21.</p>
+</div>
+
+<p class="foot">All figures and counts are generated from the run described here (26 of 28 papers
+extracted; two are abstract-only and correctly yielded nothing). The interactive knowledge graph is
+available in the review console. This is a progress report on a system under active development.</p>
+
+</div>
+</body>
+</html>

@@ -356,7 +356,8 @@ def _pipeline_state() -> tuple[list[dict], dict]:
 
 
 def _latest_report() -> dict | None:
-    reps = sorted(glob.glob(str(OUTPUTS_DIR / "runs" / "verify-*" / "verification_report.json")))
+    reps = sorted(glob.glob(str(OUTPUTS_DIR / "runs" / "verify-*" / "verification_report.json")),
+                  key=os.path.getmtime)  # by mtime — hex run-ids don't sort chronologically
     return json.load(open(reps[-1], encoding="utf-8")) if reps else None
 
 

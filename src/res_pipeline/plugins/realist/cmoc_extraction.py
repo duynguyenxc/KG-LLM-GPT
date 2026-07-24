@@ -23,9 +23,10 @@ from pydantic import BaseModel, Field
 from res_pipeline.core.agents import persona
 from res_pipeline.core.db import get_connection, log_audit_event
 from res_pipeline.core.llm import call_structured
+from res_pipeline.plugins.realist.guidance import extraction_guidance_block, guidance_config
 from res_pipeline.plugins.realist.ontology import EntityType, Predicate, domain_range_map
 
-PROMPT_VERSION = "cmoc-extraction-v4.0-selfrefine+boundary"
+PROMPT_VERSION = "cmoc-extraction-v5.0-guided+selfrefine"
 
 _ENTITY_FIELD_TO_TYPE: dict[str, EntityType] = {
     "contexts": EntityType.CONTEXT,
@@ -227,14 +228,17 @@ def extract_study_cmocs(study_id: str, run_id: str) -> dict:
         ).fetchone()
     canonical_text, title = row["canonical_text"], row["title"]
 
-    # Per-paper CMOC coding stays DATA-DRIVEN and pristine (Richmond §2.2): the IPT
-    # steers synthesis/retroduction, NOT per-paper extraction — injecting it here was
-    # measured to suppress CMOC yield and quote-support (a MetaGPT-style dilution). The
-    # faithful per-paper addition is the independent Checker (below), not a prompt change.
+    # The extractor's _SYSTEM stays pristine and data-driven (a heavy IPT block here was
+    # measured to suppress yield). The professor's three mechanisms are added as a LIGHT,
+    # advisory block AFTER the text — seed naming examples, existing LKG concepts for
+    # cross-study consistency (GraphRAG-in-the-loop), and any human corrections learned at
+    # earlier checkpoints (HITL few-shot). It steers naming only, never what may be yielded,
+    # and is fully toggleable in config/guidance.yaml.
+    guidance = extraction_guidance_block()
     user_prompt = (
         f"STUDY {study_id}: {title} ({row['year'] or 'year unknown'}); "
         f"source: {row['source_kind']}.\n\nFULL TEXT:\n{canonical_text}\n\n"
-        "Extract the CMOCs."
+        "Extract the CMOCs." + guidance
     )
     result = call_structured(
         tier="extraction", system_prompt=_SYSTEM, user_prompt=user_prompt,
@@ -349,6 +353,8 @@ def extract_study_cmocs(study_id: str, run_id: str) -> dict:
     log_audit_event(run_id, "cmoc_extraction_agent", "study_extracted",
                     subject_ref=study_id,
                     detail={**stats, "prompt_version": PROMPT_VERSION,
+                            "guidance": guidance_config(),
+                            "guidance_applied": bool(guidance),
                             "limitations": result.study_limitations})
     return stats
 

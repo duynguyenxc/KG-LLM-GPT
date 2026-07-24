@@ -42,6 +42,49 @@ def _slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:60]
 
 
+def _norm_key(text: str) -> str:
+    """Aggressive normalisation for mechanical exact-match pre-merge."""
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+_BATCH = 40  # labels per LLM clustering call — keeps each response small and bounded
+
+
+def _batched_cluster(items: list[str], system_prompt: str, run_id: str,
+                     noun: str = "LABELS") -> list[tuple[str, list[str]]]:
+    """Cluster ``items`` in bounded batches, then merge clusters that share a
+    canonical label across batches.
+
+    A single call over ~100+ items can send the model into a degenerate
+    repetition loop that hits the completion-token ceiling. We instead sort
+    (so near-duplicate strings sit adjacent and land in the same batch), split
+    into batches of ``_BATCH``, cluster each, and union members whose canonical
+    label matches across batches — recovering cross-batch synonyms.
+    """
+    ordered = sorted(items)
+    merged: dict[str, tuple[str, list[str]]] = {}  # norm(canonical) -> (display, members)
+    for start in range(0, len(ordered), _BATCH):
+        batch = ordered[start:start + _BATCH]
+        result = call_structured(
+            tier="normalization",
+            system_prompt=system_prompt,
+            user_prompt=f"{noun}:\n" + "\n".join(f"- {x}" for x in batch),
+            schema=ClusteringResult,
+            run_id=run_id,
+        )
+        batch_set = set(batch)
+        for cluster in result.clusters:
+            members = [m for m in cluster.member_labels if m in batch_set]
+            if not members:
+                continue
+            key = _norm_key(cluster.canonical_label)
+            if key in merged:
+                merged[key][1].extend(members)
+            else:
+                merged[key] = (cluster.canonical_label, list(members))
+    return list(merged.values())
+
+
 def build_concept_families(run_id: str) -> dict[str, int]:
     """Second-level clustering: canonical concepts -> broader concept FAMILIES.
 
@@ -71,8 +114,8 @@ def build_concept_families(run_id: str) -> dict[str, int]:
             ).fetchall()]
         if not concepts:
             continue
-        result = call_structured(
-            tier="normalization",
+        clusters = _batched_cluster(
+            concepts,
             system_prompt=(
                 f"You are grouping {entity_type} concepts from a realist synthesis of "
                 "clinical-reasoning education into BROAD analytic families, at the "
@@ -84,16 +127,15 @@ def build_concept_families(run_id: str) -> dict[str, int]:
                 "provided concept id appears in exactly one family; copy ids exactly; "
                 "prefer 4-12 families; name each family with a short analytic label."
             ),
-            user_prompt="CONCEPT IDS:\n" + "\n".join(f"- {c}" for c in concepts),
-            schema=ClusteringResult,
-            run_id=run_id,
+            run_id=run_id, noun="CONCEPT IDS",
         )
         assigned: dict[str, tuple[str, str]] = {}
-        for cluster in result.clusters:
-            family_id = f"fam:{entity_type[:4].lower()}:{_slug(cluster.canonical_label)}"
-            for member in cluster.member_labels:
-                if member in concepts:
-                    assigned[member] = (family_id, cluster.canonical_label)
+        concept_set = set(concepts)
+        for canonical_label, members in clusters:
+            family_id = f"fam:{entity_type[:4].lower()}:{_slug(canonical_label)}"
+            for member in members:
+                if member in concept_set:
+                    assigned[member] = (family_id, canonical_label)
         for concept in concepts:
             assigned.setdefault(concept, (f"fam:{concept}", concept))
         with get_connection() as conn:
@@ -131,8 +173,16 @@ def normalize_entities(run_id: str) -> dict[str, int]:
         if not labels:
             continue
 
-        result = call_structured(
-            tier="normalization",
+        # Mechanical pre-merge: labels with identical normalised keys are the same
+        # concept (case/punctuation/whitespace variants). Cluster one representative
+        # per key with the LLM, then fan the canonical_id back to all variants.
+        key_to_variants: dict[str, list[str]] = {}
+        for label in labels:
+            key_to_variants.setdefault(_norm_key(label), []).append(label)
+        reps = [variants[0] for variants in key_to_variants.values()]
+
+        clusters = _batched_cluster(
+            reps,
             system_prompt=(
                 "You are canonicalizing concept labels for a realist-synthesis knowledge "
                 f"graph. All labels below are of type {entity_type}. Group labels that refer "
@@ -142,18 +192,23 @@ def normalize_entities(run_id: str) -> dict[str, int]:
                 "do NOT invent labels; when unsure, keep labels in separate clusters "
                 "(over-merging corrupts the analysis, under-merging is recoverable)."
             ),
-            user_prompt="LABELS:\n" + "\n".join(f"- {label}" for label in labels),
-            schema=ClusteringResult,
             run_id=run_id,
         )
 
         # Build mapping with safety: unassigned/hallucinated labels fall back to themselves.
+        rep_set = set(reps)
+        rep_to_canon: dict[str, str] = {}
+        for canonical_label, members in clusters:
+            canonical_id = f"{entity_type[:4].lower()}:{_slug(canonical_label)}"
+            for member in members:
+                if member in rep_set:
+                    rep_to_canon[member] = canonical_id
         assigned: dict[str, str] = {}
-        for cluster in result.clusters:
-            canonical_id = f"{entity_type[:4].lower()}:{_slug(cluster.canonical_label)}"
-            for member in cluster.member_labels:
-                if member in labels:
-                    assigned[member] = canonical_id
+        for key, variants in key_to_variants.items():
+            rep = variants[0]
+            canonical_id = rep_to_canon.get(rep, f"{entity_type[:4].lower()}:{_slug(rep)}")
+            for variant in variants:
+                assigned[variant] = canonical_id
         for label in labels:
             assigned.setdefault(label, f"{entity_type[:4].lower()}:{_slug(label)}")
 

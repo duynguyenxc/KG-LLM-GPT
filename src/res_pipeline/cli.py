@@ -202,6 +202,39 @@ def extract(
 
 
 @app.command()
+def feedback(
+    correct: str = typer.Option(..., help="The human's correction (what the agent SHOULD do)."),
+    agent: str = typer.Option("cmoc_extraction", help="Agent the correction applies to."),
+    wrong: str = typer.Option("", help="What the agent did wrong (optional, for contrast)."),
+    note: str = typer.Option("", help="Short rationale (optional)."),
+    study: str = typer.Option("", help="Study to re-extract now so the correction takes effect."),
+    reextract: bool = typer.Option(
+        False, help="Re-run extraction for --study using the new few-shot correction."),
+) -> None:
+    """HITL feedback -> few-shot -> re-run: record a human correction, then optionally
+    re-extract a study so the agent immediately learns from it (professor's signature loop)."""
+    import uuid as _uuid
+
+    from res_pipeline.plugins.realist.guidance import record_feedback
+
+    run_id = f"feedback-{_uuid.uuid4().hex[:8]}"
+    record_feedback(agent, correct, wrong=wrong, note=note, study_id=study, run_id=run_id)
+    console.print(f"Recorded correction for '{agent}': {correct}", markup=False)
+    if reextract:
+        if not study:
+            console.print("--reextract needs --study.", markup=False)
+            raise typer.Exit(1)
+        from res_pipeline.plugins.realist.retroduction import _reextract_study
+        console.print(f"Re-extracting {study} with the learned correction...", markup=False)
+        _reextract_study(study, run_id)
+        from res_pipeline.plugins.realist.span_repair import fuzzy_repair_spans, repair_spans
+        repair_spans(run_id)
+        fuzzy_repair_spans(run_id)
+        console.print(f"  {study} re-extracted under HITL few-shot.", markup=False)
+        _print_run_cost(run_id)
+
+
+@app.command()
 def adjudicate() -> None:
     """HITL-1: human adjudication of 'uncertain' screening decisions.
 
