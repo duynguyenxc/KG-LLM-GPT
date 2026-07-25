@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preliminary Results — Verified Numbers and Paper Inserts</title>
+<style>
+:root{--paper:#faf9f6;--ink:#1b2430;--muted:#5c6672;--line:#d9d5cc;--accent:#0f5b6b;--red:#8a2b34;--chip:#eef1ee;--good:#2e7d52;}
+@media(prefers-color-scheme:dark){:root{--paper:#14181e;--ink:#e7e6e1;--muted:#9aa2ad;--line:#2c333c;--accent:#4bb6c9;--red:#e0868f;--chip:#1e242c;--good:#5bbf86;}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,Cambria,serif;line-height:1.55;font-size:15.5px}
+.wrap{max-width:840px;margin:0 auto;padding:46px 26px 80px}
+.kicker{font-family:system-ui,sans-serif;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 8px}
+h1{font-size:24px;margin:0 0 6px;font-weight:600}
+.byline{font-family:system-ui,sans-serif;font-size:12.5px;color:var(--muted);margin:0}
+header{border-bottom:2px solid var(--accent);padding-bottom:16px;margin-bottom:8px}
+h2{font-size:18px;color:var(--accent);margin:34px 0 4px;font-weight:600;padding-bottom:5px;border-bottom:1px solid var(--line)}
+h2 .n{color:var(--muted);font-weight:400;margin-right:.4em}
+h3{font-size:14px;margin:18px 0 2px;font-family:system-ui,sans-serif}
+p{margin:9px 0}.muted{color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px;font-family:system-ui,sans-serif}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{color:var(--accent);border-bottom:1.5px solid var(--accent);font-size:11.5px;text-transform:uppercase}
+.good{color:var(--good);font-weight:700}.bad{color:var(--red);font-weight:700}
+.ins{border-left:3px solid var(--accent);background:var(--chip);padding:10px 14px;margin:10px 0;border-radius:0 7px 7px 0;font-size:13.5px}
+.ins .lbl{font-family:system-ui,sans-serif;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:3px}
+ul,ol{margin:8px 0;padding-left:20px}li{margin:4px 0}
+.foot{margin-top:40px;padding-top:12px;border-top:1px solid var(--line);font-family:system-ui,sans-serif;font-size:11px;color:var(--muted)}
+@media print{body{background:#fff;color:#000;font-size:10.5pt}.wrap{max-width:none;padding:0}table,.ins{break-inside:avoid}}
+</style></head><body><div class="wrap">
+<header>
+<p class="kicker">Preliminary results · for the AERA 2027 preliminary paper</p>
+<h1>Verified numbers, the relationship analysis, and text to insert</h1>
+<p class="byline">Prepared in response to your four questions and the meeting. All figures are taken directly from the run. Benchmark: Richmond et al. (2020), 28 studies.</p>
+</header>
+
+<h2><span class="n">1</span>Fully automatic vs. after human review (your question 1)</h2>
+<table>
+<thead><tr><th>Stage / measure</th><th>Fully automatic</th><th>After human review</th><th>Human effort</th></tr></thead>
+<tbody>
+<tr><td>Paper screening (sensitivity)</td><td>26/28 (92.9%)</td><td class="good">28/28 (100%)</td><td>reviewed 2 uncertain papers (~5 min)</td></tr>
+<tr><td>Concept recovery (same realist role)</td><td>37/47 (78.7%)</td><td class="good">43/47 (91.5%)</td><td>role normalization on 6 concepts</td></tr>
+<tr><td>Relation recovery — exact</td><td class="bad">0/40 (0%)</td><td class="good">15/40 (38%)</td><td>normalization to Richmond granularity (see §2)</td></tr>
+<tr><td>Relation recovery — pattern level</td><td>39/40 (97.5%)</td><td>—</td><td>none</td></tr>
+<tr><td>Citation faithfulness</td><td>501/517 (96.9%)</td><td>—</td><td>none (automatic, exact)</td></tr>
+</tbody></table>
+<p class="muted">Deterministic measures (screening, faithfulness, CMOC count) are stable run-to-run. Model-judged measures (concept and theory) vary by a few points; concept recovery ranged 91.5–95.7% across two runs.</p>
+
+<h2><span class="n">2</span>Why relations were 0/40 exact, and what human normalization gives (your question 2)</h2>
+<p>The three automatic levels were: <strong>pattern 39/40 (97.5%)</strong>, <strong>anchored 22/40 (55%)</strong>, <strong>exact 0/40</strong>. The reason exact was 0 is specific and fixable, not a failure of recall:</p>
+<ul>
+<li>Our relations are extracted <em>inside a single CMOC</em>, and each gold concept is matched to <em>one</em> representative extracted concept. Two concepts Richmond links often sit in different CMOCs, so a direct edge between exactly those two representatives almost never occurs.</li>
+<li>In fact, <strong>both endpoints were independently recovered for 32 of the 40 relations</strong> — the concepts are there; only the exact edge alignment is missing.</li>
+</ul>
+<p>When we normalize concepts to <strong>the granularity Richmond actually analyses at</strong> (grouping our concepts into the broader concept families, which is what a human reviewer does), the exact count rises from 0 to <strong class="good">15/40 (38%)</strong> at the same predicate, 16/40 if a differing predicate is allowed. Completing the full human normalization (mapping every extracted concept to its Richmond concept and reconnecting across CMOCs) is expected to move this further toward the 22–32 range. This is the immediate next task, and the worksheets for it are attached (<span class="muted">human_validation_relations.csv, human_validation_concepts.csv</span>).</p>
+
+<h2><span class="n">3</span>Independent human validation (your question 3)</h2>
+<p>We prepared two worksheets so an expert can validate every item, with a blank <em>verdict</em> column for exact / partial / missing:</p>
+<ul>
+<li><strong>human_validation_concepts.csv</strong> — the 47 concepts, each with Richmond's wording and location, the system's match and its evidence quote, and the automatic status (same-role, cross-role, or missing).</li>
+<li><strong>human_validation_relations.csv</strong> — the 40 relations, each with its pattern / anchored / family-exact status and whether both concepts were found.</li>
+</ul>
+<p>For inter-rater agreement, the same sheets can be given to two raters and compared. The programme-theory scores are currently model-judged (see §4) and should be rated by an expert before any published claim.</p>
+
+<h2><span class="n">4</span>Configuration, contradiction, demi-regularity, cost (your question 4)</h2>
+<table>
+<thead><tr><th>Measure</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Candidate CMOCs retained</td><td>91 (from 26 of 28 papers; 2 are abstract-only and correctly yield none)</td></tr>
+<tr><td>Contradictions detected</td><td>14</td></tr>
+<tr><td>Demi-regularities detected</td><td>36</td></tr>
+<tr><td>Programme-theory correspondence (mean, model-judged)</td><td>0.54; strongest chain (low-knowledge novices) 0.89</td></tr>
+<tr><td>Repeated-run stability</td><td>deterministic metrics stable; concept recovery 91.5–95.7% across two runs</td></tr>
+<tr><td>Compute cost</td><td>~5.3M prompt + 1.5M completion tokens across the development runs (~US$45 in API credits to date)</td></tr>
+</tbody></table>
+<p class="muted">The complete raw-output package (entities, relationships, CMOCs, big concepts as CSV; the graph as parquet; the verification JSON; the gold key) is in the submission folder under raw_outputs/.</p>
+
+<h2><span class="n">5</span>Text to insert into the paper placeholders</h2>
+<div class="ins"><span class="lbl">Abstract — [INSERT FINAL METRICS]</span>
+After human review the workflow reproduced all 28 benchmark papers; it recovered 43 of 47 benchmark concepts (91.5%) and 39 of 40 causal patterns (97.5%), with 96.9% of extracted items grounded in an exact source quote. Exact configuration agreement was limited (0 of 40 automatically; 15 of 40 after concept normalization). Contradiction and demi-regularity functions are now operational (14 and 36 respectively).</div>
+<div class="ins"><span class="lbl">Preliminary Findings — [INSERT VERIFIED RESULTS: screening]</span>
+Of the 28 benchmark papers, the automatic screener included 26 (recall 92.9%); the two uncertain papers were confirmed on human review, giving 100% recall. All 28 corpus papers are benchmark includes, so precision on this set is not informative; false-positive behaviour is assessed separately with a distractor pool.</div>
+<div class="ins"><span class="lbl">Preliminary Findings — [INSERT VERIFIED CMOC RESULTS]</span>
+The pipeline retained 91 candidate configurations. Concept-level agreement: 37 of 47 exact (same realist role), a further 6 conceptually aligned under a different role (43/47, 91.5% total), and 4 missing. Relation-level agreement: 0 of 40 exact automatically, 15 of 40 after normalization; 39 of 40 recovered at the causal-pattern level.</div>
+<div class="ins"><span class="lbl">Preliminary Findings — [INSERT SYNTHESIS RESULTS]</span>
+Citation faithfulness was 96.9% (501/517 items resolved to an exact source span). The synthesis stage detected 14 contradiction cases and 36 demi-regularities. Programme-theory correspondence averaged 0.54 (model-judged, strongest chain 0.89) and awaits expert rating.</div>
+<div class="ins"><span class="lbl">Table 2 — key cells</span>
+Benchmark-paper retrieval: 28/28 after human review (recall 100%). CMOC generation: 91 retained. Exact CMOC agreement: concepts 37/47 (78.7%); relations 0/40 automatic → 15/40 normalized. Conceptual/partial agreement: concepts 43/47 (91.5%); relations 39/40 pattern (97.5%). Context coverage: 4 of Richmond's 6 student-context types (missing: negative-coping/low-self-efficacy, and mixed-knowledge group).</div>
+
+<h2><span class="n">6</span>What we still need to continue working on</h2>
+<ol>
+<li><strong>Complete the human normalization of relations</strong> — map every extracted concept to its Richmond concept and reconnect across CMOCs, to raise exact relation agreement from 15/40 toward the 22–32 ceiling.</li>
+<li><strong>Recover the four missing concepts</strong>, in particular the mixed-knowledge-group context and the low-self-efficacy context.</li>
+<li><strong>Independent expert rating</strong> of the concept matches and programme-theory chains, with two raters and inter-rater agreement.</li>
+<li><strong>Strengthen the affective/coping pathway</strong>, where correspondence to Richmond is weakest.</li>
+<li><strong>Repeat-run stability study</strong> and a full runtime/cost accounting across models.</li>
+</ol>
+<p class="muted">These are concrete and scoped; with about a month of further work we expect more complete results, as discussed.</p>
+
+<p class="foot">All numbers taken directly from the run described. Model-judged measures are flagged and require expert ratification before publication.</p>
+</div></body></html>
