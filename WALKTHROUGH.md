@@ -752,3 +752,47 @@ what is loaded" panel shows counts, accepted formats, and how to scale.
 **Still open:** HITL clarity redesign (so a non-author reviewer understands what to review), manuscript
 Findings/Evaluation draft, human κ + figures; and the KG fixes from Deliverable 1 (tighter
 boundary prompt, abstraction pass, Checker re-typing).
+
+## M30 — Professor's four questions, guided full run, and the AERA 2027 preliminary submission (2026-07-23→24)
+
+**Trigger.** Prof. Zheng needed preliminary results for an AERA 2027 Division D preliminary paper
+(draft with yellow `[INSERT]` placeholders) by 8 pm on 7/23, and sent four questions after a
+ChatGPT-assisted review of our first package: (1) separate fully-automatic from after-human-review
+results, per stage, with human effort; (2) explain why relations were 39/40 pattern, 22/40 anchored
+but 0/40 exact, and how many become exact after human normalization; (3) arrange independent
+two-rater human validation of the 43/47 concepts and theory scores; (4) provide the complete
+raw-output package plus CMOC count, contradictions, demi-regularities, stability, runtime, cost.
+In the meeting his stated priority was the relation result ("0% and 50%") and a human-validated
+47-concept / 40-relation classification, framed as "preliminary, promising, more in a month".
+
+**System work.** Built the three mechanisms he had asked for (`plugins/realist/guidance.py`,
+`config/guidance.yaml`): light seed-guided naming from the IPT, GraphRAG-in-the-loop retrieval of
+concepts already in the graph, and a HITL feedback → few-shot → re-run loop (`res feedback`).
+Fixed normalization to cluster in batches (a single call over ~110 labels had run into a degenerate
+128k-token loop). Verification gained a cross-type recovery pass, an anchored relation tier, and
+type-agreement reporting. The web console's "latest report" picker now sorts by mtime (it had been
+picking a stale run by hex name).
+
+**Guided full run** (prior run preserved in `*_bak957` tables): 26/28 papers → 91 CMOCs, 180
+canonical concepts, 439 relations, 8 big concepts, 36 demi-regularities, 14 contradictions.
+Screening 26/28 → 28/28 after HITL; concepts 43/47 (37 same role, 6 different role; missing E05,
+E06, E26, E31); relations 39/40 pattern, 22/40 anchored, 0/40 exact; faithfulness 96.9%; theory
+0.54 (PTS1 0.89). Runtime ≈ 65 min end-to-end; API cost ≈ US$45 to date.
+
+**The relation answer.** Exact 0/40 is an artifact of within-CMOC edges plus single-representative
+matching: both endpoints were recovered for 32 of 40 relations. Normalizing to Richmond's family
+granularity gives 15/40 (38%) exact at the same predicate. Full manual normalization is the next
+step toward the 22–32 ceiling.
+
+**Delivered** `outputs/submission_v2/` (commit `bfaca12`): the professor's draft with every
+placeholder filled from the original file (highlights and bold cleared, table fonts matched;
+IRB line filled with the standard literature-only wording and flagged for PI confirmation);
+`00_Preliminary_Results_and_Paper_Inserts.pdf` answering the four questions with paste-ready
+insert text and a what-we-continue section; the journal-style Professor_Report and the
+Knowledge_Graph_Report; the full 47-item Richmond correspondence; a console screenshot; and
+`raw_outputs/` (CSV exports, parquet, verification JSON, gold key, and the two human-validation
+worksheets with blank verdict columns). Plain-English email drafts prepared, including a request
+for API-cost support.
+
+**Open.** Two-rater expert validation (human task; worksheets ready); manual relation
+normalization; recovering the four missed concepts; expert rating of the programme theory.
