@@ -1,3 +1,5 @@
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # Preliminary Results — An Agentic Pipeline for Realist Systematic Review in Education
 
 **Worked example and external benchmark: Richmond et al. (2020).**

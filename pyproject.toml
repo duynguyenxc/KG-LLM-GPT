@@ -8,6 +8,7 @@ readme = "README.md"
 license = { text = "MIT" }
 
 dependencies = [
+    "openai>=2.0",
     "langchain>=0.3",
     "langchain-openai>=0.2",
     "langgraph>=0.2",
@@ -53,4 +54,5 @@ select = ["E", "F", "I", "N", "UP", "B", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 asyncio_mode = "auto"

@@ -796,3 +796,18 @@ for API-cost support.
 
 **Open.** Two-rater expert validation (human task; worksheets ready); manual relation
 normalization; recovering the four missed concepts; expert rating of the programme theory.
+
+
+## 2026-09-10 - Research audit, official Richmond reference and observable outputs
+
+The accepted abstract, five meetings, original Richmond paper, available corpus documents, professor briefings, repository implementation and historical artifacts were reviewed. A reading-coverage record distinguishes actual text/data review from binary/cache inventory and incomplete visual review. All 766 deduplicated long narrative fields from 16 historical verification versions were read. Inaccessible supplements and missing full texts remain acknowledged.
+
+Created the official-findings account, cited method/verification protocol, historical-output correction record, explicit 18-branch reference and a current-run guide. Added continuity instructions in AGENTS.md and refreshed CLAUDE.md/README. Historical submissions remain unchanged; notices on older design/result summaries direct readers to the audit.
+
+Implemented an isolated typed evidence pipeline: source hashes and pages; extraction with inference labels; deterministic quotation location and source-line selection repair; critic coverage checks; reified evidence graph; Jaccard/Louvain grouping; BM25 return-to-source retrieval; bounded programme-theory refinement; frozen-output external comparison; correctly serialized matrices; and independent human coder/adjudication exports. Fixed the legacy CSV generator's dictionary-row defect without silently replacing submitted files.
+
+A three-paper pilot exposed citation typography and index-coverage issues. The clean full run in outputs/runs/evidence-20260910-full then completed 19 extraction responses and 17 source audits: 86 findings, 83 eligible. It stopped on provider HTTP 429 credit_balance_exhausted. There is no new final programme theory or comparison score. A directly observed invalid S015 source-line range was preserved and now fails closed at finding level. Nineteen tests pass; deterministic checks confirm 500 located spans agree with original text offsets, CSV row values/counts and integrity of a separately labelled partial graph. These are engineering checks, not human validation.
+
+Readable actual output: outputs/runs/evidence-20260910-full/progress.html. Portable tables: partial_evidence_matrix.csv (86 rows), paper_progress.csv (28 records), comparison_plan.csv (18 reference rows with unexecuted verdicts blank). The partial graph has 902 nodes, 3290 edges and four retrieval groups from 83 eligible findings. It has no generated community summaries. The partial HTML was checked in headless Chrome; research PDFs were rendered and visually inspected. Cost estimates for completed calls: USD 3.1133 clean attempt plus USD 1.4252 pilot; four unresolved requests retain reservations.
+
+Next executable step: restore API credit, inspect CURRENT_RUN_RESULTS.md and failure.json, then resume the same run with the explicit --retry-unfinished flag. Complete remaining audits, synthesis/refinement and external comparison; inspect the report and source evidence; arrange actual independent expert review. The pending API-credit question and Pony Tail installation-path question must not be mistaken for answered questions. PowerShell/Python was used because Pony Tail was not available in the exposed tools/searches.

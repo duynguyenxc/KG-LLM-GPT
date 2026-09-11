@@ -46,7 +46,11 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     with get_connection() as conn:
         for name, sql in QUERIES.items():
-            df = pd.read_sql(sql, conn)
+            cursor = conn.execute(sql)
+            rows = cursor.fetchall()
+            columns = [column.name for column in cursor.description]
+            # psycopg uses dict_row: pandas.read_sql can interpret those keys as row values.
+            df = pd.DataFrame.from_records(rows, columns=columns)
             # utf-8-sig so Excel opens the quotes/accents correctly
             df.to_csv(OUT / f"{name}.csv", index=False, encoding="utf-8-sig")
             print(f"  {name}.csv — {len(df)} rows")

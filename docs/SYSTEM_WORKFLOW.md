@@ -1,3 +1,5 @@
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # The Workflow — Richmond's Human Process and Our System's Process, Side by Side
 
 _A single, complete reference: (A) exactly how Richmond and colleagues worked to produce their realist

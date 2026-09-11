@@ -1,0 +1,24 @@
+{
+  "protocol_version": "evidence-v1",
+  "extractor_model": "gpt-5.5-2026-04-23",
+  "critic_model": "gpt-5.4-mini-2026-03-17",
+  "synthesis_model": "gpt-5.5-2026-04-23",
+  "comparison_model": "gpt-5.4-mini-2026-03-17",
+  "reasoning_effort": "medium",
+  "max_completion_tokens": 12000,
+  "budget_usd": 50.0,
+  "prior_budget_runs": ["evidence-20260910-v1"],
+  "prices_per_million": {
+    "gpt-5.5-2026-04-23": {"input": 5.0, "output": 30.0},
+    "gpt-5.4-mini-2026-03-17": {"input": 0.75, "output": 4.5}
+  },
+  "price_sources": [
+    "https://developers.openai.com/api/docs/models/gpt-5.5",
+    "https://developers.openai.com/api/docs/models/gpt-5.4-mini"
+  ],
+  "retrieval": {"top_pages": 8, "bm25_k1": 1.5, "bm25_b": 0.75},
+  "graph": {"community_algorithm": "louvain", "seed": 20260910, "minimum_shared_terms": 3},
+  "maximum_refinement_rounds": 1,
+  "human_gate_policy": "exploratory machine run; all human approvals remain pending",
+  "benchmark_policy": "Reference is loaded only after production artifacts are frozen. Development benchmark, not an unseen model benchmark."
+}

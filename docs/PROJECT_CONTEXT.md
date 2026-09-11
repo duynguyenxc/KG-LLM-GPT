@@ -1,3 +1,5 @@
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # PROJECT CONTEXT — Realist Evidence Synthesis (living memory)
 
 _Last updated: 2026-07-14. Maintained by Claude. This is the authoritative project memory.

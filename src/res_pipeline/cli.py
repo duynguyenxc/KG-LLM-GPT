@@ -719,5 +719,18 @@ def status() -> None:
     console.print(f"[cyan]Studies with extracted CMOCs: {studies_with_cmocs}[/cyan]")
 
 
+@app.command("evidence-run")
+def evidence_run(
+    run_dir: str = typer.Option(..., help="Isolated output directory for this experiment."),
+    papers: str = typer.Option("", help="Optional comma-separated paper IDs for a pilot."),
+) -> None:
+    """Run source-preserving synthesis and external comparison; human validation stays pending."""
+    from pathlib import Path
+
+    from res_pipeline.evidence.pipeline import run
+
+    run(Path(run_dir), set(papers.split(",")) if papers else None)
+
+
 if __name__ == "__main__":
     app()

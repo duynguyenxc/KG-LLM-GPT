@@ -1,52 +1,43 @@
-# Realist Evidence Synthesis (V2)
+# Realist evidence synthesis
 
-> An agentic, human-in-the-loop, GraphRAG-based multi-agent framework for automating
-> **realist systematic reviews** in education — the methodological contribution of a
-> Review of Research in Education (RRE, Vol. 50, 2026) manuscript. Worked example and
-> external benchmark: **Richmond et al. (2020)**, *"The student is key"* (Medical
-> Education 54(8):709–719), a RAMESES realist review with 28 included studies.
+This repository investigates a researcher-controlled agent method for realist evidence synthesis under Wei Zheng's accepted RRE proposal. Richmond et al. (2020), *The student is key*, is the worked example and external human synthesis. The research output is a set of conditional explanations with an inspectable evidence trail and a defined human evaluation protocol.
 
-**This is a research artifact, not a product.** The framework reproduces the analytic
-operations of realist synthesis — search, two-stage screening, CMOC (Context–Mechanism–
-Outcome Configuration) extraction, cross-study synthesis, programme-theory construction —
-under human "master control" at four adjudication checkpoints, with every decision
-auditable and every extracted claim span-grounded in its source. A **separate**
-verification harness compares system outputs against the human benchmark; it is not part
-of the production pipeline.
+## Current status
 
-## Documentation map
+The September 2026 audit found substantive problems in historical verification claims and CSV exports. An isolated evidence-preserving implementation and a three-paper pilot are available. The clean full-corpus attempt stopped because the OpenAI API returned `credit_balance_exhausted`: 19 papers extracted, 17 source audits completed, 86 audited findings and 83 machine-eligible findings. A new final programme theory and Richmond comparison have **not yet been generated**. Independent human validation remains pending.
+
+Open the local [actual progress report](outputs/runs/evidence-20260910-full/progress.html) and [current results/continuation record](docs/research/CURRENT_RUN_RESULTS.md). Run files and private research inputs are excluded from Git; their local links require the research workspace.
+
+## Start here
 
 | Document | Purpose |
 |---|---|
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | The seven grounded design decisions, agents, ontology, phases |
-| [`docs/research/SOTA_REPORT.md`](docs/research/SOTA_REPORT.md) | Cited state-of-the-art research behind each decision |
-| [`docs/PROJECT_CONTEXT.md`](docs/PROJECT_CONTEXT.md) | Living project memory (goals, professor requirements, status) |
-| [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md) | Append-only record of decisions with rationale |
-| [`WALKTHROUGH.md`](WALKTHROUGH.md) | Milestone-by-milestone report for non-followers |
-| [`config/ontology.yaml`](config/ontology.yaml) | The typed realist ontology (entity types + relation predicates) |
-| [`config/models.yaml`](config/models.yaml) | Pinned LLM tiers and budget controls |
+| [Richmond's official findings](docs/research/RICHMOND_OFFICIAL_FINDINGS.md) | Published outputs, five contexts, branches, exact pages and limitations |
+| [Method and verification protocol](docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md) | Primary research, exact algorithms, tool choices and six-dimension comparison |
+| [Historical output audit](docs/research/OUTPUT_INVENTORY_AND_CORRECTIONS.md) | Actual files, defective exports and unsupported preliminary claims |
+| [Current run results](docs/research/CURRENT_RUN_RESULTS.md) | Observed counts, interruption and executable resume command |
+| [Reading coverage](docs/research/READING_COVERAGE.md) | What was reviewed and what an inventory does not establish |
+| [Research continuity](docs/research/RESEARCH_AUDIT_STATUS.md) | Active task, decisions, unresolved work and source hierarchy |
+| [Decision log](docs/DECISION_LOG.md) / [Walkthrough](WALKTHROUGH.md) | Dated changes; earlier entries are historical |
 
-## Stack
+The reference in `gold/richmond_reference_v1.json` contains an explicit 18-row operational decomposition awaiting expert ratification. It is not a machine-readable gold standard supplied by Richmond.
 
-Python 3.11 · LangChain + **LangGraph** (stateful orchestration, `interrupt()`-based HITL,
-Postgres checkpointer) · **Microsoft GraphRAG** (Literature Knowledge Graph: BYOG typed
-triples + Leiden communities) · OpenAI GPT-5.4 tier (see `config/models.yaml`) ·
-**PostgreSQL** (registry, audit, checkpoints) · **Parquet** (canonical reproducible KG
-artifact) · **Neo4j** (derived motif-query & visualization layer).
+## Implemented experiment
 
-## Setup (Phase 0)
+`src/res_pipeline/evidence/` contains typed extraction, exact/typography-preserving citation location, source-line repair, a separate source critic, a NetworkX evidence graph, seeded Louvain grouping, BM25 page retrieval, bounded synthesis/refinement, isolated comparison and human-review exports. Source snippets and missing evidence remain labelled. Requests, responses, hashes, code snapshots and token estimates are retained per run.
 
-```bash
-python -m venv .venv && .venv\Scripts\activate   # Windows
-pip install -e ".[dev,viz]"
-copy .env.example .env                            # then fill in keys
-res --help
+The current stack is Python 3.11, Pydantic, pypdf, NetworkX and the OpenAI SDK. Extraction/synthesis use pinned GPT-5.5; repetitive source audit/comparison use pinned GPT-5.4 mini. JSON/JSONL, CSV and HTML provide run-local persistence and readable outputs. See `config/evidence_run.json` for exact snapshots and budget parameters.
+
+This is a custom graph-assisted baseline. Full Microsoft GraphRAG execution, graph-guided extraction, learned domain adaptation, RLHF and complete interactive human checkpoints are not established by this run. Legacy PostgreSQL/Neo4j/Parquet modules and historical reports remain preserved for inspection.
+
+## Local use
+
+Install the project in a Python 3.11 environment with `pip install -e ".[dev,viz]"`, and configure the private `.env` from `.env.example`. Supply the authorized private corpus separately. Do not commit credentials or source PDFs.
+
+```powershell
+$env:PYTHONPATH = Join-Path (Get-Location) 'src'
+python -B -m pytest -q
+python -B -u -m res_pipeline.evidence.pipeline --run-dir outputs/runs/NEW_RUN_NAME
 ```
 
-Corpus (`data/`) is read-only input: 20 full-text PDFs + 8 abstract-only records matching
-Richmond's 28 included studies, plus the benchmark paper itself.
-
-## Status
-
-Architecture v1.0 adopted; Phase 0 scaffolding in progress. See `WALKTHROUGH.md` for the
-current milestone log.
+Use a new run name for a new protocol or source state. For the interrupted September experiment, follow the specific resume instructions in `CURRENT_RUN_RESULTS.md` after restoring API credit. Do not interpret tests passing or model judgments as independent scientific validation.

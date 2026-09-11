@@ -12,6 +12,9 @@ transcript-meetings/
 # Per-run regenerable artifacts (curated top-level reports in outputs/ are kept)
 outputs/runs/
 outputs/lkg/
+outputs/research_audit/
+tmp/
+.pytest_cache/
 
 # Python
 __pycache__/

@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 
 from pydantic import BaseModel, Field
+from pypdf import PdfReader
 
 from res_pipeline.core.config import DATA_DIR
 
@@ -114,8 +115,6 @@ def build_registry_from_dir(
     PDF (used when only an abstract is available). This is what lets the pipeline scale
     from 28 to 100+ papers with no code change: point ``res ingest --source <dir>`` at it.
     """
-    from pypdf import PdfReader  # noqa: F401 — used via _pdf_title
-
     directory = Path(directory)
     files = sorted(directory.glob(pattern), key=lambda p: p.name.lower())
     studies: list[StudyRecord] = []

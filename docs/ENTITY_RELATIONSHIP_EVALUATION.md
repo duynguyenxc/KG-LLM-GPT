@@ -1,3 +1,5 @@
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # Evaluation — Are our Entities & Relationships correct, useful, and faithful to Richmond?
 
 _A critical self-assessment of the knowledge-graph schema and the extracted graph, judged against a

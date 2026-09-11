@@ -92,3 +92,18 @@ Format:
 - Neo4j initial password/setup (do during scaffold).
 - Second human coder for per-paper gold standard (RA to arrange; professor?).
 - Budget ceiling per full pipeline run (set after 3-paper pilot).
+
+
+## 2026-09-10 - Source-grounded audit and isolated comparison baseline
+
+Decision status: implemented as a provisional engineering baseline under the owner's request; scientific ratification by the research team remains pending.
+
+The authoritative benchmark is Richmond's published review, not the old project coding or an AI's assertion that it is an authoritative human coder. The new 18-branch reference preserves the five contexts and Figure 3 pathways with explicit page anchors. It requires expert ratification and must not be reported as Richmond's published CMOC count.
+
+Preserve historical submissions and issue an explicit audit record. The old 39/40 type-pattern metric is not complete causal-configuration recovery; 501/517 located spans are not a faithfulness/entailment estimate. Blank human forms do not support past claims of completed human validation. Contrary to an earlier log entry, strict endpoint performance cannot be dismissed merely as an artifact without investigating semantic mapping errors.
+
+Implement a separately versioned source/finding/graph/synthesis/evaluation experiment. Preserve partial configurations, source-reported versus inferred mechanisms, outcome definitions, comparators, follow-up and study-family dependence. Use exact source addresses, source-line repair and an independent model-role audit. Similarity edges organize inspection and do not assert causal links. Freeze synthesis before loading the external reference.
+
+Use Python/Pydantic, pinned OpenAI models, NetworkX Louvain plus connected-component splitting and BM25 page retrieval. This is an inspectable graph-assisted baseline, not proof of Microsoft GraphRAG effectiveness or fulfillment of proposed fine-tuning/RLHF. Primary-source rationale and required ablations are documented in the method protocol.
+
+The full-corpus attempt stopped on API credit exhaustion after 19 extractions and 17 paper audits. Partial matrices contain 86 findings, 83 machine-eligible; new synthesis and comparison remain unexecuted. Citation-range and provider-error defects were addressed with preserved responses, code history and focused tests. Do not promote this checkpoint to a completed research result.

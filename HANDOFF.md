@@ -1,3 +1,7 @@
+> **Current checkpoint (2026-09-10):** The new evidence run is interrupted by OpenAI API credit exhaustion, with 19 paper extractions and 17 source audits complete. Read [current run results](docs/research/CURRENT_RUN_RESULTS.md) and [research status](docs/research/RESEARCH_AUDIT_STATUS.md) before continuing. The new final synthesis/comparison and independent human validation are pending.
+
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # Project Handoff — Agentic Realist Evidence Synthesis
 
 _A one-document orientation for the RA and professor. Written for a reader who has not followed

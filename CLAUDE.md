@@ -1,45 +1,31 @@
-# CLAUDE.md — Realist Evidence Synthesis (V2)
+# Realist evidence synthesis: project continuity
 
-> This file is auto-loaded at the start of every session whose working directory is this
-> folder. It is the project's persistent memory. Read `docs/PROJECT_CONTEXT.md` for the
-> full context before making any non-trivial decision. Keep both files updated as the
-> project evolves — this is how future sessions "remember" the project.
+Read `AGENTS.md` and `docs/research/RESEARCH_AUDIT_STATUS.md` before substantive work. The active workspace is `D:/KG-LLM/KG-LLM-GPT`. Earlier paths and July implementation/performance summaries are historical.
 
-## One-paragraph summary
-This is a **serious academic research project** for a real journal submission (Review of
-Research in Education, RRE 2026). The deliverable is a **methodological-innovation paper**,
-NOT a software demo. It proposes an **agentic, human-in-the-loop, GraphRAG-based multi-agent
-framework** for automating **realist systematic reviews** in education. The paper's *worked
-example / external benchmark* is **Richmond et al. (2020)** — a realist review of educational
-interventions for clinical reasoning in medical students (28 included papers). The system
-must reproduce Richmond's analytic operations (search → screen → CMOC extraction →
-cross-study synthesis → programme theory) and be verified by comparing its outputs to
-Richmond's human outputs. **Method > platform; human judgment stays sovereign.**
+This is a methodological research project led by Wei Zheng for an accepted RRE proposal. Richmond et al. (2020), DOI 10.1111/medu.14137, is a worked example and external human synthesis. The central task is to produce inspectable conditional explanations with source evidence and a defensible human-comparison protocol. A software demonstration or a high label-overlap percentage is insufficient.
 
-## Working rules (from the RA / project owner)
-- **All project artifacts (code, files, docs, identifiers) must be written in English.**
-  Vietnamese is only for chat between the RA and Claude.
-- This is not a place for fabrication. **Every architectural / technology / ontology decision
-  must be grounded** in the source documents here and in real external literature/repos —
-  research before deciding, never invent.
-- All new work happens in this folder (`Realist Evidence Synthesis V2/`). The sibling folder
-  `../LLM-Knowledge-Graph/` is the **old version** (built with Cursor/Antigravity) — read it
-  for reference and lessons, but do not build there.
-- Aim for professional, tidy, optimized structure down to naming conventions. Quality over speed.
+## Standing requirements
 
-## Where things are
-- `data/` — Richmond corpus: `20-paper-of-Richmond/` (20 PDFs) + 8 abstract/metadata records,
-  `paper-Richmond-original.pdf`, `in4-about-28-studies-paper.pdf`, `studies_metadata.jsonl` (28 studies).
-- `documents/` — professor's briefing material: `abstract-from-professor/abstract.md` (the
-  accepted RRE proposal), `plan_verification_text.txt` (8-step verification protocol),
-  `new-documents-from-professor/` (3 PDFs: agentic framework, KG+GraphRAG, plugin agent — the
-  freshest guidance), `Human-Workflow-from-paper-Richmond.pdf`, `paper-Microsoft-GraphRAG.pdf`.
-- `transcript-meetings/` — weekly RA↔professor meetings (Jan 23, Feb 4, Feb 19, **May 28**).
-- `docs/` — project memory maintained by Claude (`PROJECT_CONTEXT.md`, `DECISION_LOG.md`).
+- Write all project artifacts, code and identifiers in English. Communicate with Duy in Vietnamese.
+- Ground scientific and architectural decisions in primary sources and the professor's actual instructions. Generated briefing documents and historical AI summaries may contain errors.
+- Distinguish proposed, implemented, executed and independently validated behavior. Never relabel AI review as human review, quote location as entailment, or type matching as causal reconstruction.
+- Preserve previous submissions and identifiable runs. Do not silently rewrite delivered preliminary results.
+- Keep private source PDFs, meeting records and credentials out of public Git history.
+- Keep Richmond's reference conclusions out of production extraction/synthesis inputs. Evaluation runs after the system theory is frozen.
+- Maintain project continuity and append a WALKTHROUGH entry for each work session, with completed work, limitations and the next step.
 
-## Status pointer
-**Architecture v1.0 adopted** (`docs/ARCHITECTURE.md`, grounded in `docs/research/SOTA_REPORT.md`).
-Build authority granted; next step is Phase 0 (repository scaffold + config + ontology file),
-then phases 1–7 per ARCHITECTURE §8. See `docs/PROJECT_CONTEXT.md` for full context and
-`WALKTHROUGH.md` for the milestone log — **append a WALKTHROUGH entry every session** (standing
-RA requirement). Credentials live in `.env` (OpenAI key, Postgres password; Neo4j not yet set up).
+## Current source map
+
+- `documents/abstract-from-professor/abstract.md`: accepted proposal and intended methodology.
+- `transcript-meetings/`: five meetings, including July 24; use actual statements rather than unchecked speaker labels.
+- `data/paper-Richmond-original.pdf`: authoritative published comparison source.
+- `data/20-paper-of-Richmond/` and `data/studies_metadata.jsonl`: 28 paper records; 19 apparently full PDFs, one one-page PDF, eight short snippets.
+- `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`: published conclusions with exact page/figure anchors.
+- `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md`: algorithm, architecture decisions, evidence and verification definitions.
+- `docs/research/OUTPUT_INVENTORY_AND_CORRECTIONS.md`: actual historical outputs and unsupported preliminary claims.
+- `gold/richmond_reference_v1.json`: AI-assisted 18-branch operationalization awaiting human ratification; not a machine-readable gold supplied by Richmond.
+- `src/res_pipeline/evidence/`: isolated evidence-preserving experiment; legacy modules remain available for historical reproduction.
+
+## Status
+
+The September audit has produced new documentation and an evidence-preserving implementation. A three-paper pilot ran and exposed citation/indexing defects, which were addressed before the full run. The full fixed-corpus run is `outputs/runs/evidence-20260910-full/`; it stopped on `credit_balance_exhausted` after 19 extractions and 17 source audits. Read `progress.json`, `failure.json` and `docs/research/CURRENT_RUN_RESULTS.md`. The final `run_status.json` and `metrics.json` do not exist yet. Human validation remains pending unless attributable coder and adjudication records establish otherwise.

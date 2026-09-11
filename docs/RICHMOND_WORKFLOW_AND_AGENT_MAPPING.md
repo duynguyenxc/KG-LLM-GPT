@@ -1,3 +1,5 @@
+> **Historical document - September 2026 audit supersedes performance and implementation claims below.** Read `docs/research/RESEARCH_AUDIT_STATUS.md`, `docs/research/RICHMOND_OFFICIAL_FINDINGS.md`, and `docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md` from the repository root. Old AI judgments are not completed human validation.
+
 # Richmond's Human Workflow, and How Our Multi-Agent System Mirrors It
 
 _The intellectual backbone of the project. Part 1 reconstructs, from a close reading of the primary

@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0",
+  "reference_version": "richmond-2020-configurations-v1",
+  "doi": "10.1111/medu.14137",
+  "source_path": "data/paper-Richmond-original.pdf",
+  "status": "AI-assisted operationalization of published findings; independent human ratification pending",
+  "granularity": "18 configuration branches: ten low-knowledge branches from Figure 3 and eight branches from sections 3.2.2–3.2.5. RC03 and RC17 overlap deliberately at different contextual scopes. This is not Richmond's published count of CMOCs.",
+  "human_ratification": null,
+  "claims": [
+    {
+      "claim_id": "RC01",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Near-peer reasoning examples accompanied by prompts",
+      "response": "Perceived similarity in prior knowledge and feeling at ease",
+      "outcome": "Improved learning or diagnostic accuracy",
+      "direction": "positive",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC02",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Instructions to combine analytical and non-analytical reasoning",
+      "response": "Trust in familiarity and developing reasoning ability",
+      "outcome": "Improved learning or diagnostic accuracy",
+      "direction": "positive",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC03",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Accurate and timely feedback",
+      "response": "Clarity, understanding and affirmation of sufficient knowledge",
+      "outcome": "Improved learning or diagnostic accuracy",
+      "direction": "positive",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC04",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Explicit, clear explanation of an expert's reasoning",
+      "response": "Clarity and understanding of how the expert reaches a decision",
+      "outcome": "Improved learning or diagnostic accuracy",
+      "direction": "positive",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3; section 3.2.1, p. 714"
+    },
+    {
+      "claim_id": "RC05",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Analytical or stepwise reasoning scaffold",
+      "response": "Relief of tension and feeling comfortable and supported",
+      "outcome": "Improved learning or diagnostic accuracy",
+      "direction": "positive",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC06",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Time constraints deliberately forcing non-analytical reasoning",
+      "response": "Spontaneous responses including guessing, frustration or distress",
+      "outcome": "Reduced learning or diagnostic accuracy",
+      "direction": "negative",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC07",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Passive expert observation without explanation of the expert's reasoning",
+      "response": "Resentment or panic at not immediately knowing the answer",
+      "outcome": "Reduced learning or diagnostic accuracy",
+      "direction": "negative",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3; section 3.2.1, p. 714"
+    },
+    {
+      "claim_id": "RC08",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Expert reasoning explanations that skip steps or rely on pattern recognition",
+      "response": "Difficulty understanding non-analytical thought and discordance between illness scripts",
+      "outcome": "Reduced learning or diagnostic accuracy",
+      "direction": "negative",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC09",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Cases of increased difficulty or significant reasoning challenge",
+      "response": "Frustration",
+      "outcome": "Reduced learning or diagnostic accuracy",
+      "direction": "negative",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC10",
+      "context_group": "low_knowledge",
+      "context": "Low general or domain/case-specific knowledge, or difficulty applying available knowledge",
+      "resource": "Passive listening to peer self-explanations containing mistakes",
+      "response": "Confusion",
+      "outcome": "Reduced learning or diagnostic accuracy",
+      "direction": "negative",
+      "pdf_page": 7,
+      "source_anchor": "Figure 3"
+    },
+    {
+      "claim_id": "RC11",
+      "context_group": "high_knowledge",
+      "context": "Sufficient clinical domain-specific knowledge",
+      "resource": "Expert reasoning made explicit and discussed",
+      "response": "Understanding and insight into diagnostic and management reasoning",
+      "outcome": "Positive learning experience and understanding of clinical reasoning",
+      "direction": "positive",
+      "pdf_page": 6,
+      "source_anchor": "Section 3.2.2; Figure 2, p. 713"
+    },
+    {
+      "claim_id": "RC12",
+      "context_group": "high_knowledge",
+      "context": "High clinical domain-specific knowledge, particularly familiar or easy cases",
+      "resource": "Instructions to use analytical reasoning alone or approaches promoting overthinking",
+      "response": "Frustration; ability to rely on familiarity and non-analytical reasoning",
+      "outcome": "High diagnostic accuracy can be maintained with limited or no additional learning benefit",
+      "direction": "no_added_benefit",
+      "pdf_page": 6,
+      "source_anchor": "Section 3.2.2; Figure 2, p. 713"
+    },
+    {
+      "claim_id": "RC13",
+      "context_group": "positive_coping",
+      "context": "Positive coping or appropriately calibrated self-confidence/self-efficacy",
+      "resource": "Realistic or simulated encounters with opportunities to make mistakes safely",
+      "response": "Gratitude, feeling safe and building understanding",
+      "outcome": "Positive learning, more complete illness scripts and more accurate non-analytical reasoning",
+      "direction": "positive",
+      "pdf_page": 6,
+      "source_anchor": "Section 3.2.3, pp. 714–716; Figure 2"
+    },
+    {
+      "claim_id": "RC14",
+      "context_group": "positive_coping",
+      "context": "Positive coping strategies",
+      "resource": "Real cases with consequential decision making",
+      "response": "Pressure from responsibility perceived as part of a meaningful learning experience",
+      "outcome": "Positive learning experience",
+      "direction": "positive",
+      "pdf_page": 6,
+      "source_anchor": "Section 3.2.3"
+    },
+    {
+      "claim_id": "RC15",
+      "context_group": "negative_coping",
+      "context": "Poor coping or insufficient self-confidence/self-efficacy",
+      "resource": "Simulated or real patient encounters",
+      "response": "Fear, stress or performance pressure increasing cognitive load",
+      "outcome": "Poor illness-script development, faulty future non-analytical reasoning and negative learning",
+      "direction": "negative",
+      "pdf_page": 8,
+      "source_anchor": "Section 3.2.4; Figure 2"
+    },
+    {
+      "claim_id": "RC16",
+      "context_group": "mixed_knowledge",
+      "context": "Different pre-existing knowledge levels within a group",
+      "resource": "Strategies promoting knowledge retention",
+      "response": "Building on existing knowledge and developing understanding",
+      "outcome": "Increased learning and engagement",
+      "direction": "positive",
+      "pdf_page": 8,
+      "source_anchor": "Section 3.2.5; Figure 2"
+    },
+    {
+      "claim_id": "RC17",
+      "context_group": "mixed_knowledge",
+      "context": "Students across knowledge levels",
+      "resource": "Accurate and timely feedback",
+      "response": "Understanding successes and failures, planning improvement and developing complete illness scripts",
+      "outcome": "More successful future non-analytical reasoning",
+      "direction": "positive",
+      "pdf_page": 8,
+      "source_anchor": "Section 3.2.5; Figure 2"
+    },
+    {
+      "claim_id": "RC18",
+      "context_group": "mixed_knowledge",
+      "context": "Students across knowledge levels",
+      "resource": "Absent, incomplete or erroneous feedback",
+      "response": "Confusion and reduced understanding",
+      "outcome": "Negative learning and impaired reasoning development",
+      "direction": "negative",
+      "pdf_page": 8,
+      "source_anchor": "Section 3.2.5; Figure 2"
+    }
+  ]
+}
