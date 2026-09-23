@@ -24,6 +24,8 @@ The owner confirmed on September 23 that there are not yet two independent revie
 
 ## Output contract
 
+September 23 correspondence preparation: a side-by-side workbench now pairs the 47/40 reference inventory with the actual 517/439 historical output records and blank A/B/adjudication forms, with strict ID/path/provenance validation. This makes the historical evaluation task concrete and inspectable; it does not supply human ratings, ratified-reference metrics or new semantic extraction results. The new semantic input mode rejects unexecuted runs. See `CORRESPONDENCE_REVIEW_GUIDE.md`.
+
 1. **Source layer:** paper identity, availability, page text, file hash and study-family identity.
 2. **Entity/relation layer:** distinguish a semantic entity mention, a canonical concept, a conditional relation assertion, an attribution edge and a retrieval-similarity edge. Expose supporting observations and inference status. Do not merge opposing outcomes or erase time/comparator qualifiers.
 3. **Finding layer:** C/resource/response/O, polarity, comparator, follow-up, quotations and measured/inferred/missing labels. Preserve excluded findings and audit reasons.

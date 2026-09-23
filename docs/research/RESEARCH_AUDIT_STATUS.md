@@ -4,7 +4,19 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: historical reference audited against the original paper
+## Current continuation checkpoint: actual-output 47/40 human review workbench
+
+Previous turn made source-audit progress (all 47 concepts/40 relations/five chains, commit `3bb7834`). This continuation implements a separate reference-to-output review workbench and strict form importer. Open `outputs/runs/correspondence-review-20260923-legacy-v2/index.html`: 47/40 reference items sit beside 517 actual historical entities and 439 actual historical relations, with actual endpoint IDs, CMOC narrative, source quotations and frozen-page text. No automatic match or human verdict is supplied. This is July semantic output, not new September semantic extraction. `CORRESPONDENCE_REVIEW_GUIDE.md` documents use and limits.
+
+Six A/B/adjudication CSVs are blank (47 or 40 rows each). Selected relation paths must join actual entity-instance IDs within one paper/configuration; equivalence requires six explicit dimensions. Adjudication requires paired reviews, distinct A/B identities and a reason. Record checks do not authenticate people or establish semantic truth. The reference remains unratified; recovery/precision metrics remain null. A prepared/unexecuted semantic run is rejected as evaluation input instead of being labelled non-recovery.
+
+New historical issue: S008-cmoc-458176-r-1de6ea maps two different entity instances to the same canonical label, leaving edge direction unresolved. The workbench retains both candidates and flags ambiguity; the old edge is unchanged. Historical relations lack dedicated relation quotations; 494/517 endpoint quotations were located anew in frozen source text, not semantically validated. V1 preparation is preserved; V2 exposes the ambiguous endpoint candidates.
+
+Validation: repository suite reached 56 passing tests; all 11 new focused tests passed after the endpoint-display correction; existing asyncio warning persists. Input/form/browser checks and visual review passed, including the ambiguous edge and 47/40 versus 517/439 record counts. No API calls or actual human reviews. Engineering evidence: `outputs/research_audit/correspondence-review-20260923-qa.json`. Frozen production/evaluation/semantic-pilot artifacts remain unchanged.
+
+Next: continue canonical/semantic integration and evaluation preparation offline; execute the semantic pilot and evaluator v2 after credit restoration, then create a separate actual new-output correspondence packet. Reference ratification, source-support judgments and attributable human intervention still require reviewers. Full-proposal experiments and the overall goal remain incomplete.
+
+## Earlier continuation checkpoint: historical reference audited against the original paper
 
 Previous goal turn was progress: semantic extraction/critic implementation, 45 passing tests, frozen offline pilot and commit `1d4ad37`. This continuation audited all 47 legacy concepts, 40 relations and five historical union chains against the original Richmond text and visually inspected Figures 2/3. `outputs/runs/reference-audit-20260923-v1/index.html` preserves each original entry, assistant proposal, source locator and blank human decision. See `REFERENCE_STANDARD_AUDIT.md`. No original reference or production artifact was changed.
 

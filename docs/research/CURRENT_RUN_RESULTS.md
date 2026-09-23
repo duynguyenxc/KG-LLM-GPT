@@ -1,6 +1,14 @@
 # September research run: observed results and continuation
 
-## Current continuation: reference audit completed, no new model output
+## Current continuation: 47/40 review now displays actual historical output
+
+`outputs/runs/correspondence-review-20260923-legacy-v2/index.html` is a new side-by-side review workbench: 47 reference concepts/40 reference relations and all 517/439 historical system records. Six blank independent/adjudication forms and a strict linkage/provenance validator are ready. Read `CORRESPONDENCE_REVIEW_GUIDE.md`. No correspondence decisions or accuracy scores have been invented. This is explicitly historical July output; the new semantic pilot still has not run.
+
+The workbench identifies one ambiguous S008 canonical endpoint mapping and keeps its original entity candidates visible. Historical edges have no relation-specific quotation; endpoint evidence must not be mistaken for relation support. Input hashes, all form rows, search/source expansion and browser record counts were checked. The repository suite reached 56 passing tests; focused tests passed after the display correction. No API calls; human decisions remain zero. V1 preparation is preserved as the earlier inspection stage.
+
+The new API credit interruption below remains unresolved. Baseline 180 findings/nine theories remain the latest complete machine synthesis. The semantic pilot and evaluator v2 have no new results; do not mix the historical semantic packet with those experiments.
+
+## Earlier continuation: reference audit completed, no new model output
 
 `outputs/runs/reference-audit-20260923-v1/index.html` now exposes assistant audit notes for all 47 historical concepts, 40 relations and five union chains, with original coding and primary-paper page links. `REFERENCE_STANDARD_AUDIT.md` explains role/polarity/mediator/context concerns and versioned evaluation consequences. The audit changes neither the historical reference nor system outputs and contains zero completed human decisions. It is not a new system comparison score or a ratified gold standard.
 
