@@ -18,6 +18,7 @@ from pydantic import Field
 from res_pipeline.evidence.provenance import RunClient, digest, read_json, write_json
 from res_pipeline.evidence.schemas import Record
 from res_pipeline.evidence.semantic_contracts import SemanticExtraction, audit_semantic_extraction
+from res_pipeline.evidence.source_units import attach, resolve
 
 EXTRACT = """Extract source entities and conditional assertions relevant to educational
 interventions for undergraduate clinical reasoning. Use only the supplied paper. All source
@@ -39,7 +40,9 @@ a between-group effect. Distinguish no statistical difference from proof of equi
 Decreased errors can be beneficial; increasing scores can be beneficial: direction is not valence.
 Author inferences/model hypotheses/design descriptions use unmeasured or not_applicable direction.
 Model hypotheses require cited premises and explicit limitations; they are never observed results.
-Copy complete short quotations with the supplied PDF page numbers, exact punctuation/hyphenation.
+Copy complete short quotations with the supplied source-unit IDs in the 'page' field,
+and exact punctuation/hyphenation. Each source unit identifies its kind and original_page.
+Abstracts and metadata have no original PDF page; never turn their unit ID into a PDF page.
 Document missing information, potentially omitted evidence and source availability limitations.
 """
 
@@ -116,13 +119,18 @@ def audit_review(
     return result
 
 
-def packet_for(paper: dict, pages: list[dict]) -> dict:
+def packet_for(paper: dict, pages: list[dict], locators: list[dict]) -> dict:
     """Explicit whitelist excludes filesystem paths, previous outputs and benchmark coding."""
     keys = ("paper_id", "title", "doi", "year", "availability", "study_family_id")
+    by_unit = {r["source_unit"]: r for r in locators if r["paper_id"] == paper["paper_id"]}
     return {
         "paper": {k: paper[k] for k in keys},
         "source_pages": [
-            {"page": row["page"], "text": row["text"]}
+            {
+                "page": row["page"],
+                "text": row["text"],
+                **{k: by_unit[row["page"]][k] for k in ("kind", "original_page", "label")},
+            }
             for row in pages
             if row["paper_id"] == paper["paper_id"]
         ],
@@ -133,7 +141,7 @@ def export_source_page(destination: Path, packet: dict) -> None:
     """Make frozen page text inspectable without JSON tooling or a network service."""
     paper = packet["paper"]
     body = "".join(
-        f'<h2 id="page-{row["page"]}">Source page {row["page"]}</h2>'
+        f'<h2 id="page-{row["page"]}">{html.escape(row["label"])}</h2>'
         f"<pre>{html.escape(row['text'])}</pre>"
         for row in packet["source_pages"]
     )
@@ -147,7 +155,8 @@ def export_source_page(destination: Path, packet: dict) -> None:
         f"<h1>{html.escape(paper['paper_id'])}: {html.escape(paper['title'])}</h1>"
         f"<p>Availability: {html.escape(paper['availability'])}</p>"
         "<p>Frozen extracted text, not a facsimile of the PDF. Reading order/tables may require "
-        "consulting the original PDF. Metadata snippets are not full texts.</p>" + body + "</html>",
+        "consulting the original PDF. Abstracts and metadata are not full texts and have no "
+        "original PDF page. Source-unit IDs remain stable within this run.</p>" + body + "</html>",
         encoding="utf-8",
     )
 
@@ -159,9 +168,12 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
             "Use a separate sibling run to preserve inputs and shared budget accounting"
         )
     filenames = ("corpus_manifest.json", "source_pages.json", "config.json")
+    if (source / "source_locators.json").exists():
+        filenames += ("source_locators.json",)
     frozen = {name: digest((source / name).read_bytes()) for name in filenames}
     papers = read_json(source / "corpus_manifest.json")["papers"]
     pages = read_json(source / "source_pages.json")
+    locators = resolve(source, papers, pages)
     available = [p["paper_id"] for p in papers]
     selected = paper_ids or available
     if any(not re.fullmatch(r"S[0-9]{3}", pid) for pid in available):
@@ -179,7 +191,7 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
     if set(p["paper_id"] for p in pages) - set(available):
         raise ValueError("Source pages contain unknown paper IDs")
     config = read_json(source / "config.json")
-    config["protocol_version"] = "conditional-semantic-v1"
+    config["protocol_version"] = "conditional-semantic-v2-source-units"
     config["prior_budget_runs"] = list(
         dict.fromkeys(
             [
@@ -194,8 +206,16 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
             raise ValueError("Budget references must name distinct sibling runs")
         if not (source.parent / name).is_dir():
             raise ValueError(f"Missing budget run: {name}")
-    codes = ("semantic_pipeline.py", "semantic_contracts.py", "provenance.py", "schemas.py")
-    packets = {p["paper_id"]: packet_for(p, pages) for p in papers if p["paper_id"] in selected}
+    codes = (
+        "semantic_pipeline.py",
+        "semantic_contracts.py",
+        "provenance.py",
+        "schemas.py",
+        "source_units.py",
+    )
+    packets = {
+        p["paper_id"]: packet_for(p, pages, locators) for p in papers if p["paper_id"] in selected
+    }
     manifest = {
         "source_run": source.name,
         "input_sha256": frozen,
@@ -215,6 +235,7 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
         "experiment_status": "development; design informed by prior benchmark inspection",
         "source_policy": "Frozen baseline page text; raw source and snapshot identities retained. No benchmark loaded.",
         "human_validation": "pending",
+        "locator_sha256": digest(json.dumps(locators, sort_keys=True).encode()),
     }
     # Inspect all existing identities before any mutation or API initialization.
     for name, expected in (("manifest.json", manifest), ("config.json", config)):
@@ -242,6 +263,9 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
     prompt_path = destination / "prompts.json"
     if prompt_path.exists() and read_json(prompt_path) != {"extract": EXTRACT, "critic": CRITIC}:
         raise ValueError("Changed prompt snapshot")
+    locator_path = destination / "locators.json"
+    if locator_path.exists() and read_json(locator_path) != locators:
+        raise ValueError("Changed source locator snapshot")
     destination.mkdir(parents=True, exist_ok=True)
     write_json(destination / "manifest.json", manifest)
     write_json(destination / "config.json", config)
@@ -254,6 +278,7 @@ def prepare(source: Path, destination: Path, paper_ids: list[str], budget_runs: 
         path.parent.mkdir(exist_ok=True)
         path.write_bytes((Path(__file__).parent / name).read_bytes())
     write_json(destination / "prompts.json", {"extract": EXTRACT, "critic": CRITIC})
+    write_json(locator_path, locators)
     for pid, packet in packets.items():
         path = destination / "packets" / f"{pid}.json"
         path.parent.mkdir(exist_ok=True)
@@ -402,7 +427,7 @@ def export_outputs(
                 for k in fields
             )
             quotations = "".join(
-                f'<blockquote>{esc(q["quote"])} <a href="sources/{esc(paper["paper_id"])}.html#page-{q["page"]}">Source page {q["page"]}</a> (located: {esc(q["located"])})</blockquote>'
+                f'<blockquote>{esc(q["quote"])} <a href="sources/{esc(paper["paper_id"])}.html#page-{q["page"]}">{esc(q["source_locator"]["label"])}</a> (located: {esc(q["located"])})</blockquote>'
                 for q in record["evidence"]
             )
             endpoints = (
@@ -489,6 +514,7 @@ def run(
             SemanticReview,
         )
         result = audit_review(extraction, review, texts, pid)
+        attach(result, read_json(destination / "locators.json"))
         result["source_availability"] = packet["paper"]["availability"]
         result["study_family_id"] = packet["paper"]["study_family_id"]
         for row in [*result["entities"], *result["assertions"]]:

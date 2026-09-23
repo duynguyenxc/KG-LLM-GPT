@@ -4,7 +4,15 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: supplemented corpus connected to offline extraction
+## Current continuation checkpoint: explicit source locators and frozen replay
+
+Previous turn made corpus integration progress (`ab0ec3f`). This continuation completes source-kind handling for semantic extraction and the correspondence workbench: PDF pages, partial-PDF pages, abstracts and metadata have distinct validated locators. The V2 prompt supplies source-unit semantics, and audited quotation records retain resolved locator provenance through JSON/CSV/graph and readable source links. The prior evidence/theory reports and review packets are not rewritten.
+
+Actual V2 artifact: `outputs/runs/semantic-20260923-enriched-preparation-v2/`, prepared for all 28 papers with zero executed model calls/candidates. The V1 three-paper and enriched 28-paper preparations remain usable through `replay_semantic.py`, which verifies saved code, configuration and imported dependency identities before invoking the frozen entry point. Offline replays left all 24 and 74 files unchanged. Current V2 code intentionally differs from V1; never resume V1 through the new entry point. Evaluation-v2 code remains unchanged.
+
+The repository suite reached 83 passing tests with the existing asyncio warning; targeted Ruff checks pass. Actual packet/source/baseline hashes, S009 locator labels and synthetic citation/independent-review navigation passed browser checks and visual inspection. QA: `outputs/research_audit/source-unit-20260923-qa.json`. No paid API call, new research extraction, reference score or human judgment. See `SEMANTIC_EXTRACTION_RUNBOOK.md` for current commands and budget caveats. Full-text gaps, actual semantic/evaluator execution, canonical/graph/synthesis integration, training experiments and real human evaluation still prevent full-goal completion.
+
+## Earlier continuation checkpoint: supplemented corpus connected to offline extraction
 
 Previous turn made source-acquisition progress (`a6c2a42`). This continuation adds `corpus.py` to verify the acquired XML/abstract identities and create a new sibling corpus without overwriting research history. Actual version: `outputs/runs/corpus-20260923-abstracts-v1/`, comprising 19 unchanged full-text records, eight complete abstracts and S009's original partial PDF plus abstract. Source units retain a locator map; an abstract unit is not an original PDF page. See `CORPUS_VERSIONING.md`.
 

@@ -1,5 +1,13 @@
 # Conditional semantic extraction: implementation and pilot
 
+## Current source-locator version
+
+The current runner uses `conditional-semantic-v2-source-units`. It validates a complete source-locator map (or derives unambiguous legacy PDF/metadata locators), supplies source kind and original-page identity to extraction, and retains resolved locators in entity/assertion evidence, CSV and graph JSON. Source viewers and the correspondence workbench display the distinction. An abstract source-unit ID is never an original PDF page. Unknown citation units remain unresolved and cannot pass source checks merely through this annotation.
+
+Actual offline preparation: `outputs/runs/semantic-20260923-enriched-preparation-v2/`, all 28 papers from `corpus-20260923-abstracts-v1`, with **zero executed model calls**. Its `locators.json` and raw input locator snapshot are frozen alongside packets/code/prompts. No actual new assertion or human judgment has been generated. V1 preparations are preserved and must use the frozen replay command below, because the current entry point and prompt have changed. Comparing V1 and V2 would change method as well as potentially source; it is not a controlled source-enrichment result.
+
+The repository suite reached 83 passing tests (the existing asyncio warning remains), including eight additional source-locator/replay cases. Actual checks verified all 28 new packets, source identities, evaluator-v2 code, S009 PDF-versus-abstract labels and old V1 replay preservation. Synthetic execution verified locator propagation through CSV/graph and the independent-review exporter without critic judgments. Browser checks exercised the actual S009 source view and labelled synthetic citation/review navigation. Evidence: `outputs/research_audit/source-unit-20260923-qa.json`.
+
 ## September 23 implementation checkpoint
 
 `src/res_pipeline/evidence/semantic_pipeline.py` now implements source-led joint entity/assertion extraction, a separate AI source critic, exact typed-ID coverage checks, source/structural admission, qualified graph export, CSV/JSON export and a searchable HTML inspection page. It uses the contracts and methodological rationale in `SEMANTIC_ASSERTION_METHOD.md`. The dated 19-page PDF records the earlier contract-only checkpoint; this runbook records the subsequent implementation. Neither document is evidence of successful model execution.
@@ -56,12 +64,16 @@ Offline preparation/identity check (safe to repeat; does not erase generated out
 
 ```powershell
 $env:PYTHONPATH = Join-Path (Get-Location) 'src'
-& 'C:/Users/Admin/AppData/Local/Programs/Python/Python311/python.exe' -B -m res_pipeline.evidence.semantic_pipeline --source-run outputs/runs/evidence-20260910-full --output-dir outputs/runs/semantic-20260923-pilot-v1 --papers S006 S015 S026 --budget-run evaluation-20260923-v2
+& 'C:/Users/Admin/AppData/Local/Programs/Python/Python311/python.exe' -B -m res_pipeline.evidence.replay_semantic --run-dir outputs/runs/semantic-20260923-pilot-v1
 ```
 
-After credit restoration, execute the identical frozen pilot by appending `--execute`. Inspect both raw output and original source before extending to the full corpus. A changed source, schema, code, prompt or paper selection requires a new run. If an API call fails after its request is written, inspect its response/error before using the existing explicit resume helper; never discard a saved raw response or reset uncertain budget reservations. Resume evaluation v2 separately using `CURRENT_RUN_RESULTS.md`.
+The replay helper checks frozen code and configuration hashes, verifies active imported dependencies against the frozen identities, and invokes the saved entry point. Its default is offline. The old three-paper and 28-paper preparations were replayed offline with all 24 and 74 files respectively unchanged. If dependencies differ, use an isolated matching checkout; do not relax the identity checks.
 
-## Verification completed
+After credit restoration, execute the identical frozen pilot by appending `--execute`. Inspect both raw output and original source before extending to the full corpus. A changed source, schema, code, prompt or paper selection requires a new run. If an API call fails after its request is written, inspect its response/error before using the existing explicit resume helper; never discard a saved raw response or reset uncertain budget reservations. Resume evaluation v2 separately using `CURRENT_RUN_RESULTS.md`. Frozen budget configurations do not automatically include paid runs created later: verify the intended shared budget before replaying an older experiment after newer spending. No newer semantic spending has occurred in this checkpoint.
+
+To check the new 28-paper V2 preparation offline, use the same replay helper with `--run-dir outputs/runs/semantic-20260923-enriched-preparation-v2`. This is not a directive to spend on all 28 papers before a separately identified pilot. Source enrichment, semantic extraction, canonical alignment and synthesis integration still need actual controlled execution and review.
+
+## Verification at the original V1 implementation checkpoint
 
 Forty-five repository tests pass, including 13 new semantic-runner cases (parameterized cases counted separately). Cases exercise offline API exclusion, prompt-field isolation, typed critic coverage, endpoint rejection, unlocated relation evidence despite AI support, hypothesis provenance, synthetic end-to-end export, non-overwriting preparation, frozen input/code tampering and invalid selections/budget paths. One pre-existing pytest warning concerns missing asyncio configuration support; these tests are synchronous. Targeted Ruff F/I checks pass.
 

@@ -229,3 +229,143 @@ def test_changed_source_selection_and_budget_paths_are_rejected(source):
     )
     with pytest.raises(ValueError, match="Changed manifest"):
         pipeline.run(source, destination)
+
+
+def mixed_source(source):
+    corpus = read_json(source / "corpus_manifest.json")
+    paper = corpus["papers"][0]
+    paper.update(availability="partial_pdf_plus_abstract", pages=2, text_characters=len(TEXT) + 8)
+    write_json(source / "corpus_manifest.json", corpus)
+    write_json(
+        source / "source_pages.json",
+        [
+            {"paper_id": "S001", "page": 1, "text": "PDF text"},
+            {"paper_id": "S001", "page": 2, "text": TEXT},
+        ],
+    )
+    write_json(
+        source / "source_locators.json",
+        [
+            {
+                "paper_id": "S001",
+                "source_unit": 1,
+                "kind": "original_partial_pdf_page",
+                "original_page": 1,
+            },
+            {
+                "paper_id": "S001",
+                "source_unit": 2,
+                "kind": "pubmed_abstract",
+                "original_page": None,
+                "pmid": "12345",
+                "assistant_note": "NEVER SEND",
+            },
+        ],
+    )
+
+
+def test_abstract_locator_survives_execution_csv_graph_and_readable_report(source, candidate):
+    import csv
+
+    mixed_source(source)
+    for record in [*candidate.entities, *candidate.assertions]:
+        for quote in record.evidence:
+            quote.page = 2
+
+    class SyntheticClient:
+        def call(self, name, model, system, user, schema):
+            assert "NEVER SEND" not in user
+            if schema is SemanticExtraction:
+                assert "source-unit" in system
+                abstract = json.loads(user)["source_pages"][1]
+                assert abstract["kind"] == "abstract" and abstract["original_page"] is None
+                return candidate
+            return review_for(candidate)
+
+    dest = source.parent / "mixed-run"
+    pipeline.run(source, dest, execute=True, client=SyntheticClient())
+    q = read_json(dest / "assertions.json")[0]["evidence"][0]
+    assert q["source_locator"]["kind"] == "abstract"
+    assert q["source_locator"]["original_page"] is None
+    assert q["source_locator"]["source_url"] == "https://pubmed.ncbi.nlm.nih.gov/12345/"
+    with (dest / "assertions.csv").open(encoding="utf-8", newline="") as f:
+        row = next(csv.DictReader(f))
+    assert json.loads(row["evidence"])[0]["source_locator"] == q["source_locator"]
+    graph_quote = read_json(dest / "semantic_graph.json")["edges"][0]["qualified_assertion"][
+        "evidence"
+    ][0]
+    assert graph_quote["source_locator"] == q["source_locator"]
+    for path in (dest / "index.html", dest / "sources/S001.html"):
+        text = path.read_text(encoding="utf-8")
+        assert "PubMed abstract (source unit 2; no PDF page)" in text
+        assert "Source page 2" not in text
+    # The independent-review exporter must use the same source identity and locator.
+    from res_pipeline.evidence.correspondence_review import export_packet
+
+    root = source.parent
+    write_json(
+        root / "gold/richmond_gold.json",
+        {
+            "entities": {"E01": {"label": "Synthetic reference", "location": "Synthetic"}},
+            "relationships": [],
+        },
+    )
+    (root / "data").mkdir(exist_ok=True)
+    (root / "data/paper-Richmond-original.pdf").write_bytes(b"Synthetic path fixture, not a PDF")
+    export_packet(root, source, root / "review", semantic_run=dest)
+    review_packet = read_json(root / "review/packet.json")
+    assert review_packet["pages"][1]["source_locator"]["original_page"] is None
+    assert review_packet["pages"][1]["source_locator"]["kind"] == "abstract"
+    assert "semantic_review" not in json.dumps(review_packet["candidates"])
+    rows = read_json(dest / "locators.json")
+    rows[-1]["label"] = "Wrong display"
+    write_json(dest / "locators.json", rows)
+    with pytest.raises(ValueError, match="locators differ"):
+        export_packet(root, source, root / "bad-review", semantic_run=dest)
+
+
+@pytest.mark.parametrize(
+    "change", ["missing", "duplicate", "invented_pdf_page", "wrong_kind", "bad_pmid"]
+)
+def test_malformed_locator_map_rejected_before_preparation(source, change):
+    mixed_source(source)
+    path = source / "source_locators.json"
+    rows = read_json(path)
+    if change == "missing":
+        rows.pop()
+    elif change == "duplicate":
+        rows.append(rows[-1])
+    elif change == "invented_pdf_page":
+        rows[-1]["original_page"] = 2
+    elif change == "wrong_kind":
+        rows[0]["kind"] = "metadata_snippet"
+    else:
+        rows[-1]["pmid"] = "javascript:alert(1)"
+    write_json(path, rows)
+    destination = source.parent / "bad-map"
+    with pytest.raises(ValueError):
+        pipeline.run(source, destination)
+    assert not destination.exists()
+
+
+def test_locator_snapshot_tampering_is_rejected(source):
+    dest = source.parent / "prepared"
+    pipeline.run(source, dest)
+    write_json(dest / "locators.json", [])
+    with pytest.raises(ValueError, match="locator snapshot"):
+        pipeline.run(source, dest)
+
+
+def test_frozen_replay_is_offline_and_rejects_changed_dependency_snapshot(source, monkeypatch):
+    from res_pipeline.evidence.replay_semantic import replay
+
+    dest = source.parent / "replay"
+    pipeline.run(source, dest)
+    before = {p.relative_to(dest): p.read_bytes() for p in dest.rglob("*") if p.is_file()}
+    monkeypatch.setattr(pipeline, "RunClient", lambda *a, **k: pytest.fail("API initialization"))
+    replay(dest)
+    after = {p.relative_to(dest): p.read_bytes() for p in dest.rglob("*") if p.is_file()}
+    assert after == before and not (dest / "calls").exists()
+    (dest / "code_snapshot/source_units.py").write_text("tampered")
+    with pytest.raises(ValueError, match="Frozen semantic code"):
+        replay(dest)

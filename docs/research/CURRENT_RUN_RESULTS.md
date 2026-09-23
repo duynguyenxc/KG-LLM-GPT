@@ -1,6 +1,12 @@
 # September research run: observed results and continuation
 
-## Current continuation: supplemented corpus prepared for extraction
+## Current continuation: source citations distinguish abstracts from PDF pages
+
+`outputs/runs/semantic-20260923-enriched-preparation-v2/index.html` is the latest offline semantic preparation. All 28 packets now identify source kind and original-page identity; its readable S009 source distinguishes the retained PDF page from abstract unit 2. Citation locators are preserved in new semantic JSON/CSV/graph and correspondence exports. There are still zero new semantic calls/results and no human judgments.
+
+For the preserved V1 pilot or V1 enriched preparation, use `python -B -m res_pipeline.evidence.replay_semantic --run-dir <existing-run-directory>`; default is offline. The current semantic entry point has a new prompt/code identity and must not be used to resume V1. Exact replay checks left 24/74 old files unchanged. The evaluator-v2 continuation below is unaffected. The repository suite reached 83 passing tests; `SEMANTIC_EXTRACTION_RUNBOOK.md` records scope and limits. New execution still awaits credit restoration.
+
+## Earlier continuation: supplemented corpus prepared for extraction
 
 `outputs/runs/corpus-20260923-abstracts-v1/index.html` shows the separate 28-record corpus: 19 unchanged full texts, eight complete abstracts and one partial PDF plus abstract. `outputs/runs/semantic-20260923-enriched-preparation-v1/index.html` is its actual offline extraction preparation, with 28 frozen packets and zero model calls/results. Read `CORPUS_VERSIONING.md` for commands, citation-unit limits and scientific controls. Existing baseline outputs and older pilot/evaluator hashes are unchanged. The test suite reached 75 passing tests; this does not establish scientific validity or human review.
 

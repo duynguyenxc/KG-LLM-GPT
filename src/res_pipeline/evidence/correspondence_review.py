@@ -14,6 +14,7 @@ from datetime import datetime
 from pathlib import Path
 
 from res_pipeline.evidence.provenance import digest, locate_quote, read_json, write_json
+from res_pipeline.evidence.source_units import resolve
 
 VERDICTS = {
     "equivalent",
@@ -340,6 +341,13 @@ def export_packet(
     files = [pages_path, corpus_path, gold_path, pdf_path]
     pages = read_json(pages_path)
     corpus = read_json(corpus_path)["papers"]
+    locators = resolve(baseline, corpus, pages)
+    locator_path = baseline / "source_locators.json"
+    if locator_path.exists():
+        files.append(locator_path)
+    by_unit = {(r["paper_id"], r["source_unit"]): r for r in locators}
+    for page in pages:
+        page["source_locator"] = by_unit[page["paper_id"], page["page"]]
     if inspection is not None:
         files.append(inspection)
         candidates = legacy_records(read_json(inspection), pages)
@@ -362,6 +370,11 @@ def export_packet(
         ):
             raise ValueError("Semantic output and displayed source text differ")
         candidates = semantic_records(semantic_run)
+        semantic_locators = semantic_run / "locators.json"
+        if semantic_locators.exists():
+            files.append(semantic_locators)
+            if read_json(semantic_locators) != locators:
+                raise ValueError("Semantic output and displayed source locators differ")
         system_label = "Conditional semantic assertions: " + semantic_run.name
     for rows in candidates.values():
         if len({r["id"] for r in rows}) != len(rows):
@@ -409,6 +422,7 @@ def export_packet(
         "packet_sha256": digest((destination / "packet.json").read_bytes()),
         "builder_sha256": digest(Path(__file__).read_bytes()),
         "template_sha256": digest(template_path.read_bytes()),
+        "source_unit_code_sha256": digest(Path(__file__).with_name("source_units.py").read_bytes()),
         "reference_counts": {k: len(v) for k, v in packet["references"].items()},
         "candidate_counts": {k: len(v) for k, v in candidates.items()},
         "human_reviews_completed": 0,

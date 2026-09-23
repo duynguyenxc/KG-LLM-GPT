@@ -18,7 +18,7 @@ The new version includes byte-preserved parent snapshots, raw acquisition XML, p
 
 The existing schema calls its locator field `page`. For this corpus it identifies a **source unit**, not necessarily a PDF page. `source_locators.json` is authoritative: an abstract unit has `original_page: null`, a PubMed identifier and source URL. S009 unit 1 is its original partial PDF page; unit 2 is the abstract. Do not report a unit-2 quotation as occurring on PDF page 2.
 
-The frozen semantic viewer currently uses the generic label “Source page”; the abstract text explicitly says it is not full text. The locator map remains in the parent corpus and must accompany downstream reporting/evaluation. Before publishing new citations, the downstream interface must render these locator types explicitly. The current preparation is not a claim that every existing exporter already handles the distinction.
+The preserved V1 semantic viewer uses the generic label “Source page”. The subsequent V2 implementation resolves and freezes locator types, supplies them to the model and displays explicit PDF/partial-PDF/abstract/metadata labels. `outputs/runs/semantic-20260923-enriched-preparation-v2/` is prepared with all 28 packets; it has not executed. Locator provenance is retained in evidence JSON/CSV/graph and the correspondence reviewer. Older historical finding/theory reports remain unchanged; this is not a retrofit of their citations. Read `SEMANTIC_EXTRACTION_RUNBOOK.md` for the current contract and frozen replay.
 
 ## Reproduction and execution boundary
 
@@ -29,13 +29,13 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 & 'C:/Users/Admin/AppData/Local/Programs/Python/Python311/python.exe' -B -m res_pipeline.evidence.corpus --baseline outputs/runs/evidence-20260910-full --acquisition outputs/research_audit/source-acquisition-20260923/source_acquisition.json --output-dir outputs/runs/corpus-NEW
 ```
 
-The actual offline preparation was:
+The historical V1 offline preparation command was (do not use current code to recreate that frozen identity):
 
 ```powershell
 & 'C:/Users/Admin/AppData/Local/Programs/Python/Python311/python.exe' -B -m res_pipeline.evidence.semantic_pipeline --source-run outputs/runs/corpus-20260923-abstracts-v1 --output-dir outputs/runs/semantic-20260923-enriched-preparation-v1 --budget-run evaluation-20260923-v2 --budget-run semantic-20260923-pilot-v1
 ```
 
-There is no `--execute` in this command. Paid execution remains pending credit restoration and should start with a separately named pilot before a full new extraction. A different paper selection, source version or prompt requires a distinct run. Do not change the prepared 28-paper selection in place. Do not invoke the historical `evidence.pipeline` loader on the supplemented directory: it rebuilds its original registry and is not the source loader for this version.
+There is no `--execute` in this command. Use `python -B -m res_pipeline.evidence.replay_semantic --run-dir outputs/runs/semantic-20260923-enriched-preparation-v1` to inspect its identity with frozen code. Paid execution remains pending credit restoration and should start with a separately named pilot before a full new extraction. A different paper selection, source version or prompt requires a distinct run. Do not change the prepared 28-paper selection in place. Do not invoke the historical `evidence.pipeline` loader on the supplemented directory: it rebuilds its original registry and is not the source loader for this version.
 
 The enriched semantic runner currently extracts entities/assertions and performs AI source review. It does not by itself complete canonical alignment, graph-integrated programme-theory synthesis, the full proposal's training experiments or human verification. Those requirements remain outstanding.
 
@@ -45,4 +45,4 @@ Source enrichment and algorithm improvement are separate factors. Comparing this
 
 Nine new synthetic tests cover preservation and rejection cases and exercise the real offline semantic preparation path without an API client. The repository suite reached 75 passing tests; the existing pytest `asyncio_mode` configuration warning remains. Targeted Ruff F/I checks pass. Actual checks verified all 28 packet hashes, nine source bundles, six unchanged baseline hashes, prior evaluator/pilot code hashes, S009's retained page, report navigation and browser errors. The corpus report was visually inspected. Evidence: `outputs/research_audit/corpus-enrichment-20260923-qa.json`.
 
-Next: complete the explicit source-locator display before executing/reporting enriched results; obtain further full texts when lawful access is available; run a controlled pilot after credit restoration; inspect source support and errors before broader execution. Human forms remain blank until real reviewers contribute.
+The explicit source-locator display is now implemented and technically checked in V2, with no actual new extraction. Next: obtain further full texts when lawful access is available; run a controlled pilot after credit restoration; inspect source support and errors before broader execution and synthesis integration. Human forms remain blank until real reviewers contribute.
