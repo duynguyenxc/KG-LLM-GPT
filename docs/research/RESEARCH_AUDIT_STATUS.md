@@ -4,7 +4,17 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: semantic extraction runner prepared offline
+## Current continuation checkpoint: historical reference audited against the original paper
+
+Previous goal turn was progress: semantic extraction/critic implementation, 45 passing tests, frozen offline pilot and commit `1d4ad37`. This continuation audited all 47 legacy concepts, 40 relations and five historical union chains against the original Richmond text and visually inspected Figures 2/3. `outputs/runs/reference-audit-20260923-v1/index.html` preserves each original entry, assistant proposal, source locator and blank human decision. See `REFERENCE_STANDARD_AUDIT.md`. No original reference or production artifact was changed.
+
+Material concerns include E43's locally explicit Mresponse role versus the old Outcome label; E21's compound role; R17's polarity-ambiguous CONSTRAINS predicate; R11/R28's unestablished serial response arrows; R37-R40's omitted mediators; and cross-context mixing in the old five chains. All 40 legacy triples lack dedicated qualifiers; this is not a claim that all are false. The 47/40 inventory also omits several distinctive Figure 3 elements, so perfect inventory recovery would not prove complete programme-theory recovery. All proposals are assistant analysis, not expert judgments.
+
+The version-checked builder preserves exact input hashes and creates a separate report/JSON. Coverage/UI checks verify 92 distinct entries, blank human fields, source-page links, search, E43/R17 deep links and no severe browser errors. Original and reference hashes match; zero API calls. Existing independent ratification forms remain blank and unchanged. Withhold assistant proposals during initial coding when measuring unaided agreement; disclose assistance otherwise. Actual human ratification, new semantic extraction and scoped evaluation v2 remain pending. The API interruption and full research scope are unchanged.
+
+Next offline work can implement linked concept/relation correspondence without confusing path summaries, semantic assertions and full explanations. Do not revise the reference merely to increase a system score or conflate reference repair with human improvement of system output. Paid execution still awaits credit-restoration confirmation; no process is live.
+
+## Earlier continuation checkpoint: semantic extraction runner prepared offline
 
 The previous conversational turn only rechecked existing review packets and explained their use; it did not advance implementation. The next safe action was available despite the API credit interruption: implement and test the source-led entity/assertion runner. This is now done in `semantic_pipeline.py`, including an independent AI source critic, exact typed-ID coverage, endpoint/source gates, qualified graph/CSV/JSON exports and searchable source-linked HTML. All candidates and uncertainty remain inspectable. No benchmark is loaded by production extraction or its critic.
 

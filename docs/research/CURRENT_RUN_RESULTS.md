@@ -1,6 +1,12 @@
 # September research run: observed results and continuation
 
-## Current continuation: semantic pilot prepared, not executed
+## Current continuation: reference audit completed, no new model output
+
+`outputs/runs/reference-audit-20260923-v1/index.html` now exposes assistant audit notes for all 47 historical concepts, 40 relations and five union chains, with original coding and primary-paper page links. `REFERENCE_STANDARD_AUDIT.md` explains role/polarity/mediator/context concerns and versioned evaluation consequences. The audit changes neither the historical reference nor system outputs and contains zero completed human decisions. It is not a new system comparison score or a ratified gold standard.
+
+Coverage and browser checks verified all 92 entries, unchanged source/reference hashes, blank human fields and working search/deep links. No API call was made. The semantic pilot below remains prepared_not_executed and evaluator v2 still has zero responses after the recorded credit failure. The baseline with 180 findings/nine theories remains the latest completed machine result.
+
+## Earlier continuation: semantic pilot prepared, not executed
 
 The source-led semantic extraction/critic runner is implemented and tested. `outputs/runs/semantic-20260923-pilot-v1/index.html` shows the explicit prepared state and readable frozen page text for S006/S015/S026. No new semantic API response or research accuracy result exists; candidate counts are zero because execution has not begun. The baseline remains the actual completed result. See `SEMANTIC_EXTRACTION_RUNBOOK.md` for the offline command and later `--execute` command, output contract, pilot selection rationale and shared budget accounting.
 

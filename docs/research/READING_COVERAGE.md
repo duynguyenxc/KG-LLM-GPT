@@ -12,6 +12,10 @@ The private file-level records are `outputs/research_audit/repository_inventory.
 - Repository instructions, configuration, research summaries, implementation modules, report generators, tests, historical programme theories and per-paper reference coding. The review identified mismatches between claimed and implemented architecture, incorrect semantic normalization, over-permissive matching and defective CSV serialization.
 - The substantive Parquet tables, historical verification metrics, blank human-coding fields, submitted report text and duplicate archive contents. All 766 distinct long narrative fields extracted from 16 verification JSON versions were read, including inconsistent matching rationales. Deduplicating repeated narrative does not make it valid.
 
+## September 23 reference audit extension
+
+Subsequent September 23 reference audit: every entity (E01-E47), relation (R01-R40) and historical union chain (PTS1-PTS5) in `gold/richmond_gold.json` was read and given an explicit assistant note. Original Richmond Figures 2/3 were newly rendered and visually read; relevant results, limitations and conclusions on PDF pages 6/8/9 were revisited. The accepted proposal's architecture/evaluation passages and July 24 transcript around the 47/40/manual-intervention instruction were consulted again. The newer `reference-audit-20260923-v1` report records source locators and version identities. This extends reference coverage; it is not a fresh full read of every repository file, every source paper or every meeting, and it is not independent expert coding.
+
 ## What this statement does not claim
 
 This is not a claim that every byte in a cache, binary workbook, historical screenshot, generated browser profile or Git object was read as prose. Historical image layouts and interactive dashboards were not all re-executed or exhaustively visually reviewed. PDF text extraction can lose graphical structure; the key Richmond figures were separately inspected. Workbooks were checked for actual coding and provenance, not silently assumed to contain completed independent reviews.
