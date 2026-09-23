@@ -1,6 +1,12 @@
 # September research run: observed results and continuation
 
-## Current continuation: 47/40 review now displays actual historical output
+## Current continuation: intervention recording prepared, no actual edits
+
+`outputs/runs/intervention-preparation-20260923-v2/index.html` now provides the nine baseline theories, empty revision ledger, schema and record hashes. `interventions.py` can record attributed add/replace/withdraw/split changes in a new sibling run while preserving original evidence and reference versions. No submission has been supplied or applied to research output. Human/AI attribution, source support and independent validation remain separate; no improvement score is claimed. See `ATTRIBUTED_INTERVENTION_PROTOCOL.md`.
+
+The repository suite reached 66 passing tests; browser checks covered readable before/after fields using explicitly synthetic data, real source navigation and unchanged baseline hashes. No API call, real human intervention or model training occurred. The latest real machine result is still the baseline with 180 findings/nine theories; semantic extraction and evaluator v2 still await credit restoration.
+
+## Earlier continuation: 47/40 review now displays actual historical output
 
 `outputs/runs/correspondence-review-20260923-legacy-v2/index.html` is a new side-by-side review workbench: 47 reference concepts/40 reference relations and all 517/439 historical system records. Six blank independent/adjudication forms and a strict linkage/provenance validator are ready. Read `CORRESPONDENCE_REVIEW_GUIDE.md`. No correspondence decisions or accuracy scores have been invented. This is explicitly historical July output; the new semantic pilot still has not run.
 

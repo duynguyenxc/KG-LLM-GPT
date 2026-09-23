@@ -4,7 +4,17 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: actual-output 47/40 human review workbench
+## Current continuation checkpoint: attributed synthesis revision workflow prepared
+
+Previous turn made concrete correspondence-workbench progress (`cacd758`). This continuation inspected the existing feedback-store and source-review workflow, revisited the professor's manual-intervention instructions and implemented `interventions.py`. It records attributed add/replace/withdraw actions, exact parent/source/reference identities, before/after events and explicit human versus AI assistance, in new sibling runs. It rejects stale/no-op/empty/conflicting submissions and unknown finding links. This is output editing, not RLHF, fine-tuning or reference repair.
+
+Actual artifact: `outputs/runs/intervention-preparation-20260923-v2/index.html`, containing nine existing baseline theories and an **empty ledger**. Status is prepared_no_intervention; zero actual edits and no changed research synthesis. V1 preparation is preserved; V2 provides readable field views. `ATTRIBUTED_INTERVENTION_PROTOCOL.md` explains use, version controls, fixed-rubric before/after evaluation and scientific limits. No reviewer identity or judgment was invented.
+
+Validation: 66 repository tests passed with the pre-existing asyncio warning; targeted Ruff checks pass. Browser checks exercised the real source link and a labelled synthetic before/after example, with changed-field highlighting and no severe errors. Baseline/source/reference hashes remain unchanged. QA: `outputs/research_audit/intervention-preparation-20260923-v2-qa.json`. Prepared/applied structures retain pending human validation; attribution fields do not authenticate a reviewer. No API calls or training updates occurred.
+
+The API credit interruption and unavailable raters remain unresolved. Next work still includes actual semantic pilot/evaluator execution after credit restoration, source/graph integration, canonical/evaluation experiments, and real attributable human contributions followed by independent before/after assessment. A prepared ledger is not the requested measured intervention result; the full goal remains active and incomplete.
+
+## Earlier continuation checkpoint: actual-output 47/40 human review workbench
 
 Previous turn made source-audit progress (all 47 concepts/40 relations/five chains, commit `3bb7834`). This continuation implements a separate reference-to-output review workbench and strict form importer. Open `outputs/runs/correspondence-review-20260923-legacy-v2/index.html`: 47/40 reference items sit beside 517 actual historical entities and 439 actual historical relations, with actual endpoint IDs, CMOC narrative, source quotations and frozen-page text. No automatic match or human verdict is supplied. This is July semantic output, not new September semantic extraction. `CORRESPONDENCE_REVIEW_GUIDE.md` documents use and limits.
 
