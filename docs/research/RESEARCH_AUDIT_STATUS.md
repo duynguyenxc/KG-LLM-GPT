@@ -4,7 +4,15 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: attributed synthesis revision workflow prepared
+## Current continuation checkpoint: nine supplemental abstracts acquired
+
+The previous goal turn restated and verified existing review packets; it did not advance implementation. This continuation searched the nine incomplete source records and captured nine complete official author abstracts through PubMed EFetch. The raw XML and per-article source records are isolated in `data/source_acquisition/20260923-pubmed/`; no frozen corpus or result was replaced. Open `outputs/research_audit/source-acquisition-20260923/index.html`. See `SOURCE_ACQUISITION_STATUS.md` for provenance and remaining access limitations.
+
+Zero new local full-text PDFs, zero model API calls and zero human judgments. S010 full-text body text was accessible through the web tool, but local download and graphical inspection failed; it is not counted as locally acquired full text. Targeted searches found restricted institutional copies and catalogue records, which were not treated as usable articles. Assistant observations identify source-coverage distinctions for the next run rather than silently correcting historical extraction.
+
+All nine abstracts were read; identifiers, raw/parsed hashes, six baseline hashes and the readable report were checked. Production code and existing results are unchanged. Source enrichment must use a new frozen corpus/run and be distinguished from algorithm changes. Actual new semantic extraction, evaluator-v2 execution, independent ratification and full-proposal experiments remain incomplete. Credit restoration and reviewers are still outstanding; no paid process is running.
+
+## Earlier continuation checkpoint: attributed synthesis revision workflow prepared
 
 Previous turn made concrete correspondence-workbench progress (`cacd758`). This continuation inspected the existing feedback-store and source-review workflow, revisited the professor's manual-intervention instructions and implemented `interventions.py`. It records attributed add/replace/withdraw actions, exact parent/source/reference identities, before/after events and explicit human versus AI assistance, in new sibling runs. It rejects stale/no-op/empty/conflicting submissions and unknown finding links. This is output editing, not RLHF, fine-tuning or reference repair.
 

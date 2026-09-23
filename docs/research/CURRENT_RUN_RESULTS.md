@@ -1,6 +1,10 @@
 # September research run: observed results and continuation
 
-## Current continuation: intervention recording prepared, no actual edits
+## Current continuation: source supplements captured, not yet adopted
+
+Nine complete PubMed abstracts are now preserved separately under `data/source_acquisition/20260923-pubmed/`. Open `outputs/research_audit/source-acquisition-20260923/index.html` for each incomplete source and the newly available distinctions. No new local full-text PDF, changed baseline input, new synthesis, paid call or human judgment occurred. `SOURCE_ACQUISITION_STATUS.md` records access failures, identity checks and the need for a separate corpus-enrichment experiment. The baseline remains the latest complete machine synthesis; prepared semantic/evaluator runs remain unexecuted or interrupted as recorded below.
+
+## Earlier continuation: intervention recording prepared, no actual edits
 
 `outputs/runs/intervention-preparation-20260923-v2/index.html` now provides the nine baseline theories, empty revision ledger, schema and record hashes. `interventions.py` can record attributed add/replace/withdraw/split changes in a new sibling run while preserving original evidence and reference versions. No submission has been supplied or applied to research output. Human/AI attribution, source support and independent validation remain separate; no improvement score is claimed. See `ATTRIBUTED_INTERVENTION_PROTOCOL.md`.
 
