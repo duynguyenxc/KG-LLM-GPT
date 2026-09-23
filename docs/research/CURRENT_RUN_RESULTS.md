@@ -1,6 +1,14 @@
 # September research run: observed results and continuation
 
-## Current continuation: evaluation v2 interrupted, baseline preserved
+## Current continuation: semantic pilot prepared, not executed
+
+The source-led semantic extraction/critic runner is implemented and tested. `outputs/runs/semantic-20260923-pilot-v1/index.html` shows the explicit prepared state and readable frozen page text for S006/S015/S026. No new semantic API response or research accuracy result exists; candidate counts are zero because execution has not begun. The baseline remains the actual completed result. See `SEMANTIC_EXTRACTION_RUNBOOK.md` for the offline command and later `--execute` command, output contract, pilot selection rationale and shared budget accounting.
+
+Forty-five tests pass, targeted Ruff checks pass, browser source navigation and synthetic record inspection pass. The audit report `outputs/research_audit/semantic-preparation-20260923.json` verifies zero API calls, all 20 source PDF hashes, metadata identity, three packet hashes and unchanged evaluation-v2 code. Do not rerun baseline extraction merely to obtain this new semantic representation. The extension is a separate, identifiable experiment; full-corpus semantic execution and 47/40 scoring remain pending.
+
+The latest provider state is still the evaluator-v2 credit rejection below. No live process is waiting. Credit restoration has not been confirmed in response to that new interruption. Human raters remain unavailable; all prepared forms are blank.
+
+## Earlier continuation: evaluation v2 interrupted, baseline preserved
 
 A new evaluation implementation in `src/res_pipeline/evidence/evaluation.py` evaluates the frozen theory under an explicit theory-level contract. It checks all six dimensions, selected-theory finding links for partial/equivalent/contradictory verdicts, and verbatim theory anchors. Invalid assessments are quarantined without silently rewriting their verdicts. Read `EVALUATION_PROTOCOL_V2.md` for the pre-execution protocol. The new run is `outputs/runs/evaluation-20260923-v2/`; it is separate from production and includes prior run/pilot charges in the existing USD 50 software cap.
 

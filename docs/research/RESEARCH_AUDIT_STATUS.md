@@ -4,7 +4,17 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: evaluation v2 and semantic contracts
+## Current continuation checkpoint: semantic extraction runner prepared offline
+
+The previous conversational turn only rechecked existing review packets and explained their use; it did not advance implementation. The next safe action was available despite the API credit interruption: implement and test the source-led entity/assertion runner. This is now done in `semantic_pipeline.py`, including an independent AI source critic, exact typed-ID coverage, endpoint/source gates, qualified graph/CSV/JSON exports and searchable source-linked HTML. All candidates and uncertainty remain inspectable. No benchmark is loaded by production extraction or its critic.
+
+`outputs/runs/semantic-20260923-pilot-v1/` is **prepared_not_executed** for S006/S015/S026, with zero model calls. Frozen source snapshots cover the existing 28-record corpus; the pilot packets contain three selected sources. No new semantic entities, relations or accuracy result have been generated. Selection is development informed by prior errors. See `SEMANTIC_EXTRACTION_RUNBOOK.md` for exact commands, output meanings and limits.
+
+Validation: 45 tests pass (one pre-existing asyncio configuration warning), targeted Ruff F/I passes, synthetic browser checks and real prepared-source navigation pass. Twenty raw PDFs, metadata identity and three packet hashes were checked; evaluation-v2 code/dependencies remain unchanged. An end-to-end test found and resolved Windows newline/hash inconsistency before freezing the pilot. Engineering report: `outputs/research_audit/semantic-preparation-20260923.json`. No paid request was attempted in this continuation.
+
+Current blockers for execution/human evaluation remain the new API credit interruption and unavailable independent reviewers. Offline integration/evaluation work remains possible. Next: run the frozen semantic pilot and resume evaluator v2 only after credit restoration; inspect errors before full-corpus semantic execution, then implement canonical candidates, linked 47/40 evaluation and integration experiments. Human fields stay blank. The complete research objective remains unfulfilled. The dated method PDF preserves the earlier contract-only edition; the new runbook documents subsequent implementation.
+
+## Earlier continuation checkpoint: evaluation v2 and semantic contracts
 
 Previous goal turn made verified progress: completed/froze the machine baseline, inspected actual artifacts, prepared human packets, and diagnosed four comparison-link defects. This continuation implemented a separate scoped evaluator and tested those failure cases. The v2 contract requires selected-theory evidence for partial as well as equivalent matches, exact theory anchors, explicit quarantine and no silent verdict rewriting. See `EVALUATION_PROTOCOL_V2.md`.
 
