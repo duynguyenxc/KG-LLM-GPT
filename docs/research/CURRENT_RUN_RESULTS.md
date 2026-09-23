@@ -1,6 +1,10 @@
 # September research run: observed results and continuation
 
-## Current continuation: source supplements captured, not yet adopted
+## Current continuation: supplemented corpus prepared for extraction
+
+`outputs/runs/corpus-20260923-abstracts-v1/index.html` shows the separate 28-record corpus: 19 unchanged full texts, eight complete abstracts and one partial PDF plus abstract. `outputs/runs/semantic-20260923-enriched-preparation-v1/index.html` is its actual offline extraction preparation, with 28 frozen packets and zero model calls/results. Read `CORPUS_VERSIONING.md` for commands, citation-unit limits and scientific controls. Existing baseline outputs and older pilot/evaluator hashes are unchanged. The test suite reached 75 passing tests; this does not establish scientific validity or human review.
+
+## Earlier continuation: source supplements captured, not yet adopted
 
 Nine complete PubMed abstracts are now preserved separately under `data/source_acquisition/20260923-pubmed/`. Open `outputs/research_audit/source-acquisition-20260923/index.html` for each incomplete source and the newly available distinctions. No new local full-text PDF, changed baseline input, new synthesis, paid call or human judgment occurred. `SOURCE_ACQUISITION_STATUS.md` records access failures, identity checks and the need for a separate corpus-enrichment experiment. The baseline remains the latest complete machine synthesis; prepared semantic/evaluator runs remain unexecuted or interrupted as recorded below.
 

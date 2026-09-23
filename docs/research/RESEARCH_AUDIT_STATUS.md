@@ -4,7 +4,15 @@
 
 The September 2026 request authorizes a continuous end-to-end review, primary-literature research, implementation, execution, and delivery of readable, evidence-linked outputs that can be compared with Richmond's human synthesis. Project artifacts are in English. The central deliverables are an accurate Richmond reference document, an honest inventory of existing outputs, a justified algorithm and architecture, and an executed comparison package with explicit human-review status.
 
-## Current continuation checkpoint: nine supplemental abstracts acquired
+## Current continuation checkpoint: supplemented corpus connected to offline extraction
+
+Previous turn made source-acquisition progress (`a6c2a42`). This continuation adds `corpus.py` to verify the acquired XML/abstract identities and create a new sibling corpus without overwriting research history. Actual version: `outputs/runs/corpus-20260923-abstracts-v1/`, comprising 19 unchanged full-text records, eight complete abstracts and S009's original partial PDF plus abstract. Source units retain a locator map; an abstract unit is not an original PDF page. See `CORPUS_VERSIONING.md`.
+
+The existing semantic runner successfully prepared all 28 packets in `outputs/runs/semantic-20260923-enriched-preparation-v1/`. It has not executed: zero calls, zero new entities/assertions and no scientific improvement result. The older pilot/evaluator code and baseline hashes remain unchanged. The historical evidence loader is not a loader for the new corpus; complete synthesis integration remains unfinished.
+
+Nine new synthetic tests passed; the repository suite reached 75 passing tests with the existing asyncio configuration warning. Actual snapshot/bundle/packet checks and browser inspection passed. QA: `outputs/research_audit/corpus-enrichment-20260923-qa.json`. The generic semantic viewer still labels units as source pages; the source locator map must be surfaced explicitly downstream before publishing enriched citations. Credit restoration, actual new extraction/evaluation and human review remain pending. The full goal is not complete.
+
+## Earlier continuation checkpoint: nine supplemental abstracts acquired
 
 The previous goal turn restated and verified existing review packets; it did not advance implementation. This continuation searched the nine incomplete source records and captured nine complete official author abstracts through PubMed EFetch. The raw XML and per-article source records are isolated in `data/source_acquisition/20260923-pubmed/`; no frozen corpus or result was replaced. Open `outputs/research_audit/source-acquisition-20260923/index.html`. See `SOURCE_ACQUISITION_STATUS.md` for provenance and remaining access limitations.
 
