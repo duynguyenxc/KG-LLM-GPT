@@ -272,6 +272,33 @@ def validate_synthesis(result: Synthesis, allowed: set[str]) -> dict:
     return value
 
 
+def production_evidence(finding: dict) -> dict:
+    """Supply scientific evidence, excluding filesystem and evaluation metadata.
+
+    Provenance paths remain in local outputs, but benchmark-named directories must
+    not cue the synthesis model. Explicit fields also exclude future review scores.
+    """
+    fields = (
+        "finding_id",
+        "paper_id",
+        "study_family_id",
+        "availability",
+        "context",
+        "resource",
+        "response",
+        "outcome",
+        "direction",
+        "comparator",
+        "timepoint",
+        "response_status",
+        "outcome_status",
+        "explanation",
+        "limitations",
+        "evidence",
+    )
+    return {key: finding[key] for key in fields}
+
+
 def validate_comparison(comparison: Comparison, theories: dict, findings: dict) -> dict:
     value = comparison.model_dump()
     if not set(value["theory_ids"]) <= set(theories) or not set(value["finding_ids"]) <= set(
@@ -421,6 +448,8 @@ def run(directory: Path, selected: set[str] | None = None, extraction_only: bool
     if not eligible:
         raise RuntimeError("No findings passed machine evidence checks")
     evidence_by_id = {finding["finding_id"]: finding for finding in eligible}
+    model_evidence = [production_evidence(finding) for finding in eligible]
+    model_evidence_by_id = {finding["finding_id"]: finding for finding in model_evidence}
     graph, groups = build_graph(
         eligible, config["graph"]["seed"], config["graph"]["minimum_shared_terms"]
     )
@@ -428,7 +457,7 @@ def run(directory: Path, selected: set[str] | None = None, extraction_only: bool
     write_json(directory / "communities.json", groups)
     summaries = []
     for index, group in enumerate(groups):
-        evidence = [evidence_by_id[identity] for identity in group]
+        evidence = [model_evidence_by_id[identity] for identity in group]
         summary = client.call(
             f"community_{index:03d}",
             config["synthesis_model"],
@@ -442,7 +471,9 @@ def run(directory: Path, selected: set[str] | None = None, extraction_only: bool
         "synthesis_initial",
         config["synthesis_model"],
         SYNTHESIZE,
-        json.dumps({"community_summaries": summaries, "evidence": eligible}, ensure_ascii=False),
+        json.dumps(
+            {"community_summaries": summaries, "evidence": model_evidence}, ensure_ascii=False
+        ),
         Synthesis,
     )
     initial = validate_synthesis(synthesis, set(evidence_by_id))
@@ -477,7 +508,7 @@ def run(directory: Path, selected: set[str] | None = None, extraction_only: bool
         json.dumps(
             {
                 "initial_theory": initial,
-                "evidence": eligible,
+                "evidence": model_evidence,
                 "retrieved_primary_pages": list(retrieved.values()),
                 "task": "Critically refine the initial theory using the retrieved pages to check context, rivals and gaps. Cite only existing finding IDs; new observations from pages without extracted findings must remain evidence gaps requiring a new extraction/human review. One refinement pass does not establish saturation.",
             },

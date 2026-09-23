@@ -35,7 +35,7 @@ def inline(text: str) -> str:
     return re.sub(r"`([^`]+)`", r'<font name="ResearchMono" size="8.3">\1</font>', text)
 
 
-def build(source: Path, target: Path) -> None:
+def build(source: Path, target: Path, edition: str = "") -> None:
     pdfmetrics.registerFont(TTFont("ResearchBody", "C:/Windows/Fonts/arial.ttf"))
     pdfmetrics.registerFont(TTFont("ResearchBold", "C:/Windows/Fonts/arialbd.ttf"))
     pdfmetrics.registerFont(TTFont("ResearchItalic", "C:/Windows/Fonts/ariali.ttf"))
@@ -93,6 +93,8 @@ def build(source: Path, target: Path) -> None:
                 index += 1
             columns = len(rows[0])
             widths = [174 * mm / columns] * columns
+            if columns == 2 and rows[0][0].getPlainText() == "ID":
+                widths = [18 * mm, 156 * mm]
             table = Table(rows, colWidths=widths, repeatRows=1, hAlign="LEFT")
             table.setStyle(
                 TableStyle(
@@ -110,6 +112,8 @@ def build(source: Path, target: Path) -> None:
             story.extend([KeepTogether([table]) if len(rows) <= 7 else table, Spacer(1, 10)])
             continue
         if line.startswith("# "):
+            if story:
+                story.append(PageBreak())
             story.append(Paragraph(inline(line[2:]), title))
         elif line.startswith("## "):
             if line == "## Sources" and source.name == "METHOD_AND_VERIFICATION_PROTOCOL.md":
@@ -123,6 +127,7 @@ def build(source: Path, target: Path) -> None:
                 index + 1 < len(lines)
                 and lines[index + 1].strip()
                 and not lines[index + 1].startswith(("#", "|", "[^"))
+                and not re.match(r"^(?:[-*]|\d+\.)\s", lines[index + 1].strip())
             ):
                 index += 1
                 paragraph.append(lines[index].strip())
@@ -132,6 +137,14 @@ def build(source: Path, target: Path) -> None:
             story.append(Paragraph(inline(text), source_style if is_source else body))
         index += 1
     target.parent.mkdir(parents=True, exist_ok=True)
+    def footer(canvas, document):
+        canvas.saveState()
+        canvas.setFont("ResearchBody", 8)
+        canvas.setFillColor(colors.HexColor("#555555"))
+        canvas.drawString(18 * mm, 10 * mm, edition or "Research method and findings")
+        canvas.drawRightString(192 * mm, 10 * mm, str(document.page))
+        canvas.restoreState()
+
     SimpleDocTemplate(
         str(target),
         pagesize=(210 * mm, 297 * mm),
@@ -141,7 +154,7 @@ def build(source: Path, target: Path) -> None:
         bottomMargin=18 * mm,
         title=lines[0].lstrip("# "),
         author="",
-    ).build(story)
+    ).build(story, onFirstPage=footer, onLaterPages=footer)
     print(target)
 
 

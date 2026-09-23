@@ -30,6 +30,27 @@ def write_json(path: Path, value) -> None:
     temporary.replace(path)
 
 
+def request_payload(
+    model: str, system: str, user: str, schema: type[BaseModel], config: dict
+) -> dict:
+    """One request contract shared by execution and offline cache inspection."""
+    return {
+        "model": model,
+        "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {
+                "name": schema.__name__,
+                "strict": True,
+                "schema": schema.model_json_schema(),
+            },
+        },
+        "reasoning_effort": config["reasoning_effort"],
+        "max_completion_tokens": config["max_completion_tokens"],
+        "store": False,
+    }
+
+
 def locate_quote(text: str, quote: str) -> dict:
     """Locate a complete quote with traceable PDF-typography normalization, never fuzzy similarity."""
     if not quote.strip():
@@ -121,21 +142,7 @@ class RunClient:
             stream.write(json.dumps(record) + "\n")
 
     def call(self, name: str, model: str, system: str, user: str, schema: type[BaseModel]):
-        request = {
-            "model": model,
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-            "response_format": {
-                "type": "json_schema",
-                "json_schema": {
-                    "name": schema.__name__,
-                    "strict": True,
-                    "schema": schema.model_json_schema(),
-                },
-            },
-            "reasoning_effort": self.config["reasoning_effort"],
-            "max_completion_tokens": self.config["max_completion_tokens"],
-            "store": False,
-        }
+        request = request_payload(model, system, user, schema, self.config)
         request_hash = digest(json.dumps(request, sort_keys=True).encode())
         location = self.directory / "calls" / name
         cached = location / "parsed.json"

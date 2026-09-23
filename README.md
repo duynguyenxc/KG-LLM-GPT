@@ -4,9 +4,11 @@ This repository investigates a researcher-controlled agent method for realist ev
 
 ## Current status
 
-The September 2026 audit found substantive problems in historical verification claims and CSV exports. An isolated evidence-preserving implementation and a three-paper pilot are available. The clean full-corpus attempt stopped because the OpenAI API returned `credit_balance_exhausted`: 19 papers extracted, 17 source audits completed, 86 audited findings and 83 machine-eligible findings. A new final programme theory and Richmond comparison have **not yet been generated**. Independent human validation remains pending.
+The September 2026 audit found substantive problems in historical verification claims and CSV exports. On September 23, restored API access allowed the isolated experiment to complete all 28 available-source extractions/audits: 180 findings, 174 machine-eligible. The subsequent machine baseline completed nine provisional theories and 18 AI comparisons. The raw verdicts are 14 partial/four not recovered, with evidence-link problems in four partial rows; these are not validated recovery scores. Read the dated continuation record and baseline review. Independent human validation remains pending; the owner requested prepared review packets while reviewers are unavailable.
 
-Open the local [actual progress report](outputs/runs/evidence-20260910-full/progress.html) and [current results/continuation record](docs/research/CURRENT_RUN_RESULTS.md). Run files and private research inputs are excluded from Git; their local links require the research workspace.
+Open the local [actual entity, relationship and finding explorer](outputs/runs/inspection-20260923-v4/index.html), [reference-review preparation](outputs/runs/reference-review-20260923-v1/index.html) and [current results/continuation record](docs/research/CURRENT_RUN_RESULTS.md). Run files and private research inputs are excluded from Git; their local links require the research workspace.
+
+The [September 23 consolidated method PDF](output/pdf/Research_Method_and_Verification_20260923.pdf) includes algorithm, verification protocol, semantic-assertion design and actual baseline limitations. A separate stricter evaluation v2 is implemented/tested, but its first API request was rejected for exhausted credit; it has no completed responses. The complete baseline above is preserved.
 
 ## Start here
 
@@ -40,4 +42,4 @@ python -B -m pytest -q
 python -B -u -m res_pipeline.evidence.pipeline --run-dir outputs/runs/NEW_RUN_NAME
 ```
 
-Use a new run name for a new protocol or source state. For the interrupted September experiment, follow the specific resume instructions in `CURRENT_RUN_RESULTS.md` after restoring API credit. Do not interpret tests passing or model judgments as independent scientific validation.
+Use a new run name for a new protocol or source state. Before resuming an existing experiment, follow the specific execution-state and cache checks in `CURRENT_RUN_RESULTS.md`; do not start a duplicate live process. Do not interpret tests passing or model judgments as independent scientific validation.

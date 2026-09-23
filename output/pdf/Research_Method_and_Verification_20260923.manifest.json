@@ -1,0 +1,13 @@
+{
+  "output": "output/pdf/Research_Method_and_Verification_20260923.pdf",
+  "pages": 19,
+  "source_sha256": {
+    "docs/research/METHOD_AND_VERIFICATION_PROTOCOL.md": "b8cba6ad66dfbdc05745f176f62232e781c502c40db6573b97996d30bc3ba132",
+    "docs/research/SEMANTIC_ASSERTION_METHOD.md": "1f0adf10910ee25d17896ad0927a534df4541b8b3ef1051e951c892cf56edd87",
+    "docs/research/EVALUATION_PROTOCOL_V2.md": "c42bf56948c8bff854c2820f34728c7c53643d6ecb429d2982565429f52e4302",
+    "docs/research/BASELINE_REVIEW_20260923.md": "26065ff740c59e1aee4690b32f1827b386dd18231ac921436baa08cd2f654269"
+  },
+  "pdf_sha256": "aed0a046e1e03a798a3e023d5f5bdb943fe05e2ea2331c42e8e999017bc2d5fa",
+  "builder_sha256": "7eb4de2f138b465a00a9f5fcb101932f6c290399e5009d0e4d861c63615a0e4b",
+  "status": "validated: extracted headings; Poppler render and visual review of all 19 pages; detailed checks of changed list/table pages"
+}

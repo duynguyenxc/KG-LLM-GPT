@@ -133,7 +133,44 @@ This implementation is a **custom graph-assisted synthesis experiment**, not a d
 
 For a later production system, preserve the same evidence contracts and add genuine human gates and versioned feedback before downstream approval. Graph-guided extraction, approved concept merge/split operations, multiple refinement cycles and resumable human intervention are substantive extensions to evaluate; they should not be claimed complete because a simple workflow can run without stopping. The exploratory machine run keeps every human gate pending and cannot grant itself research approval.
 
+## September 23 clarification: semantic relations and two levels of comparison
+
+The July 24 professor meeting explicitly requests concept/relation evaluation and results before and after human intervention. The September attribution graph and 18-row configuration reference do not complete those requirements. The historical 47 concepts/40 relations remain an evaluation track requiring source reconciliation; they must not be silently discarded or treated as an already authenticated gold dataset.
+
+The implementation must distinguish four objects:
+
+- An **entity mention** is an attributable occurrence of a concept or construct, with its role, paper and source span. A **canonical concept** is an explicitly justified grouping of mentions, not a synonym inferred from a shared role.
+- A **semantic relation assertion** describes what connects particular entities under particular conditions. It needs evidence for the relationship, not merely one quotation mentioning each endpoint.
+- An **attribution edge** such as `has_context` or `cites` records where a component or quotation belongs.
+- A **retrieval edge** such as `lexical_retrieval_candidate` selects potentially relevant records. It does not assert that their explanations agree.
+
+The new offline inspection exporter exposes existing instances, relations, configurations and attribution/retrieval edges separately. It preserves the legacy labels, quotes and critiques; it does not repair the scientific content by displaying it. Its source hashes and endpoint checks establish data identity and referential integrity, not semantic validity.
+
+### Research basis and extension contract
+
+Dagdelen et al. evaluate joint entity/relation extraction with structured, potentially hierarchical records. Their examples show that losing parts of a compound relation can change its scientific meaning. Their manual evaluation allows equivalent information despite wording differences, while still checking the grouping of entities. Their experiments concern materials science and task-specific fine-tuning; they do not validate education-domain realist synthesis or our current prompting baseline.[^14]
+
+Our resulting design decision is to preserve a conditional assertion as a first-class record:
+
+`a = (assertion_id, entity_ids, predicate, context, outcome_definition, comparator, timepoint, evidence_ids, inference_status, limitations)`.
+
+This is a data contract, not a numerical causal model. Semantic extraction must be source-led, allow partial assertions, and decline an unsupported link even when the endpoint types permit it. A graph edge may point to this assertion record; it cannot replace its qualifiers. Source-reported associations, primary-author explanations and synthesis hypotheses require separate labels. Candidate semantic merges must preserve role, polarity and scope, with reversible merge/split records. Benchmark labels and judgments remain external to production prompts.
+
+**Implementation status:** typed semantic assertion contracts and offline source/structural checks are implemented, but semantic extraction under this extension has not run. Existing configuration records already retain many of these qualifiers. Existing `has_*` edges must not be relabelled as an implementation of the extension. The completed baseline supplies actual extraction and synthesis behavior for inspecting failures before the extension is evaluated.
+
+### Evaluation contract
+
+Keep three reference-facing tables: concepts, relations, and complete conditional explanations. For a relation, the reviewer checks both endpoint meanings, the asserted connection, direction, context, comparator, time and inference status. Exact string identity and semantic equivalence are separate columns. Do not award an exact semantic match merely because both endpoints appear somewhere in the graph.
+
+For generated-output precision, review the generated assertion inventory, including assertions without a Richmond counterpart. For reference recovery, review the ratified reference inventory. These denominators differ. Redundant generated paraphrases must not inflate recovery; relation matches must preserve the connected assertion rather than pool endpoints from unrelated studies. Report partial matches separately from equivalent matches.
+
+Before/after human intervention is a versioned experiment: freeze the automatic result, record reviewer edits with evidence/reasons/time, execute only affected downstream stages in a new version, and reevaluate with the same rubric. Changes informed by Richmond are development corrections; they are not a held-out generalization result. A corrected reference also requires a new reference version and transparent recomputation of both comparison conditions.
+
+RAMESES requires changes from the intended method to be described and justified. Accordingly, missing proposal components (including model training and link prediction) remain explicit pending requirements or require a documented revision agreed with the professor; a simpler implemented baseline cannot silently redefine them as achieved.[^2]
+
 ## Experiments needed for a publishable effectiveness claim
+
+Further September 23 work is specified in `SEMANTIC_ASSERTION_METHOD.md` (source-specific entity/assertion contracts, comparator/time and direction-versus-benefit distinctions, and additional primary extraction research) and `EVALUATION_PROTOCOL_V2.md` (strict theory-level comparison of the frozen baseline). Contracts and structural tests are implemented; the semantic extraction experiment is not executed. Evaluation v2's first API request was rejected for exhausted credit. Its planned outputs must not be substituted for observed baseline results.
 
 The current run can establish that the output exists, is traceable, and can be evaluated with a specified protocol. It cannot by itself establish superiority of multiple agents or GraphRAG. A defensible comparison should hold corpus, model, output schema and budget constant while comparing: direct source-based synthesis; extraction plus source retrieval; and extraction plus graph-organized retrieval and refinement. A separate ablation removes the critic to measure both error reduction and evidence loss.
 
@@ -156,3 +193,4 @@ Predeclare error categories: unavailable text, parsing error, missed evidence, i
 [^11]: Traag VA, Waltman L, van Eck NJ. [From Louvain to Leiden: guaranteeing well-connected communities](https://doi.org/10.1038/s41598-019-41695-z). Scientific Reports. 2019;9:5233. [NetworkX Louvain documentation](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.louvain.louvain_communities.html), accessed September 2026.
 [^12]: Ren Z et al. [Systematic Literature Reviews With Two Multi-Agentic Systems And Human-In-The-Loop](https://arxiv.org/abs/2607.21920). July 2026 preprint; discovery-stage source, abstract inspected only, not used to substantiate implementation effectiveness.
 [^13]: OpenAI, [GPT-5.5 model documentation](https://developers.openai.com/api/docs/models/gpt-5.5), [GPT-5.4 mini model documentation](https://developers.openai.com/api/docs/models/gpt-5.4-mini), and [Structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs), accessed September 2026. Prices are configuration assumptions checked against the official documentation; account billing remains authoritative.
+[^14]: Dagdelen J et al. [Structured information extraction from scientific text with large language models](https://pmc.ncbi.nlm.nih.gov/articles/PMC10869356/). Nature Communications. 2024;15:1418. DOI 10.1038/s41467-024-45563-x. Introduction/Figure 1 and exact-match versus manual evaluation discussion. Revisited September 23, 2026; the publisher page failed to open, so the full-text PMC version was used. This is supporting research for an extension, not evidence that the extension already performs well.
